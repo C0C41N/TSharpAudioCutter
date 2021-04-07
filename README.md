@@ -1,20 +1,22 @@
-# electron-snowpack-react-typescript
+# TSharp Audio Cutter
 
-Electron app powered by snowpack using react + typescript
+Electron app powered by `https://github.com/C0C41N/electron-snowpack-react-typescript`
 
-`git clone https://github.com/C0C41N/electron-snowpack-react-typescript`
+### Get Started
+
+`git clone https://github.com/C0C41N/TSharpAudioCutter`
 
 ## Available Scripts
 
-### yarn start
+### `yarn start`
 
 Runs the app in the development mode.
 
-### yarn build
+### `yarn build`
 
 Builds a static copy of your site to the `build/` folder.
 
-### yarn make
+### `yarn make`
 
 Makes electron app.
 You can find setup and other generated files at `release/` folder
