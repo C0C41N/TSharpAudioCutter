@@ -2,7 +2,7 @@ import './App.css';
 
 import React, { useEffect, useState } from 'react';
 
-import { useFFmpeg, useLog, useNative } from './services';
+import { useLog, useSplit } from './services';
 
 const logo = './assets/logo.svg';
 
@@ -10,24 +10,14 @@ interface AppProps {}
 
 function App({}: AppProps) {
   const [count, setCount] = useState(0);
-  const { fs } = useNative();
   const { log, cls } = useLog();
-  const { ffmpeg } = useFFmpeg();
+  const { Short, Long } = useSplit();
 
   useEffect(() => {
     const file = 'C:\\__Sandbox\\audio.mp3';
-    const out = 'C:\\__Sandbox\\audio\\out%2d.wav';
+    const out = 'C:\\__Sandbox\\audio\\out%2d.ogg';
     cls();
-
-    ffmpeg()
-      .addInput(file)
-      .on('start', (ffmpegCommand) => log({ ffmpegCommand }))
-      .on('progress', (data) => log({ data }))
-      .on('end', () => log('END'))
-      .on('error', (error) => log({ error }))
-      .addOutput(out)
-      .addOutputOption('-f', 'segment', '-segment_time', '10')
-      .run();
+    Short('');
   }, []);
 
   useEffect(() => {

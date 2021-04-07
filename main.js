@@ -1,10 +1,12 @@
-const { app, BrowserWindow, screen } = require('electron');
+const { app, BrowserWindow, screen, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
 
 let win = null;
 const args = process.argv.slice(1),
   serve = args.some((val) => val === '--serve');
+
+ipcMain.on('docs', (e) => e.reply('docs', app.getPath('documents')));
 
 function createWindow() {
   const electronScreen = screen;
