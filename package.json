@@ -1,7 +1,7 @@
 {
-	"name": "electron-snowpack-react-typescript",
+	"name": "tsharp-audio-cutter",
 	"version": "1.0.0",
-	"description": "Electron app powered by snowpack using react + typescript",
+	"description": "Audio cutter app for secondlife uploads.",
 	"main": "main.js",
 	"author": "C0C41N",
 	"license": "MIT",
