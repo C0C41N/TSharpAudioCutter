@@ -12,29 +12,22 @@ function App({}: AppProps) {
   const [count, setCount] = useState(0);
   const { fs } = useNative();
   const { log, cls } = useLog();
-  const { ffmpeg, path, probePath } = useFFmpeg();
+  const { ffmpeg } = useFFmpeg();
 
   useEffect(() => {
     const file = 'C:\\__Sandbox\\audio.mp3';
+    const out = 'C:\\__Sandbox\\audio\\out%2d.wav';
+    cls();
 
-    // ffmpeg()
-    //   .addInput(file)
-    //   // .on('start', function (ffmpegCommand) {
-    //   //   log({ ffmpegCommand });
-    //   // })
-    //   // .on('progress', function (data) {
-    //   //   log({ data });
-    //   // })
-    //   // .on('end', function () {
-    //   //   log('END');
-    //   // })
-    //   // .on('error', function (error) {
-    //   //   log({ error });
-    //   // })
-    //   .addOutput('out_%03d.mp3')
-    //   .addOutputOption('-f', 'segment', '-segment_time', '10')
-    //   .addOutputOption('-c copy')
-    //   .run();
+    ffmpeg()
+      .addInput(file)
+      .on('start', (ffmpegCommand) => log({ ffmpegCommand }))
+      .on('progress', (data) => log({ data }))
+      .on('end', () => log('END'))
+      .on('error', (error) => log({ error }))
+      .addOutput(out)
+      .addOutputOption('-f', 'segment', '-segment_time', '10')
+      .run();
   }, []);
 
   useEffect(() => {
