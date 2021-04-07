@@ -2,7 +2,7 @@ import './App.css';
 
 import React, { useEffect, useState } from 'react';
 
-import { useFFmpeg, useLog } from './services';
+import { useFFmpeg, useLog, useNative } from './services';
 
 const logo = './assets/logo.svg';
 
@@ -10,12 +10,31 @@ interface AppProps {}
 
 function App({}: AppProps) {
   const [count, setCount] = useState(0);
+  const { fs } = useNative();
   const { log, cls } = useLog();
   const { ffmpeg, path, probePath } = useFFmpeg();
 
   useEffect(() => {
-    cls();
-    log({ path, probePath, ffmpeg });
+    const file = 'C:\\__Sandbox\\audio.mp3';
+
+    // ffmpeg()
+    //   .addInput(file)
+    //   // .on('start', function (ffmpegCommand) {
+    //   //   log({ ffmpegCommand });
+    //   // })
+    //   // .on('progress', function (data) {
+    //   //   log({ data });
+    //   // })
+    //   // .on('end', function () {
+    //   //   log('END');
+    //   // })
+    //   // .on('error', function (error) {
+    //   //   log({ error });
+    //   // })
+    //   .addOutput('out_%03d.mp3')
+    //   .addOutputOption('-f', 'segment', '-segment_time', '10')
+    //   .addOutputOption('-c copy')
+    //   .run();
   }, []);
 
   useEffect(() => {

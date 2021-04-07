@@ -1,6 +1,7 @@
 import type * as ffmpeg from 'fluent-ffmpeg';
 import type * as ffmpegStatic from 'ffmpeg-static';
 import type * as ffprobeStatic from 'ffprobe-static';
+import { svcLog } from './log';
 import { svcNative } from './native';
 
 class FFMPEG {
@@ -10,6 +11,7 @@ class FFMPEG {
 
   constructor() {
     const { valid } = svcNative;
+    const { log, cls } = svcLog;
 
     if (!valid) return;
 
@@ -22,6 +24,18 @@ class FFMPEG {
 
     this.ffmpeg.setFfmpegPath(path);
     this.ffmpeg.setFfprobePath(probe);
+
+    cls();
+
+    log({ path });
+
+    this.ffmpeg()
+      .setFfmpegPath(
+        'C:\\__Sandbox\\TSharp\\TSharpAudioCutter\\node_modules\\ffmpeg-static\\ffmpeg.exe',
+      )
+      .getAvailableCodecs((err, codecs) => {
+        log({ err, codecs });
+      });
   }
 }
 
