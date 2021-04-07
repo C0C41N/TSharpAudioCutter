@@ -2,7 +2,7 @@ import './App.css';
 
 import React, { useEffect, useState } from 'react';
 
-import { useLog } from './services';
+import { useFFmpeg, useLog } from './services';
 
 const logo = './assets/logo.svg';
 
@@ -11,10 +11,11 @@ interface AppProps {}
 function App({}: AppProps) {
   const [count, setCount] = useState(0);
   const { log, cls } = useLog();
+  const { ffmpeg, path, probePath } = useFFmpeg();
 
   useEffect(() => {
     cls();
-    log('Hello World!');
+    log({ path, probePath, ffmpeg });
   }, []);
 
   useEffect(() => {
