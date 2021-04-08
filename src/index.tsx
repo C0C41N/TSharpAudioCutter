@@ -7,12 +7,12 @@ import App from './App';
 import { Provider, services } from './services';
 
 ReactDOM.render(
-  <React.StrictMode>
+	<React.StrictMode>
 		<Provider value={services}>
 			<App />
 		</Provider>
-  </React.StrictMode>,
-  document.getElementById('root'),
+	</React.StrictMode>,
+	document.getElementById('root')
 );
 
 import.meta.hot && import.meta.hot.accept();

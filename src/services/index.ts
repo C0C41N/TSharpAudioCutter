@@ -8,12 +8,12 @@ import { svcSplit } from './split';
 import { svcUtil } from './util';
 
 export const services = {
-  svcNative,
-  svcLog,
-  svcFF,
-  svcSplit,
-  svcComs,
-  svcUtil,
+	svcNative,
+	svcLog,
+	svcFF,
+	svcSplit,
+	svcComs,
+	svcUtil,
 };
 
 const context = createContext(services);

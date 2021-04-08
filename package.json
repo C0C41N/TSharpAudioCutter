@@ -8,9 +8,7 @@
 	"scripts": {
 		"start": "snowpack dev",
 		"build": "snowpack build",
-		"make": "yarn build && electron-builder build",
-		"format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-		"lint": "prettier --check \"src/**/*.{js,jsx,ts,tsx}\""
+		"make": "yarn build && electron-builder build"
 	},
 	"dependencies": {
 		"ffmpeg-static": "^4.3.0",
@@ -32,7 +30,6 @@
 		"electron": "^12.0.2",
 		"electron-builder": "^22.10.5",
 		"electron-snowpack-plugin": "^1.12.0",
-		"prettier": "^2.0.5",
 		"snowpack": "^3.1.2",
 		"typescript": "^4.0.0"
 	}
