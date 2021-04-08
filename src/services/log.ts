@@ -15,7 +15,9 @@ class Log {
     const { appendFileSync } = fs;
 
     const time = new Date().toString().split(' ')[4];
-    const txt = JSON.stringify(o, null, '\t');
+    const txt = JSON.stringify(o, null, '\t')
+      .replace('\\n', '\n')
+      .replace('\\t', '\t');
     appendFileSync(this.file, `[${time}]\n\n${txt}\n\n`);
   };
 }

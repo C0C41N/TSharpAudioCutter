@@ -2,22 +2,13 @@ import './App.css';
 
 import React, { useEffect, useState } from 'react';
 
-import { useLog, useSplit } from './services';
-
 const logo = './assets/logo.svg';
 
-interface AppProps {}
-
-function App({}: AppProps) {
+function App() {
   const [count, setCount] = useState(0);
-  const { log, cls } = useLog();
-  const { Short, Long } = useSplit();
 
   useEffect(() => {
-    const file = 'C:\\__Sandbox\\audio.mp3';
-    const out = 'C:\\__Sandbox\\audio\\out%2d.ogg';
-    cls();
-    Short('');
+    //
   }, []);
 
   useEffect(() => {
