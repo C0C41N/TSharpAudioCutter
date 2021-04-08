@@ -2,7 +2,7 @@ import './App.css';
 
 import React, { useEffect, useState } from 'react';
 
-import { useUtil } from './services';
+import { useUtil } from '@services';
 
 const logo = './assets/logo.svg';
 
