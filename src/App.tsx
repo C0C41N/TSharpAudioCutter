@@ -2,17 +2,21 @@ import './App.css';
 
 import React, { useEffect, useState } from 'react';
 
+import { useUtil } from './services';
+
 const logo = './assets/logo.svg';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const { randomKey } = useUtil();
+
+  const [key, setKey] = useState(randomKey(6));
 
   useEffect(() => {
     //
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => setCount(count + 1), 1000);
+    const timer = setTimeout(() => setKey(randomKey(6)), 100);
     return () => clearTimeout(timer);
   });
 
@@ -21,20 +25,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <p>
-          Page has been open for <code>{count}</code> seconds.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          Key: <code>{key}</code>
         </p>
       </header>
     </div>
