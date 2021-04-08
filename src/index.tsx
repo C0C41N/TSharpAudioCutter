@@ -3,8 +3,9 @@ import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { Provider, services } from '@services';
+
 import App from './App';
-import { Provider, services } from './services';
 
 ReactDOM.render(
 	<React.StrictMode>
