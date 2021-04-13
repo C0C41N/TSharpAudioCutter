@@ -1,0 +1,12 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+	background-color: transparent;
+	height: 600px;
+	width: 1000px;
+}
+
+.draggable {
+	-webkit-app-region: drag;
+}

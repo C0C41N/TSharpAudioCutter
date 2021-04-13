@@ -27,14 +27,15 @@ app.on('activate', () => {
 const createWindow = (): BrowserWindow => {
 	win = new BrowserWindow({
 		center: true,
-		width: 1000,
-		height: 600,
+		width: 1160,
+		height: 764,
 		frame: false,
+		transparent: true,
+		backgroundColor: '#00000000',
 		webPreferences: {
 			nodeIntegration: true,
 			allowRunningInsecureContent: serve ? true : false,
 			contextIsolation: false,
-			enableRemoteModule: true,
 		},
 	});
 
@@ -50,7 +51,7 @@ const createWindow = (): BrowserWindow => {
 
 	win.loadURL(url);
 
-	if (serve) win.webContents.openDevTools();
+	// if (serve) win.webContents.openDevTools();
 
 	win.on('closed', () => {
 		win = null;

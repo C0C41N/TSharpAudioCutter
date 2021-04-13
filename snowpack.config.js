@@ -6,8 +6,9 @@ module.exports = {
 		'src/renderer': { url: '/' },
 	},
 	plugins: [
-		'@snowpack/plugin-react-refresh',
+		'@snowpack/plugin-sass',
 		'@snowpack/plugin-typescript',
+		'@snowpack/plugin-react-refresh',
 		'electron-snowpack-plugin',
 	],
 	optimize: {
@@ -17,6 +18,7 @@ module.exports = {
 		treeshake: true,
 	},
 	alias: {
+		'@comp': './src/renderer/components',
 		'@services': './src/renderer/services',
 		'@': './renderer/src',
 	},
