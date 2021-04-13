@@ -9,7 +9,7 @@
 		"start": "yarn prep && snowpack dev",
 		"build": "yarn prep && snowpack build",
 		"make": "yarn build && electron-builder build",
-		"prep": "tsc -p src/main/tsconfig.json"
+		"prep": "rimraf dist && tsc -p src/main/tsconfig.json"
 	},
 	"dependencies": {
 		"ffmpeg-static": "^4.3.0",
@@ -31,6 +31,7 @@
 		"electron": "^12.0.2",
 		"electron-builder": "^22.10.5",
 		"electron-snowpack-plugin": "^1.12.0",
+		"rimraf": "^3.0.2",
 		"snowpack": "^3.1.2",
 		"typescript": "^4.0.0"
 	},
