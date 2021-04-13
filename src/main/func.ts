@@ -6,4 +6,5 @@ export const Init = () => {
 
 export const conWin = (e: BrowserWindow) => {
 	e.removeMenu();
+	ipcMain.on('exit', () => e.close());
 };

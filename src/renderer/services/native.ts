@@ -10,12 +10,18 @@ class Native {
 	public valid = () => !!(window?.process as any)?.type;
 
 	constructor() {
-		if (this.valid()) {
-			this.fs = window.require('fs');
-			this.electron = window.require('electron');
-			this.path = window.require('path');
-		}
+		if (!this.valid()) throw 'SVC:Native:VALID';
+
+		this.fs = window.require('fs');
+		this.electron = window.require('electron');
+		this.path = window.require('path');
 	}
+
+	public exit = () => {
+		const { ipcRenderer } = this.electron;
+		alert('close');
+		// ipcRenderer.send('exit');
+	};
 }
 
 export const svcNative = new Native();

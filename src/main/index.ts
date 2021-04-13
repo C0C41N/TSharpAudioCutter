@@ -28,10 +28,12 @@ const createWindow = (): BrowserWindow => {
 	win = new BrowserWindow({
 		center: true,
 		width: 1160,
-		height: 764,
+		height: 760 + 4,
 		frame: false,
 		transparent: true,
 		backgroundColor: '#00000000',
+		maximizable: false,
+		resizable: false,
 		webPreferences: {
 			nodeIntegration: true,
 			allowRunningInsecureContent: serve ? true : false,
@@ -51,7 +53,7 @@ const createWindow = (): BrowserWindow => {
 
 	win.loadURL(url);
 
-	// if (serve) win.webContents.openDevTools();
+	if (serve) win.webContents.openDevTools();
 
 	win.on('closed', () => {
 		win = null;
