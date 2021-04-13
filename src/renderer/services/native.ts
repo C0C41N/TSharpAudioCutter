@@ -19,8 +19,7 @@ class Native {
 
 	public exit = () => {
 		const { ipcRenderer } = this.electron;
-		alert('close');
-		// ipcRenderer.send('exit');
+		ipcRenderer.send('exit');
 	};
 }
 

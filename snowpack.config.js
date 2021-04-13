@@ -18,7 +18,6 @@ module.exports = {
 		treeshake: true,
 	},
 	alias: {
-		'@svgs': './src/renderer/svgs',
 		'@comp': './src/renderer/components',
 		'@services': './src/renderer/services',
 		'@': './renderer/src',

@@ -7,8 +7,6 @@
 		"jsx": "preserve",
 		"baseUrl": "./",
 		"paths": {
-			"@svgs": ["src/renderer/svgs"],
-			"@svgs/*": ["src/renderer/svgs/*"],
 			"@comp/*": ["src/renderer/components/*"],
 			"@services": ["src/renderer/services"],
 			"@services/*": ["src/renderer/services/*"],
