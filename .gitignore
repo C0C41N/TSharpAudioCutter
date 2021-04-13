@@ -1,5 +1,5 @@
 .snowpack
 .log
-build
+dist
 release
 node_modules

@@ -2,13 +2,14 @@
 	"name": "tsharp-audio-cutter",
 	"version": "1.0.0",
 	"description": "Audio cutter app for secondlife uploads.",
-	"main": "main.js",
+	"main": "dist",
 	"author": "C0C41N",
 	"license": "MIT",
 	"scripts": {
-		"start": "snowpack dev",
-		"build": "snowpack build",
-		"make": "yarn build && electron-builder build"
+		"start": "yarn prep && snowpack dev",
+		"build": "yarn prep && snowpack build",
+		"make": "yarn build && electron-builder build",
+		"prep": "tsc -p src/main/tsconfig.json"
 	},
 	"dependencies": {
 		"ffmpeg-static": "^4.3.0",
@@ -39,8 +40,7 @@
 			"output": "release/"
 		},
 		"files": [
-			"build/**/*",
-			"main.js"
+			"dist/**/*"
 		],
 		"win": {
 			"icon": "build/assets/icons",

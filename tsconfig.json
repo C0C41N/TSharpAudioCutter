@@ -1,5 +1,5 @@
 {
-	"include": ["src", "types"],
+	"include": ["src/renderer", "types"],
 	"compilerOptions": {
 		"module": "esnext",
 		"target": "esnext",
@@ -7,9 +7,9 @@
 		"jsx": "preserve",
 		"baseUrl": "./",
 		"paths": {
-			"@services": ["src/services"],
-			"@services/*": ["src/services/*"],
-			"@/*": ["src/*"]
+			"@services": ["src/renderer/services"],
+			"@services/*": ["src/renderer/services/*"],
+			"@/*": ["src/renderer/*"]
 		},
 		"noEmit": true,
 		"strict": true,

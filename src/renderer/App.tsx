@@ -2,17 +2,20 @@ import './App.css';
 
 import React, { useEffect, useState } from 'react';
 
-import { useUtil } from '@services';
+import { useLog, useSplit, useUtil } from '@services';
 
 const logo = './assets/logo.svg';
 
 function App() {
 	const { randomKey } = useUtil();
+	const { Long } = useSplit();
+	const { cls, log } = useLog();
 
 	const [key, setKey] = useState(randomKey(6));
 
 	useEffect(() => {
-		//
+		cls();
+		Long('C:\\__Sandbox\\audio.mp3').subscribe(log);
 	}, []);
 
 	useEffect(() => {
