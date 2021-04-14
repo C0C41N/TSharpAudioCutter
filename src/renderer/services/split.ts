@@ -42,39 +42,39 @@ class Split {
 
 	public Short = (file: string): Observable<IReturn> => {
 		const key = randomKey(6);
-
-		setTimeout(async () => {
-			ffmpeg()
-				.on('progress', ({ percent }) => fire(key, { percent, end: false }))
-				.on('end', () => fire(key, { percent: 100, end: true }))
-				.addInput(file)
-				.addOutput(await this.filename(file, 10))
-				.addOutputOption('-f', 'segment', '-segment_time', '9.96') // split
-				.addOutputOption('-ar', '44100') // resample
-				.addOutputOption('-ac', '1') // mono
-				.run();
-		}, 0);
-
+		this.FFShort(key, file);
 		return observe(key);
 	};
 
 	public Long = (file: string): Observable<IReturn> => {
 		const key = randomKey(6);
-
-		setTimeout(async () => {
-			ffmpeg()
-				.on('progress', ({ percent }) => fire(key, { percent, end: false }))
-				.on('end', () => fire(key, { percent: 100, end: true }))
-				.addInput(file)
-				.addOutput(await this.filename(file, 58))
-				.addOutputOption('-f', 'segment', '-segment_time', '7.25') // split
-				.addOutputOption('-af', 'asetrate=352800') // resample
-				.addOutputOption('-ar', '176400') // resample
-				.addOutputOption('-q:a', '10') // quality
-				.run();
-		}, 0);
-
+		this.FFLong(key, file);
 		return observe(key);
+	};
+
+	private FFShort = async (key: string, file: string) => {
+		ffmpeg()
+			.on('progress', ({ percent }) => fire(key, { percent, end: false }))
+			.on('end', () => fire(key, { percent: 100, end: true }))
+			.addInput(file)
+			.addOutput(await this.filename(file, 10))
+			.addOutputOption('-f', 'segment', '-segment_time', '9.96') // split
+			.addOutputOption('-ar', '44100') // resample
+			.addOutputOption('-ac', '1') // mono
+			.run();
+	};
+
+	private FFLong = async (key: string, file: string) => {
+		ffmpeg()
+			.on('progress', ({ percent }) => fire(key, { percent, end: false }))
+			.on('end', () => fire(key, { percent: 100, end: true }))
+			.addInput(file)
+			.addOutput(await this.filename(file, 58))
+			.addOutputOption('-f', 'segment', '-segment_time', '7.25') // split
+			.addOutputOption('-af', 'asetrate=352800') // resample
+			.addOutputOption('-ar', '176400') // resample
+			.addOutputOption('-q:a', '10') // quality
+			.run();
 	};
 }
 
