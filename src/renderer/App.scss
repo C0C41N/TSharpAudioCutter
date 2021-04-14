@@ -2,3 +2,14 @@
 	filter: url(#filter1_dddd);
 	cursor: pointer;
 }
+
+#btnFile:hover #txtRect,
+#btnYT:hover #txtRect_2 {
+	// filter: url(#filter3_dddd);
+	cursor: pointer;
+
+	box-shadow: -5px 5px 10px rgba(217, 217, 217, 0.8),
+		5px -5px 10px rgba(217, 217, 217, 0.8),
+		-5px -5px 10px rgba(255, 255, 255, 0.9),
+		5px 5px 13px rgba(217, 217, 217, 0.9);
+}
