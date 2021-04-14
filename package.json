@@ -6,10 +6,9 @@
 	"author": "C0C41N",
 	"license": "MIT",
 	"scripts": {
-		"start": "yarn prep && snowpack dev",
-		"build": "yarn prep && snowpack build",
-		"make": "yarn build && electron-builder build",
-		"prep": "rimraf dist && tsc -p src/main/tsconfig.json"
+		"start": "snowpack dev",
+		"build": "snowpack build",
+		"make": "yarn build && electron-builder build"
 	},
 	"dependencies": {
 		"ffmpeg-static": "^4.3.0",
@@ -31,8 +30,7 @@
 		"@types/snowpack-env": "^2.3.2",
 		"electron": "^12.0.2",
 		"electron-builder": "^22.10.5",
-		"electron-snowpack-plugin": "^1.12.0",
-		"rimraf": "^3.0.2",
+		"electron-snowpack-plugin": "^1.13.0",
 		"snowpack": "^3.1.2",
 		"typescript": "^4.0.0"
 	},

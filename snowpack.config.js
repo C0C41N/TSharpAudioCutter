@@ -9,7 +9,7 @@ module.exports = {
 		'@snowpack/plugin-sass',
 		'@snowpack/plugin-typescript',
 		'@snowpack/plugin-react-refresh',
-		'electron-snowpack-plugin',
+		['electron-snowpack-plugin', { entryPath: './src/main', outPath: 'dist' }],
 	],
 	optimize: {
 		bundle: true,

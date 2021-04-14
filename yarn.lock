@@ -1096,14 +1096,16 @@ electron-publish@22.10.5:
     lazy-val "^1.0.4"
     mime "^2.5.0"
 
-electron-snowpack-plugin@^1.12.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/electron-snowpack-plugin/-/electron-snowpack-plugin-1.12.0.tgz#3c7d962ec3f515c8f90e7b92aaf1d4256d2e701f"
-  integrity sha512-LzDBb3/tvdeje8LC4YBakDex2kQPxKClNFpDpWeyZN/lwC2u6C2KIbzPVjsHN4ob9QFm2dZdf7DLN5bxTtl49g==
+electron-snowpack-plugin@^1.13.0:
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/electron-snowpack-plugin/-/electron-snowpack-plugin-1.13.0.tgz#92cbf5b2d62fd839df691416338ddda53219ba67"
+  integrity sha512-iKSLuLksgF7XnhPVuE6x62ofSzv/sIqa2IbWX/cBn1RbW8lR7uvnSMfRnkbdyf+j+2UlWe89sf1abFS+zSvDiQ==
   dependencies:
     execa "^5.0.0"
-    fs "^0.0.1-security"
+    glob "^7.1.6"
+    imurmurhash "^0.1.4"
     npm-run-path "^4.0.1"
+    rimraf "^3.0.2"
 
 electron-to-chromium@^1.3.649:
   version "1.3.703"
@@ -1306,11 +1308,6 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
-
-fs@^0.0.1-security:
-  version "0.0.1-security"
-  resolved "https://registry.yarnpkg.com/fs/-/fs-0.0.1-security.tgz#8a7bd37186b6dddf3813f23858b57ecaaf5e41d4"
-  integrity sha1-invTcYa23d84E/I4WLV+yq9eQdQ=
 
 fsevents@^2.2.0, fsevents@~2.3.1:
   version "2.3.2"
