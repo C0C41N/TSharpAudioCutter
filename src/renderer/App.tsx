@@ -2,12 +2,12 @@ import './App.scss';
 
 import React from 'react';
 
-import Close from '@comp/close';
-import Illustration from '@comp/illustration';
-import Logo from '@comp/logo';
+import Close from '@comp/Close';
+import Illustration from '@comp/Illustration';
+import Logo from '@comp/Logo';
 import MainBtns from '@comp/MainBtns';
 import MainHeading from '@comp/MainHeading';
-import Watermark from '@comp/watermark';
+import Watermark from '@comp/Watermark';
 
 function App() {
 	return (
