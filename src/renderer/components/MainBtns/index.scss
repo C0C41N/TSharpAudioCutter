@@ -1,0 +1,27 @@
+@import '../../lib.scss';
+
+.mainBtn {
+	@include flexCenter;
+
+	cursor: pointer;
+
+	width: 320px;
+	height: 46px;
+
+	margin-bottom: 25px;
+
+	border-radius: 10px;
+
+	background: linear-gradient(90deg, #b565a5 0%, #6c63fe 100%);
+
+	&:hover {
+		box-shadow: -5px 5px 10px rgba(217, 217, 217, 0.8),
+			5px -5px 10px rgba(217, 217, 217, 0.8),
+			-5px -5px 10px rgba(255, 255, 255, 0.9),
+			5px 5px 13px rgba(217, 217, 217, 0.9);
+	}
+}
+
+.mainBtnsTxt {
+	opacity: 0.99;
+}

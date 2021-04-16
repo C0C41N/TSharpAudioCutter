@@ -5,6 +5,7 @@ import React from 'react';
 import Close from '@comp/close';
 import Illustration from '@comp/illustration';
 import Logo from '@comp/logo';
+import MainBtns from '@comp/MainBtns';
 import MainHeading from '@comp/MainHeading';
 import Watermark from '@comp/watermark';
 
@@ -17,6 +18,7 @@ function App() {
 				<Watermark className='watermark'></Watermark>
 				<Illustration className='illustration'></Illustration>
 				<MainHeading className='mainHeading'></MainHeading>
+				<MainBtns className='mainBtns'></MainBtns>
 			</div>
 		</div>
 	);
