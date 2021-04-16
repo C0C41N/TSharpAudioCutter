@@ -4,11 +4,11 @@ import React from 'react';
 
 import { useNative } from '@services';
 
-function Close() {
+function Close(props: any) {
 	const { exit } = useNative();
 
 	return (
-		<div id='close' onClick={exit}>
+		<div id='close' {...props} onClick={exit}>
 			<svg
 				width='14'
 				height='14'

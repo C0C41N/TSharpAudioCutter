@@ -1,0 +1,10 @@
+@import '../../lib.scss';
+
+#watermark {
+	@include flexCenter;
+
+	width: 536px;
+	height: 506px;
+
+	opacity: 0.05;
+}

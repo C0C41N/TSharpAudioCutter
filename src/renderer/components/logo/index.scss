@@ -1,13 +1,8 @@
 @import '../../lib.scss';
 
 #logo {
-	position: absolute;
+	@include flexCenter;
+	background: #ffffff;
 	width: 77px;
 	height: 72px;
-	left: 37px;
-	top: 26px;
-
-	background: #ffffff;
-
-	@include flexCenter;
 }

@@ -2,9 +2,9 @@ import './index.scss';
 
 import React from 'react';
 
-function Logo() {
+function Logo(props: any) {
 	return (
-		<div id='logo'>
+		<div id='logo' {...props}>
 			<svg
 				width='77'
 				height='72'
