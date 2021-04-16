@@ -1,0 +1,21 @@
+@import '../../lib.scss';
+
+#close {
+	position: absolute;
+	width: 35px;
+	height: 35px;
+	top: 27px;
+	right: 31px;
+
+	border-radius: 100px;
+	background: white;
+
+	@include flexCenter;
+
+	&:hover {
+		box-shadow: -5px 5px 10px rgba(217, 217, 217, 0.2),
+			5px -5px 10px rgba(217, 217, 217, 0.2),
+			-5px -5px 10px rgba(255, 255, 255, 0.9),
+			5px 5px 13px rgba(217, 217, 217, 0.9);
+	}
+}

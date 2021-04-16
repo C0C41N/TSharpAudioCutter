@@ -20,7 +20,7 @@ module.exports = {
 	alias: {
 		'@comp': './src/renderer/components',
 		'@services': './src/renderer/services',
-		'@': './renderer/src',
+		'@': './src/renderer',
 	},
 	buildOptions: {
 		baseUrl: './',
