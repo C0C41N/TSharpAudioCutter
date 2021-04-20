@@ -8,9 +8,11 @@ import DragBar from '@comp/DragBar';
 import { Provider, services } from '@services';
 
 import App from './App';
+import { GlobalStyle } from './lib';
 
 ReactDOM.render(
 	<React.StrictMode>
+		<GlobalStyle />
 		<Provider value={services}>
 			<DragBar />
 			<BrowserRouter>
