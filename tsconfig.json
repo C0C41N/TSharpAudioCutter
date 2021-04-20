@@ -8,6 +8,7 @@
 		"baseUrl": "./",
 		"paths": {
 			"@comp/*": ["src/renderer/components/*"],
+			"@pages/*": ["src/renderer/pages/*"],
 			"@services": ["src/renderer/services"],
 			"@services/*": ["src/renderer/services/*"],
 			"@/*": ["src/renderer/*"]

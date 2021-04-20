@@ -2,6 +2,7 @@ import './index.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import DragBar from '@comp/DragBar';
 import { Provider, services } from '@services';
@@ -12,7 +13,9 @@ ReactDOM.render(
 	<React.StrictMode>
 		<Provider value={services}>
 			<DragBar />
-			<App />
+			<BrowserRouter>
+				<App />
+			</BrowserRouter>
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById('root')

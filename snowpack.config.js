@@ -18,6 +18,7 @@ module.exports = {
 		treeshake: true,
 	},
 	alias: {
+		'@pages': './src/renderer/pages',
 		'@comp': './src/renderer/components',
 		'@services': './src/renderer/services',
 		'@': './src/renderer',
