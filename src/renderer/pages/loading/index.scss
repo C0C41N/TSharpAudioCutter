@@ -1,0 +1,40 @@
+.loader {
+	--color: #6c63ff;
+	--size: 100px;
+	--persp: calc(var(--size) + 50px);
+
+	width: var(--size);
+	height: var(--size);
+}
+
+#loader-7 {
+	-webkit-perspective: var(--persp);
+	-moz-perspective: var(--persp);
+	-ms-perspective: var(--persp);
+	perspective: var(--persp);
+}
+
+#loader-7:before {
+	content: '';
+	position: absolute;
+	left: calc(var(--size) / 4);
+	top: calc(var(--size) / 4);
+	width: calc(var(--size) / 2);
+	height: calc(var(--size) / 2);
+	background-color: var(--color);
+	animation: flip 1s infinite;
+}
+
+@keyframes flip {
+	0% {
+		transform: rotate(0);
+	}
+
+	50% {
+		transform: rotateY(180deg);
+	}
+
+	100% {
+		transform: rotateY(180deg) rotateX(180deg);
+	}
+}

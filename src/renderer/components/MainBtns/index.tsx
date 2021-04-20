@@ -2,7 +2,7 @@ import './index.scss';
 
 import React from 'react';
 
-function MainBtns(props: any) {
+function mainBtns(props: any) {
 	return (
 		<div id='mainBtns' {...props}>
 			<div className='mainBtn'>
@@ -41,4 +41,4 @@ function MainBtns(props: any) {
 	);
 }
 
-export default MainBtns;
+export default mainBtns;

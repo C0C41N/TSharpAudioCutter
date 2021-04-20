@@ -1,6 +1,6 @@
 import React from 'react';
 
-function MainHeading(props: any) {
+function mainHeading(props: any) {
 	return (
 		<svg
 			{...props}
@@ -135,4 +135,4 @@ function MainHeading(props: any) {
 	);
 }
 
-export default MainHeading;
+export default mainHeading;

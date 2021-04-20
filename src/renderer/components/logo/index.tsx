@@ -2,7 +2,7 @@ import './index.scss';
 
 import React from 'react';
 
-function Logo(props: any) {
+function logo(props: any) {
 	return (
 		<div id='logo' {...props}>
 			<svg
@@ -81,4 +81,4 @@ function Logo(props: any) {
 	);
 }
 
-export default Logo;
+export default logo;

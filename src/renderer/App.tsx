@@ -1,16 +1,28 @@
-import './App.scss';
-
 import React from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import styled from 'styled-components';
 
-import Close from '@comp/Close';
+import { flexCenter } from '@/lib';
+import Loading from '@pages/loading';
+import Main from '@pages/main';
+
+const Container = styled.div`
+	${flexCenter}
+	width: 1160px;
+	height: 760px;
+`;
 
 function App() {
 	return (
-		<div className='container'>
-			<div id='main'>
-				<Close className='close'></Close>
-			</div>
-		</div>
+		<Container>
+			<Switch>
+				<Route path='/' exact>
+					<Redirect to='/main' />
+				</Route>
+				<Route path='/main' component={Main} />
+				<Route path='/loading' component={Loading} />
+			</Switch>
+		</Container>
 	);
 }
 

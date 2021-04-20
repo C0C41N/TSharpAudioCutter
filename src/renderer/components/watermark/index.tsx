@@ -2,7 +2,7 @@ import './index.scss';
 
 import React from 'react';
 
-function Watermark(props: any) {
+function watermark(props: any) {
 	return (
 		<div id='watermark' {...props}>
 			<svg
@@ -73,4 +73,4 @@ function Watermark(props: any) {
 	);
 }
 
-export default Watermark;
+export default watermark;

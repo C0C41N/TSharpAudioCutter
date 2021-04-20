@@ -4,7 +4,7 @@ import React from 'react';
 
 import { useNative } from '@services';
 
-function Close(props: any) {
+function close(props: any) {
 	const { exit } = useNative();
 
 	return (
@@ -25,4 +25,4 @@ function Close(props: any) {
 	);
 }
 
-export default Close;
+export default close;
