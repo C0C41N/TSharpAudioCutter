@@ -11,6 +11,7 @@
 		"make": "yarn build && electron-builder build"
 	},
 	"dependencies": {
+		"@fontsource/montserrat": "^4.2.2",
 		"ffmpeg-static": "^4.3.0",
 		"ffprobe-static": "^3.0.0",
 		"fluent-ffmpeg": "^2.1.2",
@@ -42,7 +43,7 @@
 		"styled-components": "^5"
 	},
 	"build": {
-		"productName": "electron-snowpack-react-typescript",
+		"productName": "Tsharp Audio Cutter",
 		"directories": {
 			"output": "release/"
 		},
@@ -50,7 +51,7 @@
 			"dist/**/*"
 		],
 		"win": {
-			"icon": "build/assets/icons",
+			"icon": "dist/build/assets/icons",
 			"target": [
 				{
 					"target": "nsis",
@@ -61,13 +62,13 @@
 			]
 		},
 		"mac": {
-			"icon": "build/assets/icons",
+			"icon": "dist/build/assets/icons",
 			"target": [
 				"dmg"
 			]
 		},
 		"linux": {
-			"icon": "build/assets/icons",
+			"icon": "dist/build/assets/icons",
 			"target": [
 				"AppImage"
 			]

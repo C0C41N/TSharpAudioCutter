@@ -19,14 +19,14 @@ function App() {
 			<DragBar />
 
 			<Switch>
-				<Route path='/' exact>
-					<Redirect to='/main' />
-				</Route>
-
 				<Route path='/main' component={Main} />
 
 				<Route path='/loading'>
 					<Loading size='500px'></Loading>
+				</Route>
+
+				<Route path='/' exact>
+					<Redirect to='/main' />
 				</Route>
 			</Switch>
 		</Container>
