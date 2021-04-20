@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { draggable } from '@/lib';
+import { draggable } from '@/styles';
 
 const DragBar = styled.div`
 	background-color: transparent;

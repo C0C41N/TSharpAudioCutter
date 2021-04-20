@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { flexCenter } from '@/lib';
+import { flexCenter } from '@/styles';
 import Loading from '@comp/loading';
 import Main from '@pages/Main';
 

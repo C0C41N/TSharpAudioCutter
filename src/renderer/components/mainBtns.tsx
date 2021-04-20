@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { flexCenter } from '@/lib';
+import { flexCenter } from '@/styles';
 
 const MainBtn = styled.div`
 	${flexCenter}

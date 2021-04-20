@@ -6,7 +6,7 @@ import DragBar from '@comp/DragBar';
 import { Provider, services } from '@services';
 
 import App from './App';
-import { GlobalStyle } from './lib';
+import { GlobalStyle } from './styles';
 
 ReactDOM.render(
 	<React.StrictMode>
