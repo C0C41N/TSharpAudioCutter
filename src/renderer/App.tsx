@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { flexCenter } from '@/styles';
+import DragBar from '@comp/DragBar';
 import Loading from '@comp/loading';
 import Main from '@pages/Main';
 
@@ -15,6 +16,8 @@ const Container = styled.div`
 function App() {
 	return (
 		<Container>
+			<DragBar />
+
 			<Switch>
 				<Route path='/' exact>
 					<Redirect to='/main' />

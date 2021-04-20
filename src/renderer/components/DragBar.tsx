@@ -3,16 +3,21 @@ import styled from 'styled-components';
 
 import { draggable } from '@/styles';
 
-const DragBar = styled.div`
-	background-color: transparent;
-	cursor: move;
-	height: 50px;
-	left: 80px;
-	position: absolute;
-	right: 164px;
-	top: 58px;
+function dragBar() {
+	const DragBar = styled.div`
+		background-color: transparent;
+		cursor: move;
+		height: 50px;
+		left: 80px;
+		position: absolute;
+		right: 164px;
+		top: 80px;
+		z-index: 100;
 
-	${draggable}
-`;
+		${draggable}
+	`;
 
-export default () => <DragBar></DragBar>;
+	return <DragBar />;
+}
+
+export default dragBar;

@@ -18,5 +18,5 @@ export const flexCenter = css`
 `;
 
 export const draggable = css`
-	-webkit - app - region: drag;
+	-webkit-app-region: drag;
 `;
