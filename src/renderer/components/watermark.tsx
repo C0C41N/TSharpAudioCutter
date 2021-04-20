@@ -1,10 +1,20 @@
-import './index.scss';
-
 import React from 'react';
+import styled from 'styled-components';
+
+import { flexCenter } from '@/lib';
+
+const Watermark = styled.div`
+	${flexCenter}
+
+	width: 536px;
+	height: 506px;
+
+	opacity: 0.05;
+`;
 
 function watermark(props: any) {
 	return (
-		<div id='watermark' {...props}>
+		<Watermark {...props}>
 			<svg
 				width='536'
 				height='506'
@@ -69,7 +79,7 @@ function watermark(props: any) {
 					fill='#6C63FE'
 				/>
 			</svg>
-		</div>
+		</Watermark>
 	);
 }
 

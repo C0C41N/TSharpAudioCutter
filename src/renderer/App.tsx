@@ -3,8 +3,8 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { flexCenter } from '@/lib';
-import Loading from '@pages/loading';
-import Main from '@pages/main';
+import Loading from '@comp/loading';
+import Main from '@pages/Main';
 
 const Container = styled.div`
 	${flexCenter}
@@ -19,8 +19,12 @@ function App() {
 				<Route path='/' exact>
 					<Redirect to='/main' />
 				</Route>
+
 				<Route path='/main' component={Main} />
-				<Route path='/loading' component={Loading} />
+
+				<Route path='/loading'>
+					<Loading size='500px'></Loading>
+				</Route>
 			</Switch>
 		</Container>
 	);

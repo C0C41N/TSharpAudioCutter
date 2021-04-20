@@ -1,11 +1,38 @@
-import './index.scss';
-
 import React from 'react';
+import styled from 'styled-components';
+
+import { flexCenter } from '@/lib';
+
+const MainBtn = styled.div`
+	${flexCenter}
+
+	cursor: pointer;
+
+	width: 320px;
+	height: 46px;
+
+	margin-bottom: 25px;
+
+	border-radius: 10px;
+
+	background: linear-gradient(90deg, #b565a5 0%, #6c63fe 100%);
+
+	&:hover {
+		box-shadow: -5px 5px 10px rgba(217, 217, 217, 0.8),
+			5px -5px 10px rgba(217, 217, 217, 0.8),
+			-5px -5px 10px rgba(255, 255, 255, 0.9),
+			5px 5px 13px rgba(217, 217, 217, 0.9);
+	}
+
+	& > svg {
+		opacity: 0.99;
+	}
+`;
 
 function mainBtns(props: any) {
 	return (
-		<div id='mainBtns' {...props}>
-			<div className='mainBtn'>
+		<div {...props}>
+			<MainBtn>
 				<svg
 					className='mainBtnsTxt'
 					width='171'
@@ -20,10 +47,10 @@ function mainBtns(props: any) {
 						fill-opacity='0.99'
 					/>
 				</svg>
-			</div>
-			<div className='mainBtn'>
+			</MainBtn>
+
+			<MainBtn>
 				<svg
-					className='mainBtnsTxt'
 					width='91'
 					height='19'
 					viewBox='0 0 91 19'
@@ -36,7 +63,7 @@ function mainBtns(props: any) {
 						fill-opacity='0.99'
 					/>
 				</svg>
-			</div>
+			</MainBtn>
 		</div>
 	);
 }

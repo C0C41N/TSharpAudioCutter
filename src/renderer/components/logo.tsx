@@ -1,10 +1,18 @@
-import './index.scss';
-
 import React from 'react';
+import styled from 'styled-components';
+
+import { flexCenter } from '@/lib';
+
+const Logo = styled.div`
+	${flexCenter}
+	background: #ffffff;
+	width: 77px;
+	height: 72px;
+`;
 
 function logo(props: any) {
 	return (
-		<div id='logo' {...props}>
+		<Logo {...props}>
 			<svg
 				width='77'
 				height='72'
@@ -77,7 +85,7 @@ function logo(props: any) {
 					fill='#2F2E41'
 				/>
 			</svg>
-		</div>
+		</Logo>
 	);
 }
 

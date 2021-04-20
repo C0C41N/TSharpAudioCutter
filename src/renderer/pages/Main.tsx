@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import close from '@comp/Close';
-import illustration from '@comp/Illustration';
-import logo from '@comp/Logo';
-import mainBtns from '@comp/MainBtns';
-import mainHeading from '@comp/MainHeading';
-import watermark from '@comp/Watermark';
+import close from '@comp/close';
+import illustration from '@comp/illustration';
+import logo from '@comp/logo';
+import mainBtns from '@comp/mainBtns';
+import mainHeading from '@comp/mainHeading';
+import watermark from '@comp/watermark';
 
 const MainDiv = styled.div`
 	position: relative;
