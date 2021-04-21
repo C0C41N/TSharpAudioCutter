@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 import { Provider, services } from '@services';
 
@@ -11,9 +11,9 @@ ReactDOM.render(
 	<React.StrictMode>
 		<GlobalStyle />
 		<Provider value={services}>
-			<BrowserRouter>
+			<HashRouter>
 				<App />
-			</BrowserRouter>
+			</HashRouter>
 		</Provider>
 	</React.StrictMode>,
 	document.getElementById('root')

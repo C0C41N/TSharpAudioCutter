@@ -5,6 +5,7 @@ module.exports = {
 		public: { url: '/', static: true },
 		'src/renderer': { url: '/' },
 	},
+	routes: [{ match: 'routes', src: '.*', dest: '/index.html' }],
 	plugins: [
 		'@snowpack/plugin-sass',
 		'@snowpack/plugin-typescript',
@@ -31,6 +32,5 @@ module.exports = {
 	devOptions: {
 		open: 'none',
 	},
-	routes: [],
 	packageOptions: {},
 };

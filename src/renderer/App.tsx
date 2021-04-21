@@ -19,7 +19,9 @@ function App() {
 			<DragBar />
 
 			<Switch>
-				<Route path='/main' component={Main} />
+				<Route path='/main'>
+					<Main />
+				</Route>
 
 				<Route path='/loading'>
 					<Loading size='500px'></Loading>
