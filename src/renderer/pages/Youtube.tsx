@@ -21,7 +21,7 @@ const Input = styled(ytTextBox)`
 const Btn = styled(ytBtn)`
 	position: absolute;
 	left: 720px;
-	top: 218px;
+	top: 219px;
 `;
 
 function Youtube() {
@@ -30,7 +30,7 @@ function Youtube() {
 			<Back />
 			<Heading />
 			<Input />
-			<Btn />
+			<Btn>Done</Btn>
 		</Fragment>
 	);
 }
