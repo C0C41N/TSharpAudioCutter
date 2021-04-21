@@ -3,7 +3,7 @@ import '@fonts/montserrat/700.css';
 import React from 'react';
 import styled from 'styled-components';
 
-const MainHeading = styled.div`
+export const MainHeading = styled.div`
 	font-family: Montserrat;
 	font-style: normal;
 	font-weight: bold;

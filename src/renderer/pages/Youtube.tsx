@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
 import Back from '@comp/back';
+import ytHeading from '@comp/ytHeading';
+import ytTextBox from '@comp/ytTextBox';
+
+const Heading = styled(ytHeading)`
+	position: absolute;
+	left: 324px;
+	top: 68px;
+`;
+
+const Input = styled(ytTextBox)`
+	position: absolute;
+	left: 190px;
+	top: 218px;
+`;
 
 function Youtube() {
-	return <Back />;
+	return (
+		<Fragment>
+			<Back />
+			<Heading />
+			<Input />
+		</Fragment>
+	);
 }
 
 export default Youtube;
