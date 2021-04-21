@@ -3,5 +3,6 @@
 	font-style: normal;
 	font-display: swap;
 	font-weight: 400;
-	src: url('./files/montserrat-all-400-normal.woff') format('woff');
+	src: url('./assets/fonts/montserrat/files/montserrat-all-400-normal.woff')
+		format('woff');
 }
