@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { flexCenter } from '@/styles';
 import { useNative } from '@services';
 
-const Close = styled.div`
+export const Btn = styled.div`
 	cursor: pointer;
 
 	width: 35px;
@@ -27,7 +27,7 @@ function close(props: any) {
 	const { exit } = useNative();
 
 	return (
-		<Close {...props} onClick={exit}>
+		<Btn {...props} onClick={exit}>
 			<svg
 				width='14'
 				height='14'
@@ -40,7 +40,7 @@ function close(props: any) {
 					fill='#808080'
 				/>
 			</svg>
-		</Close>
+		</Btn>
 	);
 }
 

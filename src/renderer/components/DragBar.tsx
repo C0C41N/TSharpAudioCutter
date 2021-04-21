@@ -8,9 +8,9 @@ function dragBar() {
 		background-color: transparent;
 		cursor: move;
 		height: 50px;
-		left: 80px;
+		left: 160px;
 		position: absolute;
-		right: 164px;
+		right: 160px;
 		top: 80px;
 		z-index: 100;
 

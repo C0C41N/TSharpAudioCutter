@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import close from '@comp/close';
@@ -7,6 +8,8 @@ import logo from '@comp/logo';
 import mainBtns from '@comp/mainBtns';
 import mainHeading from '@comp/mainHeading';
 import watermark from '@comp/watermark';
+
+import Youtube from './Youtube';
 
 const MainDiv = styled.div`
 	position: relative;
@@ -62,14 +65,25 @@ const MainBtns = styled(mainBtns)`
 `;
 
 function Main() {
+	const { path } = useRouteMatch();
+
 	return (
 		<MainDiv>
 			<Close />
-			<Logo />
-			<Watermark />
-			<Illustration />
-			<MainHeading />
-			<MainBtns />
+
+			<Switch>
+				<Route exact path={path}>
+					<Logo />
+					<Watermark />
+					<Illustration />
+					<MainHeading />
+					<MainBtns />
+				</Route>
+
+				<Route path={`${path}/youtube`}>
+					<Youtube />
+				</Route>
+			</Switch>
 		</MainDiv>
 	);
 }

@@ -1,6 +1,7 @@
 import '@fonts/nunito-sans/400.css';
 
 import React from 'react';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { flexCenter } from '@/styles';
@@ -35,12 +36,24 @@ const Text = styled.div`
 `;
 
 function mainBtns(props: any) {
+	const history = useHistory();
+	const { url } = useRouteMatch();
+
 	return (
 		<div {...props}>
-			<MainBtn>
+			<MainBtn
+				onClick={() => {
+					history.push(`${url}/youtube`);
+				}}
+			>
 				<Text>I’ve youtube link</Text>
 			</MainBtn>
-			<MainBtn style={{ marginTop: 25 }}>
+			<MainBtn
+				style={{ marginTop: 25 }}
+				onClick={() => {
+					history.push(`${url}/files`);
+				}}
+			>
 				<Text>I’ve audio files</Text>
 			</MainBtn>
 		</div>
