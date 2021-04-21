@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
 import Back from '@comp/back';
+import ytBtn from '@comp/ytBtn';
 import ytHeading from '@comp/ytHeading';
 import ytTextBox from '@comp/ytTextBox';
 
@@ -17,12 +18,19 @@ const Input = styled(ytTextBox)`
 	top: 218px;
 `;
 
+const Btn = styled(ytBtn)`
+	position: absolute;
+	left: 720px;
+	top: 218px;
+`;
+
 function Youtube() {
 	return (
 		<Fragment>
 			<Back />
 			<Heading />
 			<Input />
+			<Btn />
 		</Fragment>
 	);
 }

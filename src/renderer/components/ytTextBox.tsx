@@ -1,6 +1,3 @@
-import '@fonts/montserrat/400.css';
-import '@fonts/montserrat/600.css';
-
 import React from 'react';
 import styled from 'styled-components';
 

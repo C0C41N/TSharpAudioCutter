@@ -1,5 +1,3 @@
-import '@fonts/nunito-sans/400.css';
-
 import React from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';

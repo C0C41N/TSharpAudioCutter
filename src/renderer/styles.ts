@@ -1,3 +1,10 @@
+import '@fonts/nunito-sans/400.css';
+import '@fonts/nunito-sans/600.css';
+import '@fonts/nunito-sans/700.css';
+import '@fonts/montserrat/400.css';
+import '@fonts/montserrat/600.css';
+import '@fonts/montserrat/700.css';
+
 import { createGlobalStyle, css } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`

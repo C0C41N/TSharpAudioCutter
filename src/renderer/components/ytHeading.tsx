@@ -1,5 +1,3 @@
-import '@fonts/montserrat/700.css';
-
 import React from 'react';
 
 import { MainHeading } from './mainHeading';
