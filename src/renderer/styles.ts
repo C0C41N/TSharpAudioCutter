@@ -29,6 +29,16 @@ export const draggable = css`
 	-webkit-app-region: drag;
 `;
 
+export const mont_400_14 = css`
+	${flexCenter}
+	font-family: Montserrat;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 17px;
+	color: #cccccc;
+`;
+
 export const mont_600_24 = css`
 	${flexCenter}
 	font-family: Montserrat;
@@ -99,7 +109,7 @@ export const btn = styled.div`
 `;
 
 export const input = styled.input`
-	${mont_600_14}
+	${mont_400_14}
 	border: 1px solid rgba(217, 217, 217, 0.9);
 	box-sizing: border-box;
 	border-radius: 10px;
