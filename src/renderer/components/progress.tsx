@@ -26,7 +26,7 @@ const Thumb = styled.div`
 	background: #6c63ff;
 `;
 
-function ytProgress(props: Props) {
+function progress(props: Props) {
 	return (
 		<Bar {...props}>
 			<Thumb />
@@ -34,4 +34,4 @@ function ytProgress(props: Props) {
 	);
 }
 
-export default ytProgress;
+export default progress;

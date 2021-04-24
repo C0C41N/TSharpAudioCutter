@@ -54,6 +54,7 @@ const MainHeading = styled.div`
 	position: absolute;
 	top: 145px;
 	right: 124px;
+	text-align: left;
 `;
 
 const Btn = styled(btn)`
