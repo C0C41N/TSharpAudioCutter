@@ -8,9 +8,9 @@ interface Props {
 }
 
 const Bar = styled.div`
-	--width: ${(props: Props) => props.width}px;
-	--height: ${(props: Props) => props.height}px;
-	--progress: ${(props: Props) => props.progress};
+	--width: ${(e: Props) => e.width}px;
+	--height: ${(e: Props) => e.height}px;
+	--progress: ${(e: Props) => e.progress};
 	position: absolute;
 	width: var(--width);
 	height: var(--height);
@@ -23,7 +23,7 @@ const Bar = styled.div`
 const Thumb = styled.div`
 	width: calc(var(--width) * var(--progress) / 100);
 	height: var(--height);
-	background: #6c63ff;
+	background: #3f3d56;
 `;
 
 function progress(props: Props) {
