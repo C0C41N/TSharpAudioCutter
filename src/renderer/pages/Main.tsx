@@ -1,11 +1,11 @@
 import React from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { btn, mont_600_14, nuni_600_24 } from '@/styles';
 import close from '@comp/close';
 import illustration from '@comp/illustration';
 import logo from '@comp/logo';
-import mainBtns from '@comp/mainBtns';
 import mainHeading from '@comp/mainHeading';
 import watermark from '@comp/watermark';
 
@@ -56,16 +56,43 @@ const MainHeading = styled(mainHeading)`
 	right: 124px;
 `;
 
-const MainBtns = styled(mainBtns)`
-	position: absolute;
+const Btn = styled(btn)`
+	${nuni_600_24}
 	width: 320px;
-	height: 117px;
-	left: 514px;
-	top: 329px;
+	height: 44px;
+`;
+
+const YtBtn = styled(Btn)`
+	position: absolute;
+	left: 515px;
+	top: 333px;
+`;
+
+const FilesBtn = styled(Btn)`
+	position: absolute;
+	left: 515px;
+	top: 413px;
+`;
+
+const LicBtn = styled.div`
+	${mont_600_14}
+	position: absolute;
+	width: 162px;
+	height: 17px;
+	left: 594px;
+	top: 517px;
+	text-transform: uppercase;
+	color: #3f3d56;
+	cursor: pointer;
+
+	&:hover {
+		text-decoration-line: underline;
+	}
 `;
 
 function Main() {
-	const { path } = useRouteMatch();
+	const history = useHistory();
+	const { path, url } = useRouteMatch();
 
 	return (
 		<MainDiv>
@@ -77,7 +104,21 @@ function Main() {
 					<Watermark />
 					<Illustration />
 					<MainHeading />
-					<MainBtns />
+					<YtBtn
+						onClick={() => {
+							history.push(`${url}/youtube`);
+						}}
+					>
+						I’ve youtube link
+					</YtBtn>
+					<FilesBtn
+						onClick={() => {
+							history.push(`${url}/files`);
+						}}
+					>
+						I’ve audio files
+					</FilesBtn>
+					<LicBtn>Change license key</LicBtn>
 				</Route>
 
 				<Route path={`${path}/youtube`}>

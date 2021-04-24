@@ -1,8 +1,8 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import styled from 'styled-components';
 
+import { btn, mont_600_17 } from '@/styles';
 import Back from '@comp/back';
-import ytBtn from '@comp/ytBtn';
 import ytHeading from '@comp/ytHeading';
 import ytProgress from '@comp/ytProgress';
 import ytTextBox from '@comp/ytTextBox';
@@ -19,10 +19,14 @@ const Input = styled(ytTextBox)`
 	top: 218px;
 `;
 
-const Btn = styled(ytBtn)`
+const Btn = styled(btn)`
 	position: absolute;
 	left: 720px;
 	top: 219px;
+	height: 38px;
+	width: 90px;
+
+	${mont_600_17}
 `;
 
 const Progress = styled(ytProgress)`
