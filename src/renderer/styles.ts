@@ -109,16 +109,14 @@ export const btn = styled.div`
 `;
 
 export const input = styled.input`
-	${mont_400_14}
+	${mont_600_14}
 	border: 1px solid rgba(217, 217, 217, 0.9);
 	box-sizing: border-box;
 	border-radius: 10px;
 	color: hsl(0deg 0% 35%);
 
 	&::placeholder {
-		${flexCenter}
-		font-weight: normal;
-		color: #cccccc;
+		${mont_400_14}
 	}
 
 	&:focus {
