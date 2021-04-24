@@ -1,6 +1,6 @@
-import '@fonts/nunito-sans/400.css';
-import '@fonts/nunito-sans/600.css';
-import '@fonts/nunito-sans/700.css';
+import '@fonts/nunito/400.css';
+import '@fonts/nunito/600.css';
+import '@fonts/nunito/700.css';
 import '@fonts/montserrat/400.css';
 import '@fonts/montserrat/600.css';
 import '@fonts/montserrat/700.css';
@@ -62,7 +62,7 @@ export const mont_700_36 = css`
 
 export const nuni_600_24 = css`
 	${flexCenter}
-	font-family: 'Nunito Sans';
+	font-family: Nunito;
 	font-style: normal;
 	font-weight: 600;
 	font-size: 24px;
