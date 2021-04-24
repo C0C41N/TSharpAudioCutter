@@ -2,11 +2,10 @@ import React from 'react';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { btn, mont_600_14, nuni_600_24 } from '@/styles';
+import { btn, mont_600_14, mont_700_36, nuni_600_24 } from '@/styles';
 import close from '@comp/close';
 import illustration from '@comp/illustration';
 import logo from '@comp/logo';
-import mainHeading from '@comp/mainHeading';
 import watermark from '@comp/watermark';
 
 import Youtube from './Youtube';
@@ -50,7 +49,8 @@ const Illustration = styled(illustration)`
 	top: 237px;
 `;
 
-const MainHeading = styled(mainHeading)`
+const MainHeading = styled.div`
+	${mont_700_36}
 	position: absolute;
 	top: 145px;
 	right: 124px;
@@ -84,6 +84,7 @@ const LicBtn = styled.div`
 	text-transform: uppercase;
 	color: #3f3d56;
 	cursor: pointer;
+	user-select: none;
 
 	&:hover {
 		text-decoration-line: underline;
@@ -103,7 +104,11 @@ function Main() {
 					<Logo />
 					<Watermark />
 					<Illustration />
-					<MainHeading />
+					<MainHeading>
+						How do you wanna
+						<br />
+						proceed ?
+					</MainHeading>
 					<YtBtn
 						onClick={() => {
 							history.push(`${url}/youtube`);

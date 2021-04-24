@@ -48,6 +48,18 @@ export const mont_600_14 = css`
 	color: #808080;
 `;
 
+export const mont_700_36 = css`
+	font-family: Montserrat;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 36px;
+	line-height: 44px;
+
+	color: #3f3d56;
+
+	text-shadow: 0px 4px 4px rgba(108, 99, 255, 0.25);
+`;
+
 export const nuni_600_24 = css`
 	${flexCenter}
 	font-family: 'Nunito Sans';

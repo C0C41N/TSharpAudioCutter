@@ -1,13 +1,13 @@
 import React, { Fragment, useState } from 'react';
 import styled from 'styled-components';
 
-import { btn, mont_600_17 } from '@/styles';
+import { btn, mont_600_17, mont_700_36 } from '@/styles';
 import Back from '@comp/back';
-import ytHeading from '@comp/ytHeading';
 import ytProgress from '@comp/ytProgress';
 import ytTextBox from '@comp/ytTextBox';
 
-const Heading = styled(ytHeading)`
+const Heading = styled.div`
+	${mont_700_36}
 	position: absolute;
 	left: 324px;
 	top: 68px;
@@ -60,7 +60,7 @@ function Youtube() {
 	return (
 		<Fragment>
 			<Back />
-			<Heading />
+			<Heading>Paste youtube link</Heading>
 			<Input />
 			<Btn>Done</Btn>
 			<Progress width={500} height={10} progress={progress} />
