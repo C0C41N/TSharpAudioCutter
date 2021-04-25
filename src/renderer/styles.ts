@@ -80,6 +80,16 @@ export const mont_700_36 = css`
 	text-shadow: 0px 4px 4px rgba(108, 99, 255, 0.25);
 `;
 
+export const nuni_400_18 = css`
+	${flexCenter}
+	font-family: Nunito;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 25px;
+	color: #7a7a7a;
+`;
+
 export const nuni_600_24 = css`
 	${flexCenter}
 	font-family: Nunito;
