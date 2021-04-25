@@ -8,6 +8,7 @@ import illustration from '@comp/illustration';
 import logo from '@comp/logo';
 import watermark from '@comp/watermark';
 
+import Registration from './Registration';
 import Youtube from './Youtube';
 
 const MainDiv = styled.div`
@@ -124,11 +125,21 @@ function Main() {
 					>
 						I’ve audio files
 					</FilesBtn>
-					<LicBtn>Change license key</LicBtn>
+					<LicBtn
+						onClick={() => {
+							history.push(`${url}/license`);
+						}}
+					>
+						Change license key
+					</LicBtn>
 				</Route>
 
 				<Route path={`${path}/youtube`}>
 					<Youtube />
+				</Route>
+
+				<Route path={`${path}/license`}>
+					<Registration />
 				</Route>
 			</Switch>
 		</MainDiv>
