@@ -8,6 +8,7 @@ import logo from '@comp/logo';
 import mainIllus from '@comp/mainIllus';
 import watermark from '@comp/watermark';
 
+import Files from './Files';
 import Registration from './Registration';
 import Youtube from './Youtube';
 
@@ -140,6 +141,10 @@ function Main() {
 
 				<Route path={`${path}/license`}>
 					<Registration />
+				</Route>
+
+				<Route path={`${path}/files`}>
+					<Files />
 				</Route>
 			</Switch>
 		</MainDiv>
