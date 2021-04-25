@@ -23,6 +23,7 @@ export const flexCenter = css`
 	display: flex;
 	justify-content: center;
 	text-align: center;
+	user-select: none;
 `;
 
 export const draggable = css`
@@ -106,7 +107,6 @@ export const btn = styled.div`
 	border: 1px solid #d9d9d9;
 	box-sizing: border-box;
 	border-radius: 5px;
-	user-select: none;
 	cursor: pointer;
 
 	&:hover {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function illustration(props: any) {
+function mainIllus(props: any) {
 	return (
 		<svg
 			{...props}
@@ -266,4 +266,4 @@ function illustration(props: any) {
 	);
 }
 
-export default illustration;
+export default mainIllus;

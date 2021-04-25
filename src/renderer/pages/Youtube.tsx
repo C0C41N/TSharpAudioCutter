@@ -51,7 +51,10 @@ function Youtube() {
 		<Fragment>
 			<Back />
 			<Heading>Paste youtube link</Heading>
-			<Input placeholder='https://www.youtube.com/watch?v=DxNt7xV5aII' />
+			<Input
+				placeholder='https://www.youtube.com/watch?v=DxNt7xV5aII'
+				autoFocus
+			/>
 			<Btn>Done</Btn>
 			<Progress width={500} height={10} progress={progress} />
 			<Percent>{`${progress}%`}</Percent>

@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 import { btn, mont_600_14, mont_700_36, nuni_600_24 } from '@/styles';
 import close from '@comp/close';
-import illustration from '@comp/illustration';
 import logo from '@comp/logo';
+import mainIllus from '@comp/mainIllus';
 import watermark from '@comp/watermark';
 
 import Registration from './Registration';
@@ -44,7 +44,7 @@ const Watermark = styled(watermark)`
 	top: 37px;
 `;
 
-const Illustration = styled(illustration)`
+const Illustration = styled(mainIllus)`
 	position: absolute;
 	left: 34px;
 	top: 237px;
