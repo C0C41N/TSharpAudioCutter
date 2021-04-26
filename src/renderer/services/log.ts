@@ -10,7 +10,9 @@ class Log {
 		writeFileSync(this.file, '');
 	};
 
-	log = (o: any) => {
+	log = (o: any, cls = false) => {
+		if (cls) this.cls();
+
 		const { fs } = svcNative;
 		const { appendFileSync } = fs;
 

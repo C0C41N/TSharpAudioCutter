@@ -1,9 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { fromEvent } from 'rxjs';
-import { map } from 'rxjs/operators';
 import styled from 'styled-components';
-
-import { useLog } from '@services';
 
 const Container = styled.div`
 	position: absolute;
@@ -62,48 +59,115 @@ const Thumb = styled.div`
 	top: 1px;
 
 	background: #3f3d56;
-	border-radius: 10px;
+
+	&:hover {
+		width: 5px;
+		right: 0px;
+	}
 `;
-
-const setThumbHeight = (thumb: div, scroll: div, cont: div) => {
-	const ratio = cont.clientHeight / cont.scrollHeight;
-	const height = scroll.clientHeight * ratio;
-	thumb.style.height = height > 30 ? `${height}px` : '30px';
-};
-
-const setThumbPos = (thumb: div, scroll: div, percent: number) => {
-	const total = scroll.clientHeight - thumb.clientHeight - 1;
-	const pos = total * percent;
-	thumb.style.top = `${1 + pos}px`;
-};
 
 function FilesList() {
 	const contRef = useRef<div>(null);
 	const scrollRef = useRef<div>(null);
 	const thumbRef = useRef<div>(null);
 
-	const { cls, log } = useLog();
+	const [drag, setDrag] = useState(false);
+	const [posY, setPosY] = useState(0);
 
-	useEffect(() => {
-		const cont = contRef.current as div;
-		const scroll = scrollRef.current as div;
-		const thumb = thumbRef.current as div;
+	const setThumbHeight = useCallback(() => {
+		const cont = contRef.current;
+		const scroll = scrollRef.current;
+		const thumb = thumbRef.current;
 
-		setThumbHeight(thumb, scroll, cont);
+		if (!cont || !scroll || !thumb) return;
+
+		const ratio = cont.clientHeight / cont.scrollHeight;
+		const height = scroll.clientHeight * ratio;
+		thumb.style.height = height > 30 ? `${height}px` : '30px';
+	}, []);
+
+	const setThumbPos = useCallback((percent: number) => {
+		const scroll = scrollRef.current;
+		const thumb = thumbRef.current;
+
+		if (!scroll || !thumb) return;
+
+		const total = scroll.clientHeight - thumb.clientHeight - 1;
+		const pos = total * percent;
+		thumb.style.top = `${1 + pos}px`;
+	}, []);
+
+	const addThumbPos = useCallback((delta: number) => {
+		const scroll = scrollRef.current;
+		const thumb = thumbRef.current;
+
+		if (!scroll || !thumb) return;
+
+		const total = scroll.clientHeight - thumb.clientHeight - 1;
+		const iPos = parseInt(thumb.style.top) + delta;
+		const pos = iPos < 1 ? 1 : iPos > total ? total : iPos;
+		thumb.style.top = `${pos}px`;
+	}, []);
+
+	const scroll = useCallback(() => {
+		const cont = contRef.current;
+		const scroll = scrollRef.current;
+		const thumb = thumbRef.current;
+		if (!cont || !scroll || !thumb) return;
 
 		const getTotalScroll = (e: div) => e.scrollHeight - e.clientHeight;
-		const mapScroll = (e: div) => map(() => e.scrollTop / getTotalScroll(e));
-
-		const $scroll = fromEvent(cont, 'scroll').pipe(mapScroll(cont));
-
-		$scroll.subscribe(e => {
-			setThumbPos(thumb, scroll, e);
-		});
+		const pos = cont.scrollTop / getTotalScroll(cont);
+		setThumbPos(pos);
 	}, []);
+
+	const mousemove = useCallback(
+		e => {
+			const thumb = thumbRef.current as div;
+			const scroll = scrollRef.current as div;
+
+			if (!drag) return;
+			const clientY = (e as MouseEvent).clientY;
+			const deltaY = clientY - posY;
+
+			addThumbPos(deltaY);
+			setPosY(clientY);
+		},
+		[drag, posY]
+	);
+
+	const mousedown = useCallback(e => {
+		const clientY = (e as MouseEvent).clientY;
+		setPosY(clientY);
+		setDrag(true);
+	}, []);
+
+	const mouseup = useCallback(() => {
+		if (!drag) return;
+		setDrag(false);
+	}, [drag]);
+
+	const mouseleave = useCallback(() => {
+		if (!drag) return;
+		setDrag(false);
+	}, [drag]);
+
+	useEffect(setThumbHeight, []);
+
+	useEffect(() => {
+		document.addEventListener('mousemove', mousemove);
+		document.addEventListener('mouseup', mouseup);
+		document.addEventListener('mouseleave', mouseleave);
+
+		return () => {
+			document.removeEventListener('mousemove', mousemove);
+			document.removeEventListener('mouseup', mouseup);
+			document.removeEventListener('mouseleave', mouseleave);
+		};
+	}, [mousemove, mouseup, mouseleave]);
 
 	return (
 		<Container>
-			<List ref={contRef}>
+			<List ref={contRef} onScroll={scroll}>
 				<File />
 				<File />
 				<File />
@@ -118,7 +182,7 @@ function FilesList() {
 				<File />
 			</List>
 			<Scroll ref={scrollRef}>
-				<Thumb ref={thumbRef} />
+				<Thumb ref={thumbRef} onMouseDown={mousedown} />
 			</Scroll>
 		</Container>
 	);
