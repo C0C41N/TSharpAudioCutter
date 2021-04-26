@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { fromEvent } from 'rxjs';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -155,13 +154,6 @@ function FilesList() {
 	return (
 		<Container>
 			<List ref={contRef} onScroll={scroll}>
-				<File />
-				<File />
-				<File />
-				<File />
-				<File />
-				<File />
-				<File />
 				<File />
 				<File />
 				<File />

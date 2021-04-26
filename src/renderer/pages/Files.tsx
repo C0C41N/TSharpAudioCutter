@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
 import { btn, mont_600_17, mont_700_36, nuni_400_18 } from '@/styles';
@@ -53,12 +53,34 @@ const Fade = styled.div`
 `;
 
 function Files() {
+	const inputFileRef = useRef<HTMLInputElement>(null);
+
+	const selectFile = useCallback(() => {
+		const inputFile = inputFileRef.current;
+		if (!inputFile) return;
+
+		inputFile.click();
+	}, []);
+
+	const inputChange = useCallback(e => {
+		const inputFile = e.target as HTMLInputElement;
+		console.log(inputFile.files);
+	}, []);
+
 	return (
 		<Fragment>
 			<Back />
 			<Heading>Select your files</Heading>
 			<SubHeading>Files should be mp3</SubHeading>
-			<BtnSelect>Select</BtnSelect>
+			<input
+				multiple
+				type='file'
+				accept='audio/mp3'
+				style={{ display: 'none' }}
+				ref={inputFileRef}
+				onChange={inputChange}
+			/>
+			<BtnSelect onClick={selectFile}>Select</BtnSelect>
 			<BtnDone>Done</BtnDone>
 			<FilesList />
 			<Fade />
