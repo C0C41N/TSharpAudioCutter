@@ -86,50 +86,37 @@ function FilesList() {
 		thumb.style.height = height > 30 ? `${height}px` : '30px';
 	}, []);
 
-	const setThumbPos = useCallback((percent: number) => {
-		const scroll = scrollRef.current;
-		const thumb = thumbRef.current;
-
-		if (!scroll || !thumb) return;
-
-		const total = scroll.clientHeight - thumb.clientHeight - 1;
-		const pos = total * percent;
-		thumb.style.top = `${1 + pos}px`;
-	}, []);
-
-	const addThumbPos = useCallback((delta: number) => {
-		const scroll = scrollRef.current;
-		const thumb = thumbRef.current;
-
-		if (!scroll || !thumb) return;
-
-		const total = scroll.clientHeight - thumb.clientHeight - 1;
-		const iPos = parseInt(thumb.style.top) + delta;
-		const pos = iPos < 1 ? 1 : iPos > total ? total : iPos;
-		thumb.style.top = `${pos}px`;
-	}, []);
-
 	const scroll = useCallback(() => {
 		const cont = contRef.current;
 		const scroll = scrollRef.current;
 		const thumb = thumbRef.current;
 		if (!cont || !scroll || !thumb) return;
 
-		const getTotalScroll = (e: div) => e.scrollHeight - e.clientHeight;
-		const pos = cont.scrollTop / getTotalScroll(cont);
-		setThumbPos(pos);
+		const percent = cont.scrollTop / (cont.scrollHeight - cont.clientHeight);
+
+		const total = scroll.clientHeight - thumb.clientHeight - 1;
+		const pos = total * percent;
+		thumb.style.top = `${1 + pos}px`;
 	}, []);
 
 	const mousemove = useCallback(
 		e => {
-			const thumb = thumbRef.current as div;
-			const scroll = scrollRef.current as div;
+			const thumb = thumbRef.current;
+			const scroll = scrollRef.current;
+			const cont = contRef.current;
+			if (!drag || !thumb || !scroll || !cont) return;
 
-			if (!drag) return;
 			const clientY = (e as MouseEvent).clientY;
 			const deltaY = clientY - posY;
 
-			addThumbPos(deltaY);
+			const total = scroll.clientHeight - thumb.clientHeight - 1;
+			const iPos = parseInt(thumb.style.top) + deltaY;
+			const pos = iPos < 1 ? 1 : iPos > total ? total : iPos;
+			thumb.style.top = `${pos}px`;
+
+			const percent = (pos - 1) / (total - 1);
+			cont.scrollTop = percent * (cont.scrollHeight - cont.clientHeight);
+
 			setPosY(clientY);
 		},
 		[drag, posY]
@@ -146,24 +133,24 @@ function FilesList() {
 		setDrag(false);
 	}, [drag]);
 
-	const mouseleave = useCallback(() => {
-		if (!drag) return;
-		setDrag(false);
-	}, [drag]);
+	useEffect(() => {
+		setThumbHeight();
 
-	useEffect(setThumbHeight, []);
+		const thumb = thumbRef.current;
+		if (thumb) thumb.style.top = '1px';
+	}, []);
 
 	useEffect(() => {
 		document.addEventListener('mousemove', mousemove);
 		document.addEventListener('mouseup', mouseup);
-		document.addEventListener('mouseleave', mouseleave);
+		document.addEventListener('mouseleave', mouseup);
 
 		return () => {
 			document.removeEventListener('mousemove', mousemove);
 			document.removeEventListener('mouseup', mouseup);
-			document.removeEventListener('mouseleave', mouseleave);
+			document.removeEventListener('mouseleave', mouseup);
 		};
-	}, [mousemove, mouseup, mouseleave]);
+	}, [mousemove, mouseup]);
 
 	return (
 		<Container>
