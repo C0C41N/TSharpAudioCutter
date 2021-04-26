@@ -7,7 +7,6 @@ module.exports = {
 	},
 	routes: [{ match: 'routes', src: '.*', dest: '/index.html' }],
 	plugins: [
-		'@snowpack/plugin-sass',
 		'@snowpack/plugin-typescript',
 		'@snowpack/plugin-react-refresh',
 		['electron-snowpack-plugin', { entryPath: './src/main', outPath: 'dist' }],
