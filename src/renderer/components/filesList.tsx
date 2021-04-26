@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { fromEvent } from 'rxjs';
+import { map } from 'rxjs/operators';
 import styled from 'styled-components';
+
+import { useLog } from '@services';
 
 const Container = styled.div`
 	position: absolute;
@@ -61,10 +65,49 @@ const Thumb = styled.div`
 	border-radius: 10px;
 `;
 
+const setThumbHeight = (thumb: div, scroll: div, cont: div) => {
+	const ratio = cont.clientHeight / cont.scrollHeight;
+	const height = scroll.clientHeight * ratio;
+	thumb.style.height = height > 30 ? `${height}px` : '30px';
+};
+
+const setThumbPos = (thumb: div, scroll: div, percent: number) => {
+	const total = scroll.clientHeight - thumb.clientHeight - 1;
+	const pos = total * percent;
+	thumb.style.top = `${1 + pos}px`;
+};
+
 function FilesList() {
+	const contRef = useRef<div>(null);
+	const scrollRef = useRef<div>(null);
+	const thumbRef = useRef<div>(null);
+
+	const { cls, log } = useLog();
+
+	useEffect(() => {
+		const cont = contRef.current as div;
+		const scroll = scrollRef.current as div;
+		const thumb = thumbRef.current as div;
+
+		setThumbHeight(thumb, scroll, cont);
+
+		const getTotalScroll = (e: div) => e.scrollHeight - e.clientHeight;
+		const mapScroll = (e: div) => map(() => e.scrollTop / getTotalScroll(e));
+
+		const $scroll = fromEvent(cont, 'scroll').pipe(mapScroll(cont));
+
+		$scroll.subscribe(e => {
+			setThumbPos(thumb, scroll, e);
+		});
+	}, []);
+
 	return (
 		<Container>
-			<List>
+			<List ref={contRef}>
+				<File />
+				<File />
+				<File />
+				<File />
 				<File />
 				<File />
 				<File />
@@ -74,11 +117,13 @@ function FilesList() {
 				<File />
 				<File />
 			</List>
-			<Scroll>
-				<Thumb />
+			<Scroll ref={scrollRef}>
+				<Thumb ref={thumbRef} />
 			</Scroll>
 		</Container>
 	);
 }
 
 export default FilesList;
+
+type div = HTMLDivElement;
