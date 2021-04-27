@@ -152,6 +152,7 @@ function File(props: IProps) {
 		<Cont>
 			<IconMusic />
 			<Title>{props.title}</Title>
+			<div>{props.key}</div>
 			{props.status === 1 && <IconProc />}
 			{props.status === 2 && <IconDone />}
 			<Dur>{props.dur}</Dur>
@@ -163,6 +164,7 @@ function File(props: IProps) {
 export default File;
 
 interface IProps {
+	id: string;
 	title: string;
 	dur: string;
 	status: number;

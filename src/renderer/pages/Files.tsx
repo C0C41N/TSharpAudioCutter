@@ -129,11 +129,7 @@ function Files() {
 	);
 
 	useEffect(() => {
-		const sub = get<TraFileList>('inputFiles').subscribe(e => {
-			if (!e) return;
-			setFiles(e);
-			console.log('get');
-		});
+		const sub = get<TraFileList>('inputFiles').subscribe(e => e && setFiles(e));
 
 		return () => {
 			sub.unsubscribe();

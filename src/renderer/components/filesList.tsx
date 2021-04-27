@@ -151,7 +151,13 @@ function FilesList() {
 		<Container>
 			<List ref={contRef} onScroll={scroll}>
 				{Object.values(files).map(e => (
-					<File title={e.name} status={e.status} dur={e.dur} key={e.id} />
+					<File
+						title={e.name}
+						status={e.status}
+						dur={e.dur}
+						key={e.id}
+						id={e.id}
+					/>
 				))}
 			</List>
 			{Object.keys(files).length > 4 && (
