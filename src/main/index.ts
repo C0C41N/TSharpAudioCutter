@@ -41,7 +41,7 @@ const createWindow = (): BrowserWindow => {
 		},
 	});
 
-	conWin(win);
+	conWin(win, serve);
 
 	const url = serve
 		? 'http://localhost:8080'
@@ -52,8 +52,6 @@ const createWindow = (): BrowserWindow => {
 		  });
 
 	win.loadURL(url);
-
-	if (serve) win.webContents.openDevTools();
 
 	win.on('closed', () => {
 		win = null;
