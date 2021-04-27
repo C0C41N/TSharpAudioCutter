@@ -1,6 +1,6 @@
-import '@fonts/nunito/400.css';
-import '@fonts/nunito/600.css';
-import '@fonts/nunito/700.css';
+import '@fonts/nunito-sans/400.css';
+import '@fonts/nunito-sans/600.css';
+import '@fonts/nunito-sans/700.css';
 import '@fonts/montserrat/400.css';
 import '@fonts/montserrat/600.css';
 import '@fonts/montserrat/700.css';
@@ -83,7 +83,7 @@ export const mont_700_36 = css`
 
 export const nuni_400_18 = css`
 	${flexCenter}
-	font-family: Nunito;
+	font-family: 'Nunito Sans';
 	font-style: normal;
 	font-weight: normal;
 	font-size: 18px;
@@ -93,7 +93,7 @@ export const nuni_400_18 = css`
 
 export const nuni_600_14 = css`
 	${flexCenter}
-	font-family: Nunito;
+	font-family: 'Nunito Sans';
 	font-style: normal;
 	font-weight: 600;
 	font-size: 14px;
@@ -103,7 +103,7 @@ export const nuni_600_14 = css`
 
 export const nuni_600_24 = css`
 	${flexCenter}
-	font-family: Nunito;
+	font-family: 'Nunito Sans';
 	font-style: normal;
 	font-weight: 600;
 	font-size: 24px;
@@ -111,11 +111,11 @@ export const nuni_600_24 = css`
 	color: #808080;
 `;
 
-export const nuni_700_16 = css`
+export const nuni_600_16 = css`
 	${flexCenter}
-	font-family: Nunito;
+	font-family: 'Nunito Sans';
 	font-style: normal;
-	font-weight: bold;
+	font-weight: 600;
 	font-size: 16px;
 	line-height: 22px;
 	color: #808080;
