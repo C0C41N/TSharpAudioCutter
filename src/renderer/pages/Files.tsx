@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useRef } from 'react';
+import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { btn, mont_600_17, mont_700_36, nuni_400_18 } from '@/styles';
@@ -57,14 +57,23 @@ function Files() {
 	const inputFileRef = useRef<HTMLInputElement>(null);
 	const { set, get } = useComs();
 
-	const selectFile = useCallback(() => inputFileRef.current?.click(), []);
-	const inputChange = useCallback(e => {
-		const inputFile = e.target as HTMLInputElement;
-		set('inputFiles', inputFile.files);
-	}, []);
+	const [files, setFiles] = useState<File[]>([]);
 
-	const test = useCallback(() => {
+	const selectFile = useCallback(() => inputFileRef.current?.click(), []);
+
+	const inputChange = useCallback(
+		e => {
+			const inputFile = e.target as HTMLInputElement;
+			if (!inputFile.files) return;
+			set('inputFiles', [...files, ...inputFile.files]);
+		},
+		[files]
+	);
+
+	useEffect(() => {
 		get<FileList>('inputFiles').subscribe(e => {
+			if (!e) return;
+			setFiles([...e]);
 			console.log(e);
 		});
 	}, []);
@@ -83,7 +92,7 @@ function Files() {
 				onChange={inputChange}
 			/>
 			<BtnSelect onClick={selectFile}>Select</BtnSelect>
-			<BtnDone onClick={test}>Done</BtnDone>
+			<BtnDone>Done</BtnDone>
 			<FilesList />
 			<Fade />
 		</Fragment>

@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
+import File from './file';
+
 const Container = styled.div`
 	position: absolute;
 	width: 810px;
@@ -16,26 +18,6 @@ const List = styled.div`
 
 	&::-webkit-scrollbar {
 		display: none;
-	}
-`;
-
-const File = styled.div`
-	height: 44px;
-	width: 780px;
-	background: #ffffff;
-	border-radius: 10px;
-
-	margin: 10px;
-
-	box-shadow: 0px 4px 31px rgba(0, 0, 0, 0.0196802),
-		0px 1.6711px 12.9511px rgba(0, 0, 0, 0.0282725),
-		0px 0.893452px 6.92426px rgba(0, 0, 0, 0.035),
-		0px 0.500862px 3.88168px rgba(0, 0, 0, 0.0417275),
-		0px 0.266004px 2.06153px rgba(0, 0, 0, 0.0503198),
-		0px 0.11069px 0.85785px rgba(0, 0, 0, 0.07);
-
-	&:last-child {
-		margin-bottom: 100px;
 	}
 `;
 
