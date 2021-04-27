@@ -55,13 +55,7 @@ const Fade = styled.div`
 function Files() {
 	const inputFileRef = useRef<HTMLInputElement>(null);
 
-	const selectFile = useCallback(() => {
-		const inputFile = inputFileRef.current;
-		if (!inputFile) return;
-
-		inputFile.click();
-	}, []);
-
+	const selectFile = useCallback(() => inputFileRef.current?.click(), []);
 	const inputChange = useCallback(e => {
 		const inputFile = e.target as HTMLInputElement;
 		console.log(inputFile.files);
