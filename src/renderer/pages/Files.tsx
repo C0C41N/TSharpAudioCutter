@@ -4,7 +4,9 @@ import styled from 'styled-components';
 import { btn, mont_600_17, mont_700_36, nuni_400_18 } from '@/styles';
 import Back from '@comp/back';
 import FilesList from '@comp/filesList';
-import { useComs } from '@services';
+import { useComs, useFFmpeg, useNative, useUtil } from '@services';
+
+const fileTypes = ['.mp3'];
 
 const Heading = styled.div`
 	${mont_700_36}
@@ -55,25 +57,81 @@ const Fade = styled.div`
 
 function Files() {
 	const inputFileRef = useRef<HTMLInputElement>(null);
-	const { set, get } = useComs();
+	const { set, get, fire, wait } = useComs();
+	const { path } = useNative();
+	const { ffmpeg } = useFFmpeg();
+	const { randomKey } = useUtil();
+	const { extname } = path;
 
-	const [files, setFiles] = useState<File[]>([]);
+	const [files, setFiles] = useState<TraFileList>({});
 
 	const selectFile = useCallback(() => inputFileRef.current?.click(), []);
 
+	const filterByExt = useCallback((e: FileList): [File[], boolean] => {
+		const arr = [...e];
+		const files = arr.filter(o => fileTypes.includes(extname(o.name)));
+		const impure = arr.some(o => !fileTypes.includes(extname(o.name)));
+		return [files, impure];
+	}, []);
+
+	const getDur = useCallback(async (path: string) => {
+		const key = randomKey(6);
+		ffmpeg.ffprobe(path, (_, { format }) => fire(key, format.duration));
+		const dur = await wait<number>(key);
+
+		if (!dur) return '#NA';
+
+		const { trunc } = Math;
+		const p: any = ['en-US', { minimumIntegerDigits: 2, useGrouping: false }];
+
+		const min = trunc(dur / 60);
+		const sec = trunc(dur % 60);
+
+		return `${min.toLocaleString(...p)}:${sec.toLocaleString(...p)}`;
+	}, []);
+
+	const traFile = useCallback(async (file: File): Promise<TraFile> => {
+		const id = randomKey(6);
+		const dur = await getDur(file.path);
+		const { name, path } = file;
+		const status = 0;
+
+		return { id, name, path, dur, status };
+	}, []);
+
+	const traFileList = useCallback(
+		async (fileList: File[]): Promise<TraFileList> =>
+			fileList.reduce(async (a: Promise<TraFileList>, e: File) => {
+				const trFile = await traFile(e);
+				const { id } = trFile;
+				return { ...(await a), [id]: trFile };
+			}, Promise.resolve({} as TraFileList)),
+		[]
+	);
+
 	const inputChange = useCallback(
-		e => {
+		async e => {
 			const inputFile = e.target as HTMLInputElement;
 			if (!inputFile.files) return;
-			set('inputFiles', [...files, ...inputFile.files]);
+
+			const [Files, impure] = filterByExt(inputFile.files);
+
+			if (impure) {
+				// TODO: Display Error
+
+				if (!Files.length) return;
+			}
+
+			const fileList = await traFileList(Files);
+			set<TraFileList>('inputFiles', { ...files, ...fileList });
 		},
 		[files]
 	);
 
 	useEffect(() => {
-		get<FileList>('inputFiles').subscribe(e => {
+		get<TraFileList>('inputFiles').subscribe(e => {
 			if (!e) return;
-			setFiles([...e]);
+			setFiles(e);
 			console.log(e);
 		});
 	}, []);
@@ -86,7 +144,7 @@ function Files() {
 			<input
 				multiple
 				type='file'
-				accept='audio/mp3'
+				accept={fileTypes.join()}
 				style={{ display: 'none' }}
 				ref={inputFileRef}
 				onChange={inputChange}
@@ -100,3 +158,15 @@ function Files() {
 }
 
 export default Files;
+
+export interface TraFile {
+	id: string;
+	name: string;
+	path: string;
+	dur: string;
+	status: number;
+}
+
+export interface TraFileList {
+	[key: string]: TraFile;
+}

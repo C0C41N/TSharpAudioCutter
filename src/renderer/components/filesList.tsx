@@ -140,7 +140,6 @@ function FilesList() {
 				<File title='Lil Peep ~ Star shopping' dur='02:53' status={2} />
 				<File title='Lil Peep ~ Star shopping' dur='02:53' status={1} />
 				<File title='Lil Peep ~ Star shopping' dur='02:53' status={0} />
-				<File title='Lil Peep ~ Star shopping' dur='02:53' status={0} />
 			</List>
 			<Scroll ref={scrollRef}>
 				<Thumb ref={thumbRef} onMouseDown={mousedown} />
