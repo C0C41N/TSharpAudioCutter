@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { btn, mont_600_17, mont_700_36, nuni_400_18 } from '@/styles';
 import Back from '@comp/back';
 import FilesList from '@comp/filesList';
+import { useComs } from '@services';
 
 const Heading = styled.div`
 	${mont_700_36}
@@ -54,11 +55,18 @@ const Fade = styled.div`
 
 function Files() {
 	const inputFileRef = useRef<HTMLInputElement>(null);
+	const { set, get } = useComs();
 
 	const selectFile = useCallback(() => inputFileRef.current?.click(), []);
 	const inputChange = useCallback(e => {
 		const inputFile = e.target as HTMLInputElement;
-		console.log(inputFile.files);
+		set('inputFiles', inputFile.files);
+	}, []);
+
+	const test = useCallback(() => {
+		get<FileList>('inputFiles').subscribe(e => {
+			console.log(e);
+		});
 	}, []);
 
 	return (
@@ -75,7 +83,7 @@ function Files() {
 				onChange={inputChange}
 			/>
 			<BtnSelect onClick={selectFile}>Select</BtnSelect>
-			<BtnDone>Done</BtnDone>
+			<BtnDone onClick={test}>Done</BtnDone>
 			<FilesList />
 			<Fade />
 		</Fragment>
