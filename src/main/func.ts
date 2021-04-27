@@ -16,6 +16,7 @@ export const conWin = (e: BrowserWindow) => {
 
 	if (dev) {
 		globalShortcut.register('CommandOrControl+R', () => e.reload());
+		globalShortcut.register('CommandOrControl+Shift+R', () => e.loadURL(url));
 		globalShortcut.register('CommandOrControl+Shift+J', () =>
 			e.webContents.toggleDevTools()
 		);
