@@ -136,11 +136,11 @@ function FilesList() {
 	return (
 		<Container>
 			<List ref={contRef} onScroll={scroll}>
-				<File />
-				<File />
-				<File />
-				<File />
-				<File />
+				<File title='Lil Peep ~ Star shopping' dur='02:53' />
+				<File title='Lil Peep ~ Star shopping' dur='02:53' />
+				<File title='Lil Peep ~ Star shopping' dur='02:53' />
+				<File title='Lil Peep ~ Star shopping' dur='02:53' />
+				<File title='Lil Peep ~ Star shopping' dur='02:53' />
 			</List>
 			<Scroll ref={scrollRef}>
 				<Thumb ref={thumbRef} onMouseDown={mousedown} />

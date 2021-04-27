@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { nuni_600_14, nuni_700_16 } from '@/styles';
+
 const Cont = styled.div`
 	position: relative;
 	height: 44px;
@@ -46,12 +48,38 @@ const IconMusic = styled(iconMusic)`
 	top: 10px;
 `;
 
-function File() {
+const Title = styled.div`
+	${nuni_700_16}
+	position: absolute;
+	width: 400px;
+	height: 20px;
+	left: 47px;
+	top: 12px;
+	justify-content: left;
+`;
+
+const Dur = styled.div`
+	${nuni_600_14}
+	position: absolute;
+	width: 50px;
+	height: 20px;
+	left: 656px;
+	top: 12px;
+`;
+
+function File(props: IProps) {
 	return (
 		<Cont>
 			<IconMusic />
+			<Title>{props.title}</Title>
+			<Dur>{props.dur}</Dur>
 		</Cont>
 	);
 }
 
 export default File;
+
+interface IProps {
+	title: string;
+	dur: string;
+}

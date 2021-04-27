@@ -91,6 +91,16 @@ export const nuni_400_18 = css`
 	color: #7a7a7a;
 `;
 
+export const nuni_600_14 = css`
+	${flexCenter}
+	font-family: Nunito;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 19px;
+	color: #808080;
+`;
+
 export const nuni_600_24 = css`
 	${flexCenter}
 	font-family: Nunito;
@@ -98,6 +108,16 @@ export const nuni_600_24 = css`
 	font-weight: 600;
 	font-size: 24px;
 	line-height: 33px;
+	color: #808080;
+`;
+
+export const nuni_700_16 = css`
+	${flexCenter}
+	font-family: Nunito;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 22px;
 	color: #808080;
 `;
 
