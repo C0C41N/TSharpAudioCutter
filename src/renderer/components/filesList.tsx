@@ -1,5 +1,8 @@
+import type { TraFileList } from '@pages/Files';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+
+import { useComs } from '@services';
 
 import File from './file';
 
@@ -52,8 +55,11 @@ function FilesList() {
 	const scrollRef = useRef<div>(null);
 	const thumbRef = useRef<div>(null);
 
+	const { get } = useComs();
+
 	const [drag, setDrag] = useState(false);
 	const [posY, setPosY] = useState(0);
+	const [files, setFiles] = useState<TraFileList>({});
 
 	const setThumbHeight = useCallback(() => {
 		const cont = contRef.current;
@@ -115,11 +121,19 @@ function FilesList() {
 	}, [drag]);
 
 	useEffect(() => {
-		setThumbHeight();
-
 		const thumb = thumbRef.current;
 		if (thumb) thumb.style.top = '1px';
+
+		const sub = get<TraFileList>('inputFiles').subscribe(e => e && setFiles(e));
+
+		return () => {
+			sub.unsubscribe();
+		};
 	}, []);
+
+	useEffect(() => {
+		setThumbHeight();
+	}, [files]);
 
 	useEffect(() => {
 		document.addEventListener('mousemove', mousemove);
@@ -136,14 +150,15 @@ function FilesList() {
 	return (
 		<Container>
 			<List ref={contRef} onScroll={scroll}>
-				<File title='Lil Peep ~ Star shopping' dur='02:53' status={2} />
-				<File title='Lil Peep ~ Star shopping' dur='02:53' status={2} />
-				<File title='Lil Peep ~ Star shopping' dur='02:53' status={1} />
-				<File title='Lil Peep ~ Star shopping' dur='02:53' status={0} />
+				{Object.values(files).map(e => (
+					<File title={e.name} status={e.status} dur={e.dur} key={e.id} />
+				))}
 			</List>
-			<Scroll ref={scrollRef}>
-				<Thumb ref={thumbRef} onMouseDown={mousedown} />
-			</Scroll>
+			{Object.keys(files).length > 4 && (
+				<Scroll ref={scrollRef}>
+					<Thumb ref={thumbRef} onMouseDown={mousedown} />
+				</Scroll>
+			)}
 		</Container>
 	);
 }

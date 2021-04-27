@@ -165,5 +165,5 @@ export default File;
 interface IProps {
 	title: string;
 	dur: string;
-	status: 0 | 1 | 2;
+	status: number;
 }
