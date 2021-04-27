@@ -37,7 +37,7 @@ class Coms {
 		this.store.next({ ...val, [id]: data });
 	};
 
-	get = <T>(id: string): Observable<T> => {
+	get = <T>(id: string): Observable<T | undefined> => {
 		return this.$store.pipe(
 			map(e => e[id]),
 			distinctUntilChanged(isEqual)
