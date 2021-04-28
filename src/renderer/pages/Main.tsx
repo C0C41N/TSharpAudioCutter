@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -98,54 +98,57 @@ function Main() {
 	const history = useHistory();
 	const { path, url } = useRouteMatch();
 
+	const Main = () => (
+		<Fragment>
+			<Logo />
+			<Watermark />
+			<Illustration />
+			<MainHeading>
+				How do you wanna
+				<br />
+				proceed ?
+			</MainHeading>
+			<YtBtn
+				onClick={() => {
+					history.push(`${url}/youtube`);
+				}}
+			>
+				I’ve youtube link
+			</YtBtn>
+			<FilesBtn
+				onClick={() => {
+					history.push(`${url}/files`);
+				}}
+			>
+				I’ve audio files
+			</FilesBtn>
+			<LicBtn
+				onClick={() => {
+					history.push(`${url}/license`);
+				}}
+			>
+				Change license key
+			</LicBtn>
+		</Fragment>
+	);
+
+	const routes = [
+		[path, <Main />],
+		[`${path}/youtube`, <Youtube />],
+		[`${path}/license`, <Registration />],
+		[`${path}/files`, <Files />],
+	] as [path: string, el: JSX.Element][];
+
 	return (
 		<MainDiv>
 			<Close />
 
 			<Switch>
-				<Route exact path={path}>
-					<Logo />
-					<Watermark />
-					<Illustration />
-					<MainHeading>
-						How do you wanna
-						<br />
-						proceed ?
-					</MainHeading>
-					<YtBtn
-						onClick={() => {
-							history.push(`${url}/youtube`);
-						}}
-					>
-						I’ve youtube link
-					</YtBtn>
-					<FilesBtn
-						onClick={() => {
-							history.push(`${url}/files`);
-						}}
-					>
-						I’ve audio files
-					</FilesBtn>
-					<LicBtn
-						onClick={() => {
-							history.push(`${url}/license`);
-						}}
-					>
-						Change license key
-					</LicBtn>
-				</Route>
-
-				<Route path={`${path}/youtube`}>
-					<Youtube />
-				</Route>
-
-				<Route path={`${path}/license`}>
-					<Registration />
-				</Route>
-
-				<Route path={`${path}/files`}>
-					<Files />
-				</Route>
+				{routes.map((e, i) => (
+					<Route exact={i === 0} path={e[0]}>
+						{e[1]}
+					</Route>
+				))}
 			</Switch>
 		</MainDiv>
 	);
