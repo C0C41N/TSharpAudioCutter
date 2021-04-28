@@ -16,7 +16,6 @@
 		"ffmpeg-static": "^4.3.0",
 		"ffprobe-static": "^3.0.0",
 		"fluent-ffmpeg": "^2.1.2",
-		"lodash": "^4.17.21",
 		"react": "^17.0.0",
 		"react-dom": "^17.0.0",
 		"react-router-dom": "^5.2.0",

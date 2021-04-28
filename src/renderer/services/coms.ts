@@ -1,6 +1,9 @@
-import isEqual from 'lodash/isEqual';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, filter, map, take } from 'rxjs/operators';
+
+import { svcUtil } from './util';
+
+const { deepEqual } = svcUtil;
 
 class Coms {
 	private messenger = new Subject<IM<any>>();
@@ -40,7 +43,7 @@ class Coms {
 	get = <T>(id: string): Observable<T | undefined> => {
 		return this.$store.pipe(
 			map(e => e[id]),
-			distinctUntilChanged(isEqual)
+			distinctUntilChanged(deepEqual)
 		);
 	};
 }

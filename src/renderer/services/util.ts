@@ -1,4 +1,12 @@
 class Util {
+	decoupleEntity = <T>(e: T): T => {
+		return JSON.parse(JSON.stringify(e));
+	};
+
+	deepEqual = <T, U>(x: T, y: U): boolean => {
+		return JSON.stringify(x) === JSON.stringify(y);
+	};
+
 	randomKey = (len: number): string => {
 		// prettier-ignore
 		const x = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C',

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import { nuni_600_14, nuni_600_16 } from '@/styles';
+import { useComs } from '@services';
 
+import type { TraFile, TraFileList } from '@pages/Files';
 const Cont = styled.div`
 	position: relative;
 	height: 44px;
@@ -148,15 +150,38 @@ const Dur = styled.div`
 `;
 
 function File(props: IProps) {
+	const { set, get } = useComs();
+
+	const [files, setFiles] = useState<TraFileList>({});
+
+	const remove = useCallback(
+		(id: string) => {
+			const filteredFiles = Object.values(files)
+				.filter(e => e.id !== id)
+				.reduce((a: TraFileList, e: TraFile) => {
+					return { ...a, [e.id]: e };
+				}, {} as TraFileList);
+			set('inputFiles', filteredFiles);
+		},
+		[files]
+	);
+
+	useEffect(() => {
+		const sub = get<TraFileList>('inputFiles').subscribe(e => e && setFiles(e));
+
+		return () => {
+			sub.unsubscribe();
+		};
+	}, []);
+
 	return (
 		<Cont>
 			<IconMusic />
 			<Title>{props.title}</Title>
-			<div>{props.key}</div>
 			{props.status === 1 && <IconProc />}
 			{props.status === 2 && <IconDone />}
 			<Dur>{props.dur}</Dur>
-			<IconRemove />
+			<IconRemove onClick={() => remove(props.id)} />
 		</Cont>
 	);
 }
