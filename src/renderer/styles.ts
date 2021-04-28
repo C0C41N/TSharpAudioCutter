@@ -16,6 +16,36 @@ export const GlobalStyle = createGlobalStyle`
 		width: 1000px;
 		background-color: transparent;
 	}
+
+	.page {
+	  position: absolute;
+	  left: 0px;
+	  right: 0px;
+		top: 0px;
+		bottom: 0px;
+	}
+	
+	.page-enter {
+	  opacity: 0;
+	  transform: scale(1.1);
+	}
+	
+	.page-enter-active {
+	  opacity: 1;
+	  transform: scale(1);
+	  transition: opacity 300ms, transform 300ms;
+	}
+	
+	.page-exit {
+	  opacity: 1;
+	  transform: scale(1);
+	}
+	
+	.page-exit-active {
+	  opacity: 0;
+	  transform: scale(0.9);
+	  transition: opacity 300ms, transform 300ms;
+	}
 `;
 
 export const flexCenter = css`

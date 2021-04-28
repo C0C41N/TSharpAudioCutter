@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
-import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
+import { Route, useHistory, useRouteMatch } from 'react-router-dom';
+import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 
 import { btn, mont_600_14, mont_700_36, nuni_600_24 } from '@/styles';
@@ -143,13 +144,20 @@ function Main() {
 		<MainDiv>
 			<Close />
 
-			<Switch>
-				{routes.map((e, i) => (
-					<Route exact={i === 0} path={e[0]}>
-						{e[1]}
-					</Route>
-				))}
-			</Switch>
+			{routes.map((e, i) => (
+				<Route exact={i === 0} path={e[0]} key={i}>
+					{({ match }) => (
+						<CSSTransition
+							in={match !== null}
+							timeout={300}
+							classNames='page'
+							unmountOnExit
+						>
+							<div className='page'>{e[1]}</div>
+						</CSSTransition>
+					)}
+				</Route>
+			))}
 		</MainDiv>
 	);
 }
