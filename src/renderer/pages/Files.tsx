@@ -161,7 +161,7 @@ function Files() {
 				onChange={inputChange}
 			/>
 			<BtnSelect onClick={selectFile}>Select</BtnSelect>
-			<BtnDone>Done</BtnDone>
+			{!!Object.keys(files).length && <BtnDone>Done</BtnDone>}
 			<FilesList />
 			<Fade />
 			<Error
