@@ -137,7 +137,12 @@ const Title = styled.div`
 	height: 20px;
 	left: 47px;
 	top: 12px;
-	justify-content: left;
+
+	text-align: left;
+	display: block;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 `;
 
 const Dur = styled.div`
