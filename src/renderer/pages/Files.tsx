@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { btn, mont_600_17, mont_700_36, nuni_400_18 } from '@/styles';
 import Back from '@comp/back';
+import error from '@comp/error';
 import FilesList from '@comp/filesList';
 import { useComs, useFFmpeg, useNative, useUtil } from '@services';
 
@@ -55,6 +56,14 @@ const Fade = styled.div`
 		linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #ffffff 100%);
 `;
 
+const Error = styled(error)`
+	position: absolute;
+	width: 383px;
+	height: 17px;
+	left: 309px;
+	bottom: 104px;
+`;
+
 function Files() {
 	const inputFileRef = useRef<HTMLInputElement>(null);
 	const { set, get, fire, wait } = useComs();
@@ -64,6 +73,7 @@ function Files() {
 	const { extname } = path;
 
 	const [files, setFiles] = useState<TraFileList>({});
+	const [impure, setImpure] = useState(false);
 
 	const selectFile = useCallback(() => inputFileRef.current?.click(), []);
 
@@ -117,8 +127,8 @@ function Files() {
 			const [Files, impure] = filterByExt(inputFile.files);
 
 			if (impure) {
-				// TODO: Display Error
-
+				setImpure(true);
+				console.log('impure');
 				if (!Files.length) return;
 			}
 
@@ -154,6 +164,11 @@ function Files() {
 			<BtnDone>Done</BtnDone>
 			<FilesList />
 			<Fade />
+			<Error
+				state={impure}
+				setState={setImpure}
+				text='Some of the selected files were invalid hence excluded'
+			/>
 		</Fragment>
 	);
 }
