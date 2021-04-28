@@ -105,8 +105,10 @@ const IconRemove = styled(iconRemove)`
 
 	cursor: pointer;
 	border-radius: 100px;
+	border: 1px solid #d9d9d9;
 
 	&:hover {
+		border: none;
 		box-shadow: -5px 5px 10px rgba(217, 217, 217, 0.2),
 			5px -5px 10px rgba(217, 217, 217, 0.2),
 			-5px -5px 10px rgba(255, 255, 255, 0.9),
