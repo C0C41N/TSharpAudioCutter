@@ -22,9 +22,9 @@ function Files() {
 
 	const filterByExt = useCallback((e: FileList): [File[], boolean] => {
 		const arr = [...e];
-		const files = arr.filter(o => fileTypes.includes(extname(o.name)));
+		const filtered = arr.filter(o => fileTypes.includes(extname(o.name)));
 		const impure = arr.some(o => !fileTypes.includes(extname(o.name)));
-		return [files, impure];
+		return [filtered, impure];
 	}, []);
 
 	const getDur = useCallback(async (path: string) => {
