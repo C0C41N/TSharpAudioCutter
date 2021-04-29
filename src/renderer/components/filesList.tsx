@@ -1,54 +1,10 @@
 import type { TraFileList } from '@pages/Files';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
 
 import { useComs } from '@services';
+import { Container, List, Scroll, Thumb } from '@styles/components/filesList';
 
 import File from './file';
-
-const Container = styled.div`
-	position: absolute;
-	width: 810px;
-	height: 280px;
-	left: 100px;
-	top: 202px;
-`;
-
-const List = styled.div`
-	width: calc(780px + 17px);
-	height: 100%;
-	overflow: scroll;
-
-	&::-webkit-scrollbar {
-		display: none;
-	}
-`;
-
-const Scroll = styled.div`
-	position: absolute;
-	width: 5px;
-	height: 260px;
-	right: 0px;
-	top: 10px;
-
-	background: #cccccc;
-	border-radius: 10px;
-`;
-
-const Thumb = styled.div`
-	position: absolute;
-	width: 3px;
-	height: 50px;
-	right: 1px;
-	top: 1px;
-
-	background: #3f3d56;
-
-	&:hover {
-		width: 5px;
-		right: 0px;
-	}
-`;
 
 function FilesList() {
 	const contRef = useRef<div>(null);
