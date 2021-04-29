@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import DragBar from '@comp/DragBar';
 import Loading from '@comp/loading';
-import Main from '@pages/Main';
+import Interface from '@pages/Interface';
 import { flexCenter } from '@styles';
 
 const Container = styled.div`
@@ -20,7 +20,7 @@ function App() {
 
 			<Switch>
 				<Route path='/main'>
-					<Main />
+					<Interface />
 				</Route>
 
 				<Route path='/loading'>
