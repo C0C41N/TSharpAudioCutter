@@ -5,6 +5,7 @@ import { btn, mont_600_17, mont_700_36, nuni_400_18 } from '@/styles';
 import Back from '@comp/back';
 import error from '@comp/error';
 import FilesList from '@comp/filesList';
+import split from '@comp/split';
 import { useComs, useFFmpeg, useNative, useUtil } from '@services';
 
 const fileTypes = ['.mp3'];
@@ -35,8 +36,7 @@ const BtnSelect = styled(btn)`
 	top: 145px;
 `;
 
-const BtnDone = styled(btn)`
-	${mont_600_17}
+const BtnDone = styled(split)`
 	position: absolute;
 	width: 260px;
 	height: 38px;
@@ -65,7 +65,6 @@ const Error = styled(error)`
 `;
 
 function Files() {
-	const inputFileRef = useRef<HTMLInputElement>(null);
 	const { set, get, fire, wait } = useComs();
 	const { path } = useNative();
 	const { ffmpeg } = useFFmpeg();
@@ -75,6 +74,7 @@ function Files() {
 	const [files, setFiles] = useState<TraFileList>({});
 	const [impure, setImpure] = useState(false);
 
+	const inputFileRef = useRef<HTMLInputElement>(null);
 	const selectFile = useCallback(() => inputFileRef.current?.click(), []);
 
 	const filterByExt = useCallback((e: FileList): [File[], boolean] => {
@@ -161,7 +161,7 @@ function Files() {
 				onChange={inputChange}
 			/>
 			<BtnSelect onClick={selectFile}>Select</BtnSelect>
-			{!!Object.keys(files).length && <BtnDone>Done</BtnDone>}
+			<BtnDone />
 			<FilesList />
 			<Fade />
 			<Error
