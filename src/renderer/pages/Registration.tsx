@@ -51,7 +51,7 @@ function Registration() {
 	return (
 		<Fragment>
 			<Back />
-			<Heading>Registration</Heading>
+			<Heading>License</Heading>
 			<SubHeading>Paste license key you got from HUD</SubHeading>
 			<Illustration />
 			<Input placeholder='zLTfb3s8NF' autoFocus />
