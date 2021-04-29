@@ -26,7 +26,7 @@ function Interface() {
 					{({ match }) => (
 						<CSSTransition
 							in={match !== null}
-							timeout={300}
+							timeout={1}
 							classNames='page'
 							unmountOnExit
 						>
