@@ -27,7 +27,7 @@ export const GlobalStyle = createGlobalStyle`
 	
 	.page-enter {
 	  opacity: 0;
-	  transform: scale(1.1);
+	  transform: scale(0.95);
 	}
 	
 	.page-enter-active {
@@ -43,7 +43,7 @@ export const GlobalStyle = createGlobalStyle`
 	
 	.page-exit-active {
 	  opacity: 0;
-	  transform: scale(0.9);
+	  transform: scale(0.95);
 	  transition: opacity 300ms, transform 300ms;
 	}
 `;
