@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import {
 	FilesBtn, Illustration, LicBtn, Logo, MainHeading, Watermark, YtBtn
 } from '@styles/pages/main';
 
 function Main() {
-	const history = useHistory();
-	const { url } = useRouteMatch();
+	const { push, location } = useHistory();
+	const { pathname } = location;
 
 	return (
 		<Fragment>
@@ -21,21 +21,21 @@ function Main() {
 			</MainHeading>
 			<YtBtn
 				onClick={() => {
-					history.push(`${url}/youtube`);
+					push(`${pathname}/youtube`);
 				}}
 			>
 				I’ve youtube link
 			</YtBtn>
 			<FilesBtn
 				onClick={() => {
-					history.push(`${url}/files`);
+					push(`${pathname}/files`);
 				}}
 			>
 				I’ve audio files
 			</FilesBtn>
 			<LicBtn
 				onClick={() => {
-					history.push(`${url}/license`);
+					push(`${pathname}/license`);
 				}}
 			>
 				Change license key
