@@ -2,10 +2,10 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { flexCenter } from '@/styles';
 import DragBar from '@comp/DragBar';
 import Loading from '@comp/loading';
 import Main from '@pages/Main';
+import { flexCenter } from '@styles';
 
 const Container = styled.div`
 	${flexCenter}

@@ -10,6 +10,8 @@
 			"@fonts/*": ["src/renderer/assets/fonts/*"],
 			"@comp/*": ["src/renderer/components/*"],
 			"@pages/*": ["src/renderer/pages/*"],
+			"@styles": ["src/renderer/styles"],
+			"@styles/*": ["src/renderer/styles/*"],
 			"@services": ["src/renderer/services"],
 			"@services/*": ["src/renderer/services/*"],
 			"@/*": ["src/renderer/*"]

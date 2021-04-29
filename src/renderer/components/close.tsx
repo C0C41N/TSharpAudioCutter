@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { flexCenter } from '@/styles';
 import { useNative } from '@services';
+import { flexCenter } from '@styles';
 
 export const Btn = styled.div`
 	cursor: pointer;

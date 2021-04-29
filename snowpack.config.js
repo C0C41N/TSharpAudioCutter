@@ -21,6 +21,7 @@ module.exports = {
 		'@fonts': './src/renderer/assets/fonts',
 		'@pages': './src/renderer/pages',
 		'@comp': './src/renderer/components',
+		'@styles': './src/renderer/styles',
 		'@services': './src/renderer/services',
 		'@': './src/renderer',
 	},

@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
-import { btn, input, mont_600_17, mont_700_36, nuni_400_18 } from '@/styles';
 import Back from '@comp/back';
 import registerIllus from '@comp/registerIllus';
+import { btn, input, mont_600_17, mont_700_36, nuni_400_18 } from '@styles';
 
 const Heading = styled.div`
 	${mont_700_36}

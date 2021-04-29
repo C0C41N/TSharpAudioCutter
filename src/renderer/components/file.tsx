@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 
-import { nuni_600_14, nuni_600_16 } from '@/styles';
 import { useComs } from '@services';
+import { nuni_600_14, nuni_600_16 } from '@styles';
 
 import type { TraFile, TraFileList } from '@pages/Files';
 const Cont = styled.div`

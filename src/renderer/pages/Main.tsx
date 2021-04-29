@@ -3,11 +3,11 @@ import { Route, useHistory, useRouteMatch } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 
-import { btn, mont_600_14, mont_700_36, nuni_600_24 } from '@/styles';
 import close from '@comp/close';
 import logo from '@comp/logo';
 import mainIllus from '@comp/mainIllus';
 import watermark from '@comp/watermark';
+import { btn, mont_600_14, mont_700_36, nuni_600_24 } from '@styles';
 
 import Files from './Files';
 import Registration from './Registration';

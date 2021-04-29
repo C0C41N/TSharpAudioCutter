@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { btn, mont_600_17 } from '@/styles';
 import { useComs } from '@services';
+import { btn, mont_600_17 } from '@styles';
 
 import type { TraFileList } from '@pages/Files';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { flexCenter } from '@/styles';
+import { flexCenter } from '@styles';
 
 const Logo = styled.div`
 	${flexCenter}

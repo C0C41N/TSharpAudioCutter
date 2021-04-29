@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import styled from 'styled-components';
 
-import { btn, input, mont_600_17, mont_600_24, mont_700_36 } from '@/styles';
 import Back from '@comp/back';
 import progress from '@comp/progress';
+import { btn, input, mont_600_17, mont_600_24, mont_700_36 } from '@styles';
 
 const Heading = styled.div`
 	${mont_700_36}
