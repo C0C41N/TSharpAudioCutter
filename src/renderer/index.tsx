@@ -8,14 +8,12 @@ import App from './App';
 import { GlobalStyle } from './styles';
 
 ReactDOM.render(
-	<React.StrictMode>
+	<Provider value={services}>
 		<GlobalStyle />
-		<Provider value={services}>
-			<HashRouter>
-				<App />
-			</HashRouter>
-		</Provider>
-	</React.StrictMode>,
+		<HashRouter>
+			<App />
+		</HashRouter>
+	</Provider>,
 	document.getElementById('root')
 );
 
