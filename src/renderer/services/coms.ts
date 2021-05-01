@@ -6,20 +6,20 @@ import { svcUtil } from './util';
 const { deepEqual } = svcUtil;
 
 class Coms {
-	private messenger = new Subject<IM<any>>();
-	private $messenger = this.messenger.asObservable();
+	private portal = new Subject<IM<any>>();
+	private $portal = this.portal.asObservable();
 
-	private store = new BehaviorSubject<ST<any>>({});
-	private $store = this.store.asObservable();
+	private state = new BehaviorSubject<ST<any>>({});
+	private $state = this.state.asObservable();
 
 	constructor() {}
 
 	fire = <T>(id: string, data: T): void => {
-		this.messenger.next({ id, data });
+		this.portal.next({ id, data });
 	};
 
 	wait = <T>(id: string): Promise<T> => {
-		return this.$messenger
+		return this.$portal
 			.pipe(
 				filter(e => e.id === id),
 				map(e => <T>e.data),
@@ -29,19 +29,19 @@ class Coms {
 	};
 
 	observe = <T>(id: string): Observable<T> => {
-		return this.$messenger.pipe(
+		return this.$portal.pipe(
 			filter(e => e.id === id),
 			map(e => <T>e.data)
 		);
 	};
 
 	set = <T>(id: string, data: T): void => {
-		const val = this.store.value;
-		this.store.next({ ...val, [id]: data });
+		const val = this.state.value;
+		this.state.next({ ...val, [id]: data });
 	};
 
 	get = <T>(id: string): Observable<T | undefined> => {
-		return this.$store.pipe(
+		return this.$state.pipe(
 			map(e => e[id]),
 			distinctUntilChanged(deepEqual)
 		);
