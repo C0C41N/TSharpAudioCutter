@@ -28,7 +28,7 @@ class Store {
 	state = <T>(data?: T): IState<T> => {
 		const key = randomKey(8);
 		const set = (data: T) => this.set<T>(key, data);
-		const val = this.val<T>(key);
+		const val = () => this.val<T>(key);
 		const get = this.get<T>(key);
 		const once = () => this.once<T>(key);
 
@@ -41,7 +41,7 @@ class Store {
 export const svcStore = new Store();
 
 type IState<T> = {
-	val: T | undefined;
+	val: () => T | undefined;
 	set: (data: T) => void;
 	get: Observable<T | undefined>;
 	once: () => Promise<T | undefined>;
