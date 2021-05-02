@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged, map, skip, take } from 'rxjs/operators';
 
 import { svcUtil } from './util';
 
@@ -22,18 +22,27 @@ class Store {
 			distinctUntilChanged(deepEqual)
 		);
 
-	/**
-	 * returns [val: T | undefined, set: (data: T) => void, get: Observable<T | undefined>]
-	 */
-	state = <T>(): IState<T> => {
+	once = <T>(id: string): Promise<T | undefined> =>
+		this.get<T>(id).pipe(skip(1), take(1)).toPromise();
+
+	state = <T>(data?: T): IState<T> => {
 		const key = randomKey(8);
-		const val = this.val<T>(key);
 		const set = (data: T) => this.set<T>(key, data);
+		const val = this.val<T>(key);
 		const get = this.get<T>(key);
-		return [val, set, get];
+		const once = () => this.once<T>(key);
+
+		if (data) set(data);
+
+		return { val, set, get, once };
 	};
 }
 
 export const svcStore = new Store();
 
-type IState<T> = [T | undefined, (data: T) => void, Observable<T | undefined>];
+type IState<T> = {
+	val: T | undefined;
+	set: (data: T) => void;
+	get: Observable<T | undefined>;
+	once: () => Promise<T | undefined>;
+};
