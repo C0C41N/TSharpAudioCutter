@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { useStore } from '@services';
+import { useStates } from '@services';
 import {
 	Cont, Dur, IconDone, IconMusic, IconProc, IconRemove, Title
 } from '@styles/components/files';
@@ -8,7 +8,7 @@ import {
 import type { TraFile, TraFileList } from '@pages/Files';
 
 function File(props: IProps) {
-	const { set, get } = useStore();
+	const { $$files, $setFiles } = useStates();
 
 	const [files, setFiles] = useState<TraFileList>({});
 
@@ -19,17 +19,14 @@ function File(props: IProps) {
 				.reduce((a: TraFileList, e: TraFile) => {
 					return { ...a, [e.id]: e };
 				}, {} as TraFileList);
-			set('inputFiles', filteredFiles);
+			$setFiles(filteredFiles);
 		},
 		[files]
 	);
 
 	useEffect(() => {
-		const sub = get<TraFileList>('inputFiles').subscribe(e => e && setFiles(e));
-
-		return () => {
-			sub.unsubscribe();
-		};
+		const sub = $$files.subscribe(e => e && setFiles(e));
+		return () => sub.unsubscribe();
 	}, []);
 
 	return (

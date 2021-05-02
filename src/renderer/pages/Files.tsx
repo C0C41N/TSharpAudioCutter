@@ -12,7 +12,7 @@ function Files() {
 	const { path } = useNative();
 	const { ffmpeg } = useFFmpeg();
 	const { randomKey } = useUtil();
-	const { files, setFiles } = useStates();
+	const { $$files, $setFiles } = useStates();
 	const { extname } = path;
 
 	const [files, setFiles] = useState<TraFileList>({});
@@ -72,22 +72,21 @@ function Files() {
 
 			if (impure) {
 				setImpure(true);
-				console.log('impure');
 				if (!Files.length) return;
 			}
 
 			const fileList = await traFileList(Files);
-			set<TraFileList>('inputFiles', { ...files, ...fileList });
+			$setFiles({ ...files, ...fileList });
 		},
 		[files]
 	);
 
 	useEffect(() => {
-		const sub = get<TraFileList>('inputFiles').subscribe(e => e && setFiles(e));
+		const sub = $$files.subscribe(e => e && setFiles(e));
 
 		return () => {
 			sub.unsubscribe();
-			set('inputFiles', {});
+			$setFiles({});
 		};
 	}, []);
 

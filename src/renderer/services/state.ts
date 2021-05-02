@@ -3,4 +3,8 @@ import { svcStore } from './store';
 
 const { state } = svcStore;
 
-export const { val: files, set: setFiles, get: $files } = state<TraFileList>();
+export const {
+	val: $files,
+	set: $setFiles,
+	get: $$files,
+} = state<TraFileList>();

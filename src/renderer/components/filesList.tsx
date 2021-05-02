@@ -1,7 +1,7 @@
 import type { TraFileList } from '@pages/Files';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { useStore } from '@services';
+import { useStates } from '@services';
 import { Container, List, Scroll, Thumb } from '@styles/components/filesList';
 
 import File from './file';
@@ -11,7 +11,7 @@ function FilesList() {
 	const scrollRef = useRef<div>(null);
 	const thumbRef = useRef<div>(null);
 
-	const { get } = useStore();
+	const { $$files } = useStates();
 
 	const [drag, setDrag] = useState(false);
 	const [posY, setPosY] = useState(0);
@@ -80,11 +80,9 @@ function FilesList() {
 		const thumb = thumbRef.current;
 		if (thumb) thumb.style.top = '1px';
 
-		const sub = get<TraFileList>('inputFiles').subscribe(e => e && setFiles(e));
+		const sub = $$files.subscribe(e => e && setFiles(e));
 
-		return () => {
-			sub.unsubscribe();
-		};
+		return () => sub.unsubscribe();
 	}, []);
 
 	useEffect(() => {
