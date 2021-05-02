@@ -8,7 +8,7 @@ import { BtnDone, BtnSelect, Error, Fade, Heading, SubHeading } from '@styles/pa
 const fileTypes = ['.mp3'];
 
 function Files() {
-	const { pub, once } = usePubSub();
+	const { pubsub } = usePubSub();
 	const { set, get } = useStore();
 	const { path } = useNative();
 	const { ffmpeg } = useFFmpeg();
@@ -29,9 +29,9 @@ function Files() {
 	}, []);
 
 	const getDur = useCallback(async (path: string) => {
-		const key = randomKey(6);
-		ffmpeg.ffprobe(path, (_, { format }) => pub(key, format.duration));
-		const dur = await once<number>(key);
+		const { once, pub } = pubsub<number>();
+		ffmpeg.ffprobe(path, (_, { format }) => pub(format.duration ?? 0));
+		const dur = await once;
 
 		if (!dur) return '#NA';
 
