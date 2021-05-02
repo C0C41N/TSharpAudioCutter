@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { useComs } from '@services';
+import { useStore } from '@services';
 import {
 	Cont, Dur, IconDone, IconMusic, IconProc, IconRemove, Title
 } from '@styles/components/files';
@@ -8,7 +8,7 @@ import {
 import type { TraFile, TraFileList } from '@pages/Files';
 
 function File(props: IProps) {
-	const { set, get } = useComs();
+	const { set, get } = useStore();
 
 	const [files, setFiles] = useState<TraFileList>({});
 

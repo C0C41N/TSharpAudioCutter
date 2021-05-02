@@ -1,11 +1,11 @@
 import type { Observable } from 'rxjs';
-import { svcComs } from './coms';
 import { svcFF } from './ffmpeg';
 import { svcNative } from './native';
+import { svcPubSub } from './pubsub';
 import { svcUtil } from './util';
 
 const { ffmpeg } = svcFF;
-const { wait, fire, observe } = svcComs;
+const { once, pub, sub } = svcPubSub;
 const { electron, fs, path } = svcNative;
 const { randomKey } = svcUtil;
 const { existsSync, mkdirSync } = fs;
@@ -13,14 +13,14 @@ const { basename } = path;
 const { ipcRenderer } = electron;
 
 class Split {
-	private path: Promise<string> = wait('ipc:docs');
+	private path: Promise<string> = once('ipc:docs');
 
 	constructor() {
 		// Get path
 		ipcRenderer.on('docs', (_, docs) => {
 			const dir = `${docs}\\TSharp_split`;
 			!existsSync(dir) && mkdirSync(dir);
-			fire('ipc:docs', dir);
+			pub('ipc:docs', dir);
 		});
 
 		ipcRenderer.send('docs');
@@ -36,26 +36,26 @@ class Split {
 
 	private dur = async (file: string): Promise<number> => {
 		const key = randomKey(6);
-		ffmpeg.ffprobe(file, (_, { format }) => fire(key, format.duration));
-		return wait(key);
+		ffmpeg.ffprobe(file, (_, { format }) => pub(key, format.duration));
+		return once(key);
 	};
 
 	public Short = (file: string): Observable<IReturn> => {
 		const key = randomKey(6);
 		this.FFShort(key, file);
-		return observe(key);
+		return sub(key);
 	};
 
 	public Long = (file: string): Observable<IReturn> => {
 		const key = randomKey(6);
 		this.FFLong(key, file);
-		return observe(key);
+		return sub(key);
 	};
 
 	private FFShort = async (key: string, file: string) => {
 		ffmpeg()
-			.on('progress', ({ percent }) => fire(key, { percent, end: false }))
-			.on('end', () => fire(key, { percent: 100, end: true }))
+			.on('progress', ({ percent }) => pub(key, { percent, end: false }))
+			.on('end', () => pub(key, { percent: 100, end: true }))
 			.addInput(file)
 			.addOutput(await this.filename(file, 10))
 			.addOutputOption('-f', 'segment', '-segment_time', '9.96') // split
@@ -66,8 +66,8 @@ class Split {
 
 	private FFLong = async (key: string, file: string) => {
 		ffmpeg()
-			.on('progress', ({ percent }) => fire(key, { percent, end: false }))
-			.on('end', () => fire(key, { percent: 100, end: true }))
+			.on('progress', ({ percent }) => pub(key, { percent, end: false }))
+			.on('end', () => pub(key, { percent: 100, end: true }))
 			.addInput(file)
 			.addOutput(await this.filename(file, 58))
 			.addOutputOption('-f', 'segment', '-segment_time', '7.25') // split

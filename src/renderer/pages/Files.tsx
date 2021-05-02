@@ -2,13 +2,14 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 
 import Back from '@comp/back';
 import FilesList from '@comp/filesList';
-import { useComs, useFFmpeg, useNative, useUtil } from '@services';
+import { useFFmpeg, useNative, usePubSub, useStore, useUtil } from '@services';
 import { BtnDone, BtnSelect, Error, Fade, Heading, SubHeading } from '@styles/pages/files';
 
 const fileTypes = ['.mp3'];
 
 function Files() {
-	const { set, get, fire, wait } = useComs();
+	const { pub, once } = usePubSub();
+	const { set, get } = useStore();
 	const { path } = useNative();
 	const { ffmpeg } = useFFmpeg();
 	const { randomKey } = useUtil();
@@ -29,8 +30,8 @@ function Files() {
 
 	const getDur = useCallback(async (path: string) => {
 		const key = randomKey(6);
-		ffmpeg.ffprobe(path, (_, { format }) => fire(key, format.duration));
-		const dur = await wait<number>(key);
+		ffmpeg.ffprobe(path, (_, { format }) => pub(key, format.duration));
+		const dur = await once<number>(key);
 
 		if (!dur) return '#NA';
 

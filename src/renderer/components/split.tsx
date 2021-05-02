@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { useComs } from '@services';
+import { useStore } from '@services';
 import { btn, mont_600_17 } from '@styles';
 
 import type { TraFileList } from '@pages/Files';
@@ -11,7 +11,7 @@ const BtnDone = styled(btn)`
 `;
 
 function split(props: any) {
-	const { get } = useComs();
+	const { get } = useStore();
 
 	const [files, setFiles] = useState<TraFileList>({});
 
