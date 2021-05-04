@@ -18,10 +18,9 @@ class FFMPEG {
 		this.pathProbe = window.require('ffprobe-static');
 
 		const path = this.path.replace('app.asar', 'app.asar.unpacked');
-		const pathProbe = this.pathProbe.path.replace(
-			'app.asar',
-			'app.asar.unpacked'
-		);
+		const pathProbe = this.pathProbe.path
+			.replace('app.asar', 'app.asar.unpacked')
+			.replace('x64', 'ia32');
 
 		this.ffmpeg.setFfmpegPath(path);
 		this.ffmpeg.setFfprobePath(pathProbe);
