@@ -16,6 +16,7 @@ module.exports = {
 		minify: true,
 		splitting: true,
 		treeshake: true,
+		sourcemap: false,
 	},
 	alias: {
 		'@fonts': './src/renderer/assets/fonts',
