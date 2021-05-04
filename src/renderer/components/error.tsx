@@ -26,7 +26,7 @@ const fade = keyframes`
 
 const Err = styled.div`
 	${mont_400_14}
-	color: #FF0000F2;
+	color: #CB3D2E;
 	animation: ${fade} ${dur}s forwards ease-in-out;
 `;
 
