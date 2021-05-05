@@ -12,14 +12,17 @@ function Modal() {
 
 	const { show, level, desc, subDesc } = modal;
 
-	const onEnter = useCallback(({ key }) => {
-		if (key !== 'Enter') return;
-		setFadeOut(true);
-		setTimeout(() => {
-			$setModal(defModal);
-			setFadeOut(false);
-		}, 300);
-	}, []);
+	const onEnter = useCallback(
+		({ key }) => {
+			if (key !== 'Enter' && !show) return;
+			setFadeOut(true);
+			setTimeout(() => {
+				$setModal(defModal);
+				setFadeOut(false);
+			}, 300);
+		},
+		[show]
+	);
 
 	useEffect(() => {
 		const sub = $$modal.subscribe(e => e && setModal(e));
