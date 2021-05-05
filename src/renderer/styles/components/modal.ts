@@ -1,12 +1,42 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import { mont_700_36, nuni_400_18, nuni_600_24 } from '@styles/fonts';
 
 const hC = ['#CB3DDC', '#C8A500', '#CB3D2E'];
-// const hL = ['463px', '418px', '453px'];
-// left: ${(p: hP) => hL[p.level]};
 
-export const Backdrop = styled.div`
+const fadeIn = keyframes`
+	0%   {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+
+  100% { 
+		opacity: 1;
+		transform: scale(1);
+	}
+`;
+
+const fadeOut = keyframes`
+  0% { 
+		opacity: 1;
+		transform: scale(1);
+	}
+
+	100%   {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+`;
+
+const animFadeIn = css`
+	animation: ${fadeIn} 0.3s forwards ease-in;
+`;
+
+const animFadeOut = css`
+	animation: ${fadeOut} 0.3s forwards ease-out;
+`;
+
+export const Backdrop = styled.div<B>`
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -15,6 +45,8 @@ export const Backdrop = styled.div`
 
 	background: #ffffff;
 	border-radius: 50px;
+
+	${(p: B) => (p.fadeOut ? animFadeOut : animFadeIn)};
 
 	z-index: 110;
 `;
@@ -60,6 +92,10 @@ export const Dismiss = styled.div`
 	left: 50%;
 	transform: translateX(-50%);
 `;
+
+interface B {
+	fadeOut: boolean;
+}
 
 interface hP {
 	className?: string;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useStates } from '@services';
 import { Backdrop, Desc, Dismiss, Heading, Level, SubDesc } from '@styles/components/modal';
@@ -6,19 +6,35 @@ import { Backdrop, Desc, Dismiss, Heading, Level, SubDesc } from '@styles/compon
 const defModal: IModal = { show: false, desc: '', level: 2, subDesc: '' };
 
 function Modal() {
-	const { $$modal } = useStates();
+	const { $$modal, $setModal } = useStates();
 	const [modal, setModal] = useState<IModal>(defModal);
+	const [fadeOut, setFadeOut] = useState(false);
+
 	const { show, level, desc, subDesc } = modal;
+
+	const onEnter = useCallback(({ key }) => {
+		if (key !== 'Enter') return;
+		setFadeOut(true);
+		setTimeout(() => {
+			$setModal(defModal);
+			setFadeOut(false);
+		}, 300);
+	}, []);
 
 	useEffect(() => {
 		const sub = $$modal.subscribe(e => e && setModal(e));
-		return () => sub.unsubscribe();
+		document.addEventListener('keypress', onEnter);
+
+		return () => {
+			sub.unsubscribe();
+			document.removeEventListener('keypress', onEnter);
+		};
 	}, []);
 
 	const h = ['Info', 'Warning', 'Error'];
 
 	return show ? (
-		<Backdrop>
+		<Backdrop fadeOut={fadeOut}>
 			<Heading level={level}>{h[level]}</Heading>
 			<Desc>{desc}</Desc>
 			<SubDesc>{subDesc}</SubDesc>
