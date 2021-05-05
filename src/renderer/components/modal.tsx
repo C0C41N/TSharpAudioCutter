@@ -26,11 +26,11 @@ function Modal() {
 
 	useEffect(() => {
 		const sub = $$modal.subscribe(e => e && setModal(e));
-		document.addEventListener('keypress', onEnter);
+		document.addEventListener('keydown', onEnter);
 
 		return () => {
 			sub.unsubscribe();
-			document.removeEventListener('keypress', onEnter);
+			document.removeEventListener('keydown', onEnter);
 		};
 	}, []);
 

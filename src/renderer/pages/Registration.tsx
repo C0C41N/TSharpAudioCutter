@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState } from 'react';
+import React, { Fragment, KeyboardEvent, useCallback } from 'react';
 
 import Back from '@comp/back';
 import { useStates } from '@services';
@@ -17,13 +17,20 @@ function Registration() {
 		});
 	}, []);
 
+	const enterInput = useCallback(({ key }: KeyboardEvent) => {
+		if (key === 'Enter')
+			setTimeout(() => {
+				clickRegister();
+			}, 1000);
+	}, []);
+
 	return (
 		<Fragment>
 			<Back />
 			<Heading>License</Heading>
 			<SubHeading>Paste license key you got from HUD</SubHeading>
 			<Illustration />
-			<Input placeholder='zLTfb3s8NF' autoFocus />
+			<Input placeholder='zLTfb3s8NF' autoFocus onKeyDown={enterInput} />
 			<Btn onClick={clickRegister}>Done</Btn>
 		</Fragment>
 	);
