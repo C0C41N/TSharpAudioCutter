@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, useRouteMatch } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
+import Modal from '@comp/modal';
 import Files from '@pages/Files';
 import Main from '@pages/Main';
 import Registration from '@pages/Registration';
@@ -21,6 +22,7 @@ function Interface() {
 	return (
 		<MainDiv>
 			<Close />
+			<Modal />
 			{routes.map((e, i) => (
 				<Route exact={i === 0} path={e[0]} key={i}>
 					{({ match }) => (
