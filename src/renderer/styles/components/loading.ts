@@ -1,4 +1,3 @@
-import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
 const flip = keyframes`
@@ -18,6 +17,12 @@ const flip = keyframes`
 const loader = styled.div`
 	width: var(--size);
 	height: var(--size);
+
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+
 	-webkit-perspective: var(--persp);
 	-moz-perspective: var(--persp);
 	-ms-perspective: var(--persp);
@@ -35,15 +40,10 @@ const loader = styled.div`
 	}
 `;
 
-function Loading(p: { size?: string }) {
-	const Loader = styled(loader)`
-		--size: ${p.size ? p.size : '100px'};
-		--color: #6c63ff;
-		--persp: calc(var(--size) + 50px);
-	`;
-
-	// @ts-ignore
-	return <Loader {...p}></Loader>;
-}
+const Loading = styled(loader)<{ size?: string }>`
+	--size: ${p => (p.size ? p.size : '100px')};
+	--color: #6c63ff;
+	--persp: calc(var(--size) + 50px);
+`;
 
 export default Loading;

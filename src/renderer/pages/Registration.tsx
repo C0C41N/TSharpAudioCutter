@@ -6,11 +6,11 @@ import { Level } from '@styles/components/modal';
 import { Btn, Heading, Illustration, Input, SubHeading } from '@styles/pages/registration';
 
 function Registration() {
-	const { $setModal } = useStates();
+	const { setModal } = useStates();
 
 	const clickRegister = useCallback(
 		() =>
-			$setModal({
+			setModal({
 				show: true,
 				level: Level.error,
 				desc: 'Sorry, It looks like you’re blocked.',

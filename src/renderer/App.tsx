@@ -3,7 +3,6 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import DragBar from '@comp/DragBar';
-import Loading from '@comp/loading';
 import Interface from '@pages/Interface';
 import { flexCenter } from '@styles';
 
@@ -21,10 +20,6 @@ function App() {
 			<Switch>
 				<Route path='/main'>
 					<Interface />
-				</Route>
-
-				<Route path='/loading'>
-					<Loading size='500px'></Loading>
 				</Route>
 
 				<Route path='/' exact>
