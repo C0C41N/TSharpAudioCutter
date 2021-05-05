@@ -14,24 +14,24 @@ function Modal() {
 
 	const onEnter = useCallback(
 		({ key }) => {
-			if (key !== 'Enter' && !show) return;
+			if (key !== 'Enter' || !show) return;
 			setFadeOut(true);
 			setTimeout(() => {
 				$setModal(defModal);
 				setFadeOut(false);
 			}, 300);
 		},
-		[show]
+		[modal]
 	);
 
 	useEffect(() => {
-		const sub = $$modal.subscribe(e => e && setModal(e));
 		document.addEventListener('keydown', onEnter);
+		return () => document.removeEventListener('keydown', onEnter);
+	}, [onEnter]);
 
-		return () => {
-			sub.unsubscribe();
-			document.removeEventListener('keydown', onEnter);
-		};
+	useEffect(() => {
+		const sub = $$modal.subscribe(e => e && setModal(e));
+		return () => sub.unsubscribe();
 	}, []);
 
 	const h = ['Info', 'Warning', 'Error'];

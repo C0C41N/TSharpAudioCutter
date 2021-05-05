@@ -1,4 +1,4 @@
-import React, { Fragment, KeyboardEvent, useCallback } from 'react';
+import React, { Fragment, useCallback } from 'react';
 
 import Back from '@comp/back';
 import { useStates } from '@services';
@@ -8,21 +8,21 @@ import { Btn, Heading, Illustration, Input, SubHeading } from '@styles/pages/reg
 function Registration() {
 	const { $setModal } = useStates();
 
-	const clickRegister = useCallback(() => {
-		$setModal({
-			show: true,
-			level: Level.error,
-			desc: 'Sorry, It looks like you’re blocked.',
-			subDesc: 'Contact the creator for assistance.',
-		});
-	}, []);
+	const clickRegister = useCallback(
+		() =>
+			$setModal({
+				show: true,
+				level: Level.error,
+				desc: 'Sorry, It looks like you’re blocked.',
+				subDesc: 'Contact the creator for assistance.',
+			}),
+		[]
+	);
 
-	const enterInput = useCallback(({ key }: KeyboardEvent) => {
-		if (key === 'Enter')
-			setTimeout(() => {
-				clickRegister();
-			}, 1000);
-	}, []);
+	const enterInput = useCallback(
+		({ key }) => key === 'Enter' && clickRegister(),
+		[]
+	);
 
 	return (
 		<Fragment>
