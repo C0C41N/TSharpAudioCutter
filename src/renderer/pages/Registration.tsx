@@ -13,14 +13,9 @@ function Registration() {
 		setModal({
 			show: true,
 			level: Level.error,
-			loading: true,
 			desc: 'Sorry, It looks like you’re blocked.',
 			subDesc: 'Contact the creator for assistance.',
 		});
-
-		setTimeout(() => {
-			setModal({ show: false });
-		}, 3000);
 	}, []);
 
 	const enterInput = useCallback(
