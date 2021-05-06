@@ -1,10 +1,9 @@
 import type { Observable } from 'rxjs';
-import { svcFF } from './ffmpeg';
+import { ffmpeg } from './ffmpeg';
 import { svcNative } from './native';
 import { svcPubSub } from './pubsub';
 import { svcUtil } from './util';
 
-const { ffmpeg } = svcFF;
 const { once, pub, sub } = svcPubSub;
 const { electron, fs, path } = svcNative;
 const { randomKey } = svcUtil;

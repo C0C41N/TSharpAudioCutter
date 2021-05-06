@@ -2,7 +2,8 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 
 import Back from '@comp/back';
 import FilesList from '@comp/filesList';
-import { useFFmpeg, useNative, usePubSub, useStates, useUtil } from '@services';
+import { useNative, usePubSub, useStates, useUtil } from '@services';
+import { ffmpeg } from '@services/ffmpeg';
 import { BtnDone, BtnSelect, Error, Fade, Heading, SubHeading } from '@styles/pages/files';
 
 import type { TraFile, TraFileList } from '@types';
@@ -12,7 +13,6 @@ const fileTypes = ['.mp3'];
 function Files() {
 	const { pubsub } = usePubSub();
 	const { path } = useNative();
-	const { ffmpeg } = useFFmpeg();
 	const { randomKey } = useUtil();
 	const { Files } = useStates();
 
