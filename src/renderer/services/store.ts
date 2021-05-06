@@ -1,3 +1,4 @@
+import { useEffect, useReducer } from 'react';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, map, skip, take } from 'rxjs/operators';
 
@@ -25,7 +26,7 @@ class Store {
 	once = <T>(id: string): Promise<T | undefined> =>
 		this.get<T>(id).pipe(skip(1), take(1)).toPromise();
 
-	state = <T>(data?: T): IState<T> => {
+	state_ = <T>(data?: T): IState<T> => {
 		const key = randomKey(8);
 		const set = (data: T) => this.set<T>(key, data);
 		const val = () => this.val<T>(key);
@@ -35,6 +36,30 @@ class Store {
 		if (data) set(data);
 
 		return { val, set, get, once };
+	};
+
+	state = <T>(data?: T) => {
+		const key = randomKey(8);
+
+		const set = (data: T) => this.set<T>(key, data);
+		const val = () => this.val<T>(key);
+		const get = this.get<T>(key);
+		const once = () => this.once<T>(key);
+
+		if (data) set(data);
+
+		return (reactive = true): IState<T> => {
+			if (reactive) {
+				const forceUpdate = useReducer(x => x + 1, 0)[1];
+
+				useEffect(() => {
+					const sub = get.subscribe(() => forceUpdate());
+					return () => sub.unsubscribe();
+				}, []);
+			}
+
+			return { val, set, get, once };
+		};
 	};
 }
 

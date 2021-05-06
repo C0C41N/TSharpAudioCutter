@@ -6,7 +6,8 @@ import { Level } from '@styles/components/modal';
 import { Btn, Heading, Illustration, Input, SubHeading } from '@styles/pages/registration';
 
 function Registration() {
-	const { $setModal } = useStates();
+	const { Modal } = useStates();
+	const { set: $setModal } = Modal(false);
 
 	const clickRegister = useCallback(
 		() =>

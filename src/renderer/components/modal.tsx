@@ -16,8 +16,8 @@ const fillNulls = (a: any, b: any) =>
 	Object.keys(a).reduce((c, e) => ({ ...c, [e]: a[e] || b[e] }), {} as any);
 
 function Modal() {
-	const { $modal, $$modal, $setModal, useForceUpdate } = useStates();
-	const forceUpdate = useForceUpdate();
+	const { Modal } = useStates();
+	const { val: $modal, set: $setModal } = Modal();
 
 	const [fadeOut, setFadeOut] = useState(false);
 
@@ -41,10 +41,10 @@ function Modal() {
 		return () => document.removeEventListener('keydown', onEnter);
 	}, [onEnter]);
 
-	useEffect(() => {
-		const sub = $$modal.subscribe(() => forceUpdate());
-		return () => sub.unsubscribe();
-	}, []);
+	// useEffect(() => {
+	// 	const sub = $$modal.subscribe(() => forceUpdate());
+	// 	return () => sub.unsubscribe();
+	// }, []);
 
 	const h = ['Info', 'Warning', 'Error'];
 
