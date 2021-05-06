@@ -1,6 +1,5 @@
 import { createContext, useContext } from 'react';
 
-import { svcLog } from './log';
 import { svcNative } from './native';
 import { svcPubSub } from './pubsub';
 import { svcSplit } from './split';
@@ -10,7 +9,6 @@ import { svcUtil } from './util';
 
 export const services = {
 	svcNative,
-	svcLog,
 	svcSplit,
 	svcPubSub,
 	svcStore,
@@ -21,7 +19,6 @@ export const services = {
 const context = createContext(services);
 export const { Provider } = context;
 
-export const useLog = () => useContext(context).svcLog;
 export const useNative = () => useContext(context).svcNative;
 export const useSplit = () => useContext(context).svcSplit;
 export const useUtil = () => useContext(context).svcUtil;
