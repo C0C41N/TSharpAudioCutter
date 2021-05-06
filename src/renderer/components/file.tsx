@@ -8,9 +8,9 @@ import {
 import type { TraFile, TraFileList } from '@pages/Files';
 
 function File(props: IProps) {
-	const { $$files, $setFiles } = useStates();
-
-	const [files, setFiles] = useState<TraFileList>({});
+	const { $files, $$files, $setFiles, useForceUpdate } = useStates();
+	const forceUpdate = useForceUpdate();
+	const files = $files() || {};
 
 	const remove = useCallback(
 		(id: string) => {
@@ -25,7 +25,7 @@ function File(props: IProps) {
 	);
 
 	useEffect(() => {
-		const sub = $$files.subscribe(e => e && setFiles(e));
+		const sub = $$files.subscribe(e => forceUpdate());
 		return () => sub.unsubscribe();
 	}, []);
 

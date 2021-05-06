@@ -16,24 +16,24 @@ const fillNulls = (a: any, b: any) =>
 	Object.keys(a).reduce((c, e) => ({ ...c, [e]: a[e] || b[e] }), {} as any);
 
 function Modal() {
-	const { modal, $modal, setModal, useForceUpdate } = useStates();
-	const [fadeOut, setFadeOut] = useState(false);
-
+	const { $modal, $$modal, $setModal, useForceUpdate } = useStates();
 	const forceUpdate = useForceUpdate();
 
-	const modal_ = fillNulls(modal(), defModal) as IModal_;
-	const { show, level, desc, subDesc, loading } = modal_;
+	const [fadeOut, setFadeOut] = useState(false);
+
+	const modal = fillNulls($modal(), defModal) as IModal_;
+	const { show, level, desc, subDesc, loading } = modal;
 
 	const onEnter = useCallback(
 		({ key }) => {
 			if (key !== 'Enter' || !show || loading) return;
 			setFadeOut(true);
 			setTimeout(() => {
-				setModal(defModal);
+				$setModal(defModal);
 				setFadeOut(false);
 			}, 300);
 		},
-		[modal()]
+		[modal]
 	);
 
 	useEffect(() => {
@@ -42,7 +42,7 @@ function Modal() {
 	}, [onEnter]);
 
 	useEffect(() => {
-		const sub = $modal.subscribe(() => forceUpdate());
+		const sub = $$modal.subscribe(() => forceUpdate());
 		return () => sub.unsubscribe();
 	}, []);
 

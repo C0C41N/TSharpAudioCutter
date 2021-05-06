@@ -16,4 +16,4 @@ enum Lic {null, demo, paid, dev}
 
 export const { val: $files, 	set: $setFiles, 	get: $$files 	} = state<TraFileList>();
 export const { val: $lic, 		set: $setLic, 		get: $$lic 		} = state<Lic>();
-export const { val: modal,		set: setModal,		get: $modal 	} = state<IModal>(defModal);
+export const { val: $modal,		set: $setModal,		get: $$modal 	} = state<IModal>(defModal);

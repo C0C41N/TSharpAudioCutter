@@ -11,11 +11,13 @@ function FilesList() {
 	const scrollRef = useRef<div>(null);
 	const thumbRef = useRef<div>(null);
 
-	const { $$files } = useStates();
+	const { $files, $$files, useForceUpdate } = useStates();
+	const files = $files() || {};
+
+	const forceUpdate = useForceUpdate();
 
 	const [drag, setDrag] = useState(false);
 	const [posY, setPosY] = useState(0);
-	const [files, setFiles] = useState<TraFileList>({});
 
 	const setThumbHeight = useCallback(() => {
 		const cont = contRef.current;
@@ -80,7 +82,7 @@ function FilesList() {
 		const thumb = thumbRef.current;
 		if (thumb) thumb.style.top = '1px';
 
-		const sub = $$files.subscribe(e => e && setFiles(e));
+		const sub = $$files.subscribe(() => forceUpdate());
 
 		return () => sub.unsubscribe();
 	}, []);

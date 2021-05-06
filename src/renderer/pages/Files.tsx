@@ -12,10 +12,10 @@ function Files() {
 	const { path } = useNative();
 	const { ffmpeg } = useFFmpeg();
 	const { randomKey } = useUtil();
-	const { $$files, $setFiles } = useStates();
+	const { $files, $$files, $setFiles, useForceUpdate } = useStates();
+	const files = $files() || {};
+	const forceUpdate = useForceUpdate();
 	const { extname } = path;
-
-	const [files, setFiles] = useState<TraFileList>({});
 	const [impure, setImpure] = useState(false);
 
 	const inputFileRef = useRef<HTMLInputElement>(null);
@@ -82,7 +82,7 @@ function Files() {
 	);
 
 	useEffect(() => {
-		const sub = $$files.subscribe(e => e && setFiles(e));
+		const sub = $$files.subscribe(() => forceUpdate());
 
 		return () => {
 			sub.unsubscribe();
