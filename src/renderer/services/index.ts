@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
 
 import * as svcState from './state';
-import { svcStore } from './store';
+import * as svcStore from './store';
 import { svcUtil } from './util';
 
 export const services = {
