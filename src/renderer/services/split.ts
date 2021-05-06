@@ -1,11 +1,10 @@
 import type { Observable } from 'rxjs';
 import { ffmpeg } from './ffmpeg';
-import { svcNative } from './native';
+import { electron, fs, path } from './native';
 import { svcPubSub } from './pubsub';
 import { svcUtil } from './util';
 
 const { once, pub, sub } = svcPubSub;
-const { electron, fs, path } = svcNative;
 const { randomKey } = svcUtil;
 const { existsSync, mkdirSync } = fs;
 const { basename } = path;

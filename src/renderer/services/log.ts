@@ -1,9 +1,8 @@
-import { svcNative } from './native';
+import { fs } from './native';
 
 const file = './.log';
 
 export const cls = () => {
-	const { fs } = svcNative;
 	const { writeFileSync } = fs;
 
 	writeFileSync(file, '');
@@ -12,7 +11,6 @@ export const cls = () => {
 export const log = (o: any, clear = false) => {
 	if (clear) cls();
 
-	const { fs } = svcNative;
 	const { appendFileSync } = fs;
 
 	const time = new Date().toString().split(' ')[4];

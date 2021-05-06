@@ -1,26 +1,16 @@
-import type * as fs from 'fs';
-import type * as path from 'path';
-import type * as electron from 'electron';
+import type * as FS from 'fs';
+import type * as Path from 'path';
+import type * as Electron from 'electron';
 
-class Native {
-	public fs!: typeof fs;
-	public path!: typeof path;
-	public electron!: typeof electron;
+export const valid = () => !!(window?.process as any)?.type;
 
-	public valid = () => !!(window?.process as any)?.type;
+if (!valid()) throw 'src:native:invalid';
 
-	constructor() {
-		if (!this.valid()) throw 'SVC:Native:VALID';
+export const fs: typeof FS = window.require('fs');
+export const path: typeof Path = window.require('path');
+export const electron: typeof Electron = window.require('electron');
 
-		this.fs = window.require('fs');
-		this.electron = window.require('electron');
-		this.path = window.require('path');
-	}
-
-	public exit = () => {
-		const { ipcRenderer } = this.electron;
-		ipcRenderer.send('exit');
-	};
-}
-
-export const svcNative = new Native();
+export const exit = () => {
+	const { ipcRenderer } = electron;
+	ipcRenderer.send('exit');
+};

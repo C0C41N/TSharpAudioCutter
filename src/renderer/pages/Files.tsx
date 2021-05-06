@@ -2,17 +2,16 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 
 import Back from '@comp/back';
 import FilesList from '@comp/filesList';
-import { useNative, usePubSub, useStates, useUtil } from '@services';
+import { usePubSub, useStates, useUtil } from '@services';
 import { ffmpeg } from '@services/ffmpeg';
+import { path } from '@services/native';
 import { BtnDone, BtnSelect, Error, Fade, Heading, SubHeading } from '@styles/pages/files';
 
 import type { TraFile, TraFileList } from '@types';
-
 const fileTypes = ['.mp3'];
 
 function Files() {
 	const { pubsub } = usePubSub();
-	const { path } = useNative();
 	const { randomKey } = useUtil();
 	const { Files } = useStates();
 
