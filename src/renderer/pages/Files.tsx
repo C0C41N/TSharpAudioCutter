@@ -17,9 +17,7 @@ function Files() {
 	const { Files } = useStates();
 
 	const { extname } = path;
-	const { val: $files, set: $setFiles } = Files();
-
-	const files = $files();
+	const { val: files, set: setFiles } = Files();
 
 	const [impure, setImpure] = useState(false);
 
@@ -81,12 +79,12 @@ function Files() {
 			}
 
 			const fileList = await traFileList(Files);
-			$setFiles({ ...files, ...fileList });
+			setFiles({ ...files, ...fileList });
 		},
 		[files]
 	);
 
-	useEffect(() => () => $setFiles({}), []);
+	useEffect(() => () => setFiles({}), []);
 
 	return (
 		<Fragment>

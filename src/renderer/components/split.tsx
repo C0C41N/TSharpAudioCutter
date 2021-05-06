@@ -11,7 +11,7 @@ const BtnDone = styled(btn)`
 `;
 
 function split(props: any) {
-	const { get } = useStore();
+	const { observe: get } = useStore();
 
 	const [files, setFiles] = useState<TraFileList>({});
 

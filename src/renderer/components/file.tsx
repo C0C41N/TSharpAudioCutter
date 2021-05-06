@@ -13,14 +13,15 @@ function File(props: IProps) {
 
 	const remove = useCallback(
 		(id: string) => {
-			const filteredFiles = Object.values(files())
+			const filteredFiles = Object.values(files)
 				.filter(e => e.id !== id)
 				.reduce((a: TraFileList, e: TraFile) => {
 					return { ...a, [e.id]: e };
 				}, {} as TraFileList);
+
 			setFiles(filteredFiles);
 		},
-		[files()]
+		[files]
 	);
 
 	return (

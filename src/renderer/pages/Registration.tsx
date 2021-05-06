@@ -7,11 +7,11 @@ import { Level } from '@types';
 
 function Registration() {
 	const { Modal } = useStates();
-	const { set: $setModal } = Modal(false);
+	const { set: setModal } = Modal(false);
 
 	const clickRegister = useCallback(
 		() =>
-			$setModal({
+			setModal({
 				show: true,
 				level: Level.error,
 				desc: 'Sorry, It looks like you’re blocked.',

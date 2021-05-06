@@ -12,11 +12,11 @@ const fillNulls = (a: any, b: any) =>
 
 function Modal() {
 	const { Modal } = useStates();
-	const { val: $modal, set: $setModal } = Modal();
+	const { val: $modal, set: setModal } = Modal();
 
 	const [fadeOut, setFadeOut] = useState(false);
 
-	const modal = fillNulls($modal(), defModal) as IModal_;
+	const modal = fillNulls($modal, defModal) as IModal_;
 	const { show, level, desc, subDesc, loading } = modal;
 
 	const onEnter = useCallback(
@@ -24,7 +24,7 @@ function Modal() {
 			if (key !== 'Enter' || !show || loading) return;
 			setFadeOut(true);
 			setTimeout(() => {
-				$setModal(defModal);
+				setModal(defModal);
 				setFadeOut(false);
 			}, 300);
 		},

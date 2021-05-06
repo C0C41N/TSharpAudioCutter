@@ -11,8 +11,7 @@ function FilesList() {
 	const thumbRef = useRef<div>(null);
 
 	const { Files } = useStates();
-	const { val: $files, set: $setFiles } = Files();
-	const files = $files() || {};
+	const { val: files } = Files();
 
 	const [drag, setDrag] = useState(false);
 	const [posY, setPosY] = useState(0);
