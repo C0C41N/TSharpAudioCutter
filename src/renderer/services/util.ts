@@ -1,25 +1,17 @@
-class Util {
-	decoupleEntity = <T>(e: T): T => {
-		return JSON.parse(JSON.stringify(e));
-	};
+export const decoupleEntity = <T>(e: T): T => JSON.parse(JSON.stringify(e));
 
-	deepEqual = <T, U>(x: T, y: U): boolean => {
-		return JSON.stringify(x) === JSON.stringify(y);
-	};
+export const deepEqual = <T, U>(x: T, y: U) =>
+	JSON.stringify(x) === JSON.stringify(y);
 
-	randomKey = (len: number): string => {
-		// prettier-ignore
-		const x = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C',
+export const randomKey = (len: number): string => {
+	// prettier-ignore
+	const x = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C',
 		'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
 		'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g',
 		'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
 		'w', 'x', 'y', 'z']
 
-		return [...Array(len)].reduce(
-			(a: string) => a.concat(x[Math.floor(Math.random() * x.length)]),
-			''
-		);
-	};
-}
-
-export const svcUtil = new Util();
+	const { floor, random } = Math;
+	const ch = () => x[floor(random() * x.length)];
+	return [...Array(len)].reduce((a: string) => a.concat(ch()), '');
+};

@@ -2,9 +2,8 @@ import type { Observable } from 'rxjs';
 import { ffmpeg } from './ffmpeg';
 import { electron, fs, path } from './native';
 import { once, pub, sub } from './pubsub';
-import { svcUtil } from './util';
+import { randomKey } from './util';
 
-const { randomKey } = svcUtil;
 const { existsSync, mkdirSync } = fs;
 const { basename } = path;
 const { ipcRenderer } = electron;

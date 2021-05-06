@@ -1,9 +1,7 @@
 import { Observable, Subject } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
 
-import { svcUtil } from './util';
-
-const { randomKey } = svcUtil;
+import { randomKey } from './util';
 
 const subj = new Subject<{ id: string; data: any }>();
 const obsv = subj.asObservable();

@@ -2,9 +2,7 @@ import { useEffect, useReducer } from 'react';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, map, skip, take } from 'rxjs/operators';
 
-import { svcUtil } from './util';
-
-const { deepEqual, randomKey } = svcUtil;
+import { deepEqual, randomKey } from './util';
 
 const bsub = new BehaviorSubject<{ [key: string]: any }>({});
 const obsv = bsub.asObservable();
