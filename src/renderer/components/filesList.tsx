@@ -1,4 +1,3 @@
-import type { TraFileList } from '@pages/Files';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useStates } from '@services';
@@ -11,10 +10,9 @@ function FilesList() {
 	const scrollRef = useRef<div>(null);
 	const thumbRef = useRef<div>(null);
 
-	const { $files, $$files, useForceUpdate } = useStates();
+	const { Files } = useStates();
+	const { val: $files, set: $setFiles } = Files();
 	const files = $files() || {};
-
-	const forceUpdate = useForceUpdate();
 
 	const [drag, setDrag] = useState(false);
 	const [posY, setPosY] = useState(0);
@@ -81,10 +79,6 @@ function FilesList() {
 	useEffect(() => {
 		const thumb = thumbRef.current;
 		if (thumb) thumb.style.top = '1px';
-
-		const sub = $$files.subscribe(() => forceUpdate());
-
-		return () => sub.unsubscribe();
 	}, []);
 
 	useEffect(() => {

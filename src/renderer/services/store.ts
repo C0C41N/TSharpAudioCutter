@@ -23,27 +23,15 @@ class Store {
 			distinctUntilChanged(deepEqual)
 		);
 
-	once = <T>(id: string): Promise<T | undefined> =>
-		this.get<T>(id).pipe(skip(1), take(1)).toPromise();
-
-	state_ = <T>(data?: T): IState<T> => {
-		const key = randomKey(8);
-		const set = (data: T) => this.set<T>(key, data);
-		const val = () => this.val<T>(key);
-		const get = this.get<T>(key);
-		const once = () => this.once<T>(key);
-
-		if (data) set(data);
-
-		return { val, set, get, once };
-	};
+	once = <T>(id: string) =>
+		this.get<T>(id).pipe(skip(1), take(1)).toPromise() as Promise<T>;
 
 	state = <T>(data?: T) => {
 		const key = randomKey(8);
 
 		const set = (data: T) => this.set<T>(key, data);
-		const val = () => this.val<T>(key);
-		const get = this.get<T>(key);
+		const val = () => this.val<T>(key) as T;
+		const get = this.get<T>(key) as Observable<T>;
 		const once = () => this.once<T>(key);
 
 		if (data) set(data);
@@ -66,8 +54,8 @@ class Store {
 export const svcStore = new Store();
 
 type IState<T> = {
-	val: () => T | undefined;
+	val: () => T;
 	set: (data: T) => void;
-	get: Observable<T | undefined>;
-	once: () => Promise<T | undefined>;
+	get: Observable<T>;
+	once: () => Promise<T>;
 };

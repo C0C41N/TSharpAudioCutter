@@ -41,11 +41,6 @@ function Modal() {
 		return () => document.removeEventListener('keydown', onEnter);
 	}, [onEnter]);
 
-	// useEffect(() => {
-	// 	const sub = $$modal.subscribe(() => forceUpdate());
-	// 	return () => sub.unsubscribe();
-	// }, []);
-
 	const h = ['Info', 'Warning', 'Error'];
 
 	const dialog = (

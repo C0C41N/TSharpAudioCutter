@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 
 import { useStates } from '@services';
 import {
@@ -8,26 +8,20 @@ import {
 import type { TraFile, TraFileList } from '@pages/Files';
 
 function File(props: IProps) {
-	const { $files, $$files, $setFiles, useForceUpdate } = useStates();
-	const forceUpdate = useForceUpdate();
-	const files = $files() || {};
+	const { Files } = useStates();
+	const { val: files, set: setFiles } = Files();
 
 	const remove = useCallback(
 		(id: string) => {
-			const filteredFiles = Object.values(files)
+			const filteredFiles = Object.values(files())
 				.filter(e => e.id !== id)
 				.reduce((a: TraFileList, e: TraFile) => {
 					return { ...a, [e.id]: e };
 				}, {} as TraFileList);
-			$setFiles(filteredFiles);
+			setFiles(filteredFiles);
 		},
-		[files]
+		[files()]
 	);
-
-	useEffect(() => {
-		const sub = $$files.subscribe(e => forceUpdate());
-		return () => sub.unsubscribe();
-	}, []);
 
 	return (
 		<Cont>
