@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useStates } from '@services';
+import { useListenEvent } from '@services/hooks';
 import { Container, List, Scroll, Thumb } from '@styles/components/filesList';
 
 import File from './file';
@@ -80,21 +81,11 @@ function FilesList() {
 		if (thumb) thumb.style.top = '1px';
 	}, []);
 
-	useEffect(() => {
-		setThumbHeight();
-	}, [files]);
+	useEffect(setThumbHeight, [files]);
 
-	useEffect(() => {
-		document.addEventListener('mousemove', mousemove);
-		document.addEventListener('mouseup', mouseup);
-		document.addEventListener('mouseleave', mouseup);
-
-		return () => {
-			document.removeEventListener('mousemove', mousemove);
-			document.removeEventListener('mouseup', mouseup);
-			document.removeEventListener('mouseleave', mouseup);
-		};
-	}, [mousemove, mouseup]);
+	useListenEvent(document, 'mousemove', mousemove);
+	useListenEvent(document, 'mouseup', mouseup);
+	useListenEvent(document, 'mouseleave', mouseup);
 
 	return (
 		<Container>

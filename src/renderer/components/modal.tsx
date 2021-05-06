@@ -1,7 +1,8 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 
 import { defModal } from '@const';
 import { useStates } from '@services';
+import { useListenEvent } from '@services/hooks';
 import Loading from '@styles/components/loading';
 import { Backdrop, Desc, Dismiss, Heading, SubDesc } from '@styles/components/modal';
 
@@ -31,10 +32,7 @@ function Modal() {
 		[modal]
 	);
 
-	useEffect(() => {
-		document.addEventListener('keydown', onEnter);
-		return () => document.removeEventListener('keydown', onEnter);
-	}, [onEnter]);
+	useListenEvent(document, 'keydown', onEnter);
 
 	const h = ['Info', 'Warning', 'Error'];
 
