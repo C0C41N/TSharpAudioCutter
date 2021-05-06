@@ -12,7 +12,7 @@ export const Btn = styled.div`
 
 	border-radius: 100px;
 	background: white;
-	z-index: 100;
+	z-index: 120;
 
 	${flexCenter}
 

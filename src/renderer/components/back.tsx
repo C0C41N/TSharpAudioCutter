@@ -8,6 +8,8 @@ const Back = styled(Btn)`
 	position: absolute;
 	left: 31px;
 	top: 27px;
+
+	z-index: 100;
 `;
 
 function back(props: any) {
