@@ -7,7 +7,10 @@
 		"jsx": "preserve",
 		"baseUrl": "./",
 		"paths": {
+			"@types": ["src/renderer/common/types"],
+			"@const": ["src/renderer/common/const"],
 			"@fonts/*": ["src/renderer/assets/fonts/*"],
+			"@common/*": ["src/renderer/common/*"],
 			"@comp/*": ["src/renderer/components/*"],
 			"@pages/*": ["src/renderer/pages/*"],
 			"@styles": ["src/renderer/styles"],

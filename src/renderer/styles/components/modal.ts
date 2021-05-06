@@ -2,6 +2,8 @@ import styled, { css, keyframes } from 'styled-components';
 
 import { mont_700_36, nuni_400_18, nuni_600_24 } from '@styles/fonts';
 
+import type { Level } from '@types';
+
 const hC = ['#CB3DDC', '#C8A500', '#CB3D2E'];
 
 const fadeIn = keyframes`
@@ -100,10 +102,4 @@ interface B {
 interface hP {
 	className?: string;
 	level: Level;
-}
-
-export enum Level {
-	'info',
-	'warning',
-	'error',
 }

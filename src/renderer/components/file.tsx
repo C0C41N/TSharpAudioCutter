@@ -5,7 +5,7 @@ import {
 	Cont, Dur, IconDone, IconMusic, IconProc, IconRemove, Title
 } from '@styles/components/files';
 
-import type { TraFile, TraFileList } from '@pages/Files';
+import type { TraFile, TraFileList } from '@types';
 
 function File(props: IProps) {
 	const { Files } = useStates();

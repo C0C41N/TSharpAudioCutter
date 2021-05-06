@@ -1,11 +1,9 @@
-import type { TraFileList } from '@pages/Files';
-
-import { defModal, IModal } from '@comp/modal';
+import { defModal } from '@const';
 import { svcStore } from '@services/store';
 
-const { state } = svcStore;
+import type { IModal, Lic, TraFileList } from '@types';
 
-enum Lic {null, demo, paid, dev}
+const { state } = svcStore;
 
 export const Files = state<TraFileList>({});
 export const License = state<Lic>(undefined);

@@ -2,8 +2,8 @@ import React, { Fragment, useCallback } from 'react';
 
 import Back from '@comp/back';
 import { useStates } from '@services';
-import { Level } from '@styles/components/modal';
 import { Btn, Heading, Illustration, Input, SubHeading } from '@styles/pages/registration';
+import { Level } from '@types';
 
 function Registration() {
 	const { Modal } = useStates();

@@ -5,6 +5,8 @@ import FilesList from '@comp/filesList';
 import { useFFmpeg, useNative, usePubSub, useStates, useUtil } from '@services';
 import { BtnDone, BtnSelect, Error, Fade, Heading, SubHeading } from '@styles/pages/files';
 
+import type { TraFile, TraFileList } from '@types';
+
 const fileTypes = ['.mp3'];
 
 function Files() {
@@ -113,15 +115,3 @@ function Files() {
 }
 
 export default Files;
-
-export interface TraFile {
-	id: string;
-	name: string;
-	path: string;
-	dur: string;
-	status: number;
-}
-
-export interface TraFileList {
-	[key: string]: TraFile;
-}

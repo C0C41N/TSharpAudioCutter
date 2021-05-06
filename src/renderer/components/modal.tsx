@@ -1,16 +1,11 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 
+import { defModal } from '@const';
 import { useStates } from '@services';
 import Loading from '@styles/components/loading';
-import { Backdrop, Desc, Dismiss, Heading, Level, SubDesc } from '@styles/components/modal';
+import { Backdrop, Desc, Dismiss, Heading, SubDesc } from '@styles/components/modal';
 
-export const defModal: IModal_ = {
-	show: false,
-	loading: false,
-	desc: '',
-	level: 2,
-	subDesc: '',
-};
+import type { IModal_ } from '@types';
 
 const fillNulls = (a: any, b: any) =>
 	Object.keys(a).reduce((c, e) => ({ ...c, [e]: a[e] || b[e] }), {} as any);
@@ -62,19 +57,3 @@ function Modal() {
 }
 
 export default Modal;
-
-export interface IModal {
-	show: boolean;
-	loading?: boolean;
-	level?: Level;
-	desc?: string;
-	subDesc?: string;
-}
-
-export interface IModal_ {
-	show: boolean;
-	loading: boolean;
-	level: Level;
-	desc: string;
-	subDesc: string;
-}

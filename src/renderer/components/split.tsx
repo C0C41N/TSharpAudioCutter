@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useStore } from '@services';
 import { btn, mont_600_17 } from '@styles';
 
-import type { TraFileList } from '@pages/Files';
+import type { TraFileList } from '@types';
 
 const BtnDone = styled(btn)`
 	${mont_600_17}

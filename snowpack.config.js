@@ -19,7 +19,10 @@ module.exports = {
 		sourcemap: false,
 	},
 	alias: {
+		'@types': './src/renderer/common/types',
+		'@const': './src/renderer/common/const',
 		'@fonts': './src/renderer/assets/fonts',
+		'@common': './src/renderer/common',
 		'@pages': './src/renderer/pages',
 		'@comp': './src/renderer/components',
 		'@styles': './src/renderer/styles',

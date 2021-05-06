@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-interface Props {
+interface IProps {
 	progress: number;
 	height: number;
 	width: number;
 }
 
 const Bar = styled.div`
-	--width: ${(e: Props) => e.width}px;
-	--height: ${(e: Props) => e.height}px;
-	--progress: ${(e: Props) => e.progress};
+	--width: ${(e: IProps) => e.width}px;
+	--height: ${(e: IProps) => e.height}px;
+	--progress: ${(e: IProps) => e.progress};
 	position: absolute;
 	width: var(--width);
 	height: var(--height);
@@ -26,7 +26,7 @@ const Thumb = styled.div`
 	background: #3f3d56;
 `;
 
-function progress(props: Props) {
+function progress(props: IProps) {
 	return (
 		<Bar {...props}>
 			<Thumb />
