@@ -20,46 +20,50 @@ export const observe = <T>(id: string): Observable<T | undefined> =>
 		distinctUntilChanged(deepEqual)
 	);
 
-export const once = <T>(id: string) =>
-	observe<T>(id).pipe(skip(1), take(1)).toPromise() as Promise<T>;
-
 export const state = <T>(data?: T) => {
 	const key = randomKey(8);
 
 	const sEt = (data: T) => set<T>(key, data);
 	const gEt = () => get<T>(key) as T;
 	const oBserve = observe<T>(key) as Observable<T>;
-	const oNce = () => once<T>(key);
 
-	if (data) sEt(data);
+	if (data !== undefined) sEt(data);
 
-	return (reactive = true): State<T> => {
-		if (reactive) {
-			const forceUpdate = useReducer(x => x + 1, 0)[1];
-
-			useEffect(() => {
-				const sub = oBserve.subscribe(() => forceUpdate());
-				return () => sub.unsubscribe();
-			}, []);
-		}
-
-		return new State<T>(gEt, sEt, oBserve, oNce);
-	};
+	return (reactive = true): State<T> =>
+		new State<T>(reactive, gEt, sEt, oBserve);
 };
 
 class State<T> {
 	get val() {
-		return this.val_();
+		return this.value();
 	}
-
-	get once() {
-		return this.once_();
-	}
+	/**
+	 * will fire first time then
+	 * on every change without causing
+	 * forceUpdate
+	 */
+	public changed = (e: (v: T) => void, initial = true) => {
+		useEffect(() => {
+			const sub = initial
+				? this.observe.subscribe(e)
+				: this.observe.pipe(skip(1)).subscribe(e);
+			return () => sub.unsubscribe();
+		}, []);
+	};
 
 	constructor(
-		private val_: () => T,
+		reactive = true,
+		private value: () => T,
 		public set: (data: T) => void,
-		public observe: Observable<T>,
-		private once_: () => Promise<T>
-	) {}
+		private observe: Observable<T>
+	) {
+		if (reactive) {
+			const forceUpdate = useReducer(x => x + 1, 0)[1];
+
+			useEffect(() => {
+				const sub = observe.subscribe(() => forceUpdate());
+				return () => sub.unsubscribe();
+			}, []);
+		}
+	}
 }

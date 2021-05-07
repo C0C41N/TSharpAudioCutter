@@ -13,21 +13,31 @@ const fillNulls = (a: any, b: any) =>
 
 function Modal() {
 	const { Modal } = useStates();
-	const { val: $modal, set: setModal } = Modal();
+	const { val: $modal, set: setModal, changed: onModal } = Modal();
 
 	const [fadeOut, setFadeOut] = useState(false);
+	const [visible, setVisible] = useState(false);
 
 	const modal = fillNulls($modal, defModal) as IModal_;
 	const { show, level, desc, subDesc, loading } = modal;
 
+	const FadeOut = useCallback(() => {
+		setFadeOut(true);
+		setTimeout(() => {
+			setVisible(false);
+			setFadeOut(false);
+		}, 300);
+	}, []);
+
+	onModal(e => {
+		if (e.show) setVisible(true);
+		else FadeOut();
+	}, false);
+
 	const onEnter = useCallback(
 		({ key }) => {
 			if (key !== 'Enter' || !show || loading) return;
-			setFadeOut(true);
-			setTimeout(() => {
-				setModal(defModal);
-				setFadeOut(false);
-			}, 300);
+			setModal({ show: false, loading: false });
 		},
 		[modal]
 	);
@@ -47,7 +57,7 @@ function Modal() {
 		</Fragment>
 	);
 
-	return show ? (
+	return visible ? (
 		<Backdrop fadeOut={fadeOut}>
 			{loading ? <Loading size='250px' /> : dialog}
 		</Backdrop>

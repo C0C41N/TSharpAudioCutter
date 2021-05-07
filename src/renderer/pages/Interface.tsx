@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Route, useRouteMatch } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
@@ -7,10 +7,24 @@ import Files from '@pages/Files';
 import Main from '@pages/Main';
 import Registration from '@pages/Registration';
 import Youtube from '@pages/Youtube';
+import { useStates } from '@services';
 import { Close, MainDiv } from '@styles/pages/interface';
+import { Lic } from '@types';
 
 function Interface() {
 	const { path } = useRouteMatch();
+	const { License, Modal: $Modal } = useStates();
+	const { set: setModal } = $Modal(false);
+	const { set: setLic, changed: onLic } = License(false);
+
+	onLic(e => {
+		if (e === Lic.null) setModal({ show: true, loading: true });
+		else setModal({ show: false, loading: true });
+	});
+
+	useEffect(() => {
+		setTimeout(() => setLic(Lic.paid), 3000);
+	}, []);
 
 	const routes = [
 		[path, <Main />],
