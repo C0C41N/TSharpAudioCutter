@@ -3,6 +3,10 @@
 
 // export const decoupleEntity = <T>(e: T): T => JSON.parse(JSON.stringify(e));
 
+export const sleep = (ms: number) => {
+	return new Promise(resolve => setTimeout(resolve, ms));
+};
+
 export const deepEqual = <T, U>(x: T, y: U) =>
 	JSON.stringify(x) === JSON.stringify(y);
 

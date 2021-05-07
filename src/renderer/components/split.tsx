@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import { useStates } from '@services';
+import { sleep } from '@services/util';
 import { btn, mont_600_17 } from '@styles';
+import { Lic, Status, TraFile } from '@types';
 
 const BtnDone = styled(btn)`
 	${mont_600_17}
@@ -10,11 +12,40 @@ const BtnDone = styled(btn)`
 
 function split(props: any) {
 	const { Files, License } = useStates();
-	const { val: files } = Files();
+	const { val: files, set: setFiles } = Files();
+	const { val: lic } = License();
 
-	return !!Object.keys(files).length ? (
-		<BtnDone {...props}>Done</BtnDone>
-	) : null;
+	const refFiles = useRef(files);
+
+	// TODO: Demo Check
+
+	const setStatus = (file: TraFile, status: Status) => {
+		const { id } = file;
+		const fiLe: TraFile = { ...file, status };
+		setFiles({ ...refFiles.current, [id]: fiLe });
+	};
+
+	const split = async () => {
+		for (const file of Object.values(files)) {
+			setStatus(file, Status.split);
+
+			await sleep(100);
+
+			setStatus(file, Status.done);
+		}
+	};
+
+	useEffect(() => {
+		refFiles.current = files;
+	}, [files]);
+
+	if (lic === Lic.null) return null;
+	if (!Object.keys(files).length) return null;
+	return (
+		<BtnDone {...props} onClick={split}>
+			Done
+		</BtnDone>
+	);
 }
 
 export default split;

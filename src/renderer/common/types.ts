@@ -32,7 +32,13 @@ export interface TraFile {
 	name: string;
 	path: string;
 	dur: string;
-	status: number;
+	status: Status;
+}
+
+export enum Status {
+	'null',
+	'split',
+	'done',
 }
 
 export interface TraFileList {
