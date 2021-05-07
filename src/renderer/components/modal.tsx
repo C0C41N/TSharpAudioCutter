@@ -1,24 +1,18 @@
 import React, { Fragment, useCallback, useState } from 'react';
 
-import { defModal } from '@const';
 import { useStates } from '@services';
 import { useListenEvent } from '@services/hooks';
 import Loading from '@styles/components/loading';
 import { Backdrop, Desc, Dismiss, Heading, SubDesc } from '@styles/components/modal';
 
-import type { IModal_ } from '@types';
-
-const fillNulls = (a: any, b: any) =>
-	Object.keys(a).reduce((c, e) => ({ ...c, [e]: a[e] || b[e] }), {} as any);
-
 function Modal() {
 	const { Modal } = useStates();
-	const { val: $modal, set: setModal, changed: onModal } = Modal();
+	const { val, set, changed, last } = Modal();
 
 	const [fadeOut, setFadeOut] = useState(false);
 	const [visible, setVisible] = useState(false);
 
-	const modal = fillNulls($modal, defModal) as IModal_;
+	const modal = last ? { ...last, ...val } : val;
 	const { show, level, desc, subDesc, loading } = modal;
 
 	const FadeOut = useCallback(() => {
@@ -29,7 +23,7 @@ function Modal() {
 		}, 300);
 	}, []);
 
-	onModal(e => {
+	changed(e => {
 		if (e.show) setVisible(true);
 		else FadeOut();
 	}, false);
@@ -37,7 +31,7 @@ function Modal() {
 	const onEnter = useCallback(
 		({ key }) => {
 			if (key !== 'Enter' || !show || loading) return;
-			setModal({ show: false, loading: false });
+			set({ show: false, loading: false });
 		},
 		[modal]
 	);
@@ -48,7 +42,7 @@ function Modal() {
 
 	const dialog = (
 		<Fragment>
-			<Heading level={level}>{h[level]}</Heading>
+			<Heading level={level}>{level ? h[level] : ''}</Heading>
 			<Desc>{desc}</Desc>
 			<SubDesc>{subDesc}</SubDesc>
 			<Dismiss>

@@ -55,7 +55,7 @@ export const Backdrop = styled.div<B>`
 
 export const Heading = styled.div<hP>`
 	${mont_700_36}
-	color: ${(p: hP) => hC[p.level]};
+	color: ${(p: hP) => (p.level ? hC[p.level] : hC[0])};
 
 	position: absolute;
 	height: 44px;
@@ -101,5 +101,5 @@ interface B {
 
 interface hP {
 	className?: string;
-	level: Level;
+	level?: Level;
 }

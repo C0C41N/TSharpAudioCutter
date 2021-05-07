@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Route, useRouteMatch } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
@@ -23,7 +23,7 @@ function Interface() {
 	});
 
 	useEffect(() => {
-		setTimeout(() => setLic(Lic.paid), 3000);
+		setTimeout(() => setLic(Lic.paid), 1000);
 	}, []);
 
 	const routes = [

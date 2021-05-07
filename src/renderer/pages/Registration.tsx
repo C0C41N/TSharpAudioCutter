@@ -13,6 +13,7 @@ function Registration() {
 		setModal({
 			show: true,
 			level: Level.error,
+			loading: false,
 			desc: 'Sorry, It looks like you’re blocked.',
 			subDesc: 'Contact the creator for assistance.',
 		});

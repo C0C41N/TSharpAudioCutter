@@ -1,6 +1,6 @@
 export interface IModal {
 	show: boolean;
-	loading?: boolean;
+	loading: boolean;
 	level?: Level;
 	desc?: string;
 	subDesc?: string;

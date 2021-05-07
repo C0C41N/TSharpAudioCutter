@@ -1,4 +1,7 @@
-export const decoupleEntity = <T>(e: T): T => JSON.parse(JSON.stringify(e));
+// export const fillNulls = <T extends { [k: string]: any }>(a: T, b: T) =>
+// 	Object.keys(a).reduce((c, e) => ({ ...c, [e]: a[e] || b[e] }), <T>{});
+
+// export const decoupleEntity = <T>(e: T): T => JSON.parse(JSON.stringify(e));
 
 export const deepEqual = <T, U>(x: T, y: U) =>
 	JSON.stringify(x) === JSON.stringify(y);

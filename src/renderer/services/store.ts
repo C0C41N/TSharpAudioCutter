@@ -1,16 +1,20 @@
 import { useEffect, useReducer } from 'react';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { distinctUntilChanged, map, skip, take } from 'rxjs/operators';
+import { distinctUntilChanged, map, skip } from 'rxjs/operators';
 
 import { deepEqual, randomKey } from './util';
 
 const bsub = new BehaviorSubject<{ [key: string]: any }>({});
 const obsv = bsub.asObservable();
 
+const lbsub = new BehaviorSubject<{ [key: string]: any }>({});
+
 export const get = <T>(id: string): T | undefined => bsub.getValue()[id];
+export const last = <T>(id: string): T | undefined => lbsub.getValue()[id];
 
 export const set = <T>(id: string, data: T): void => {
 	const val = bsub.value;
+	lbsub.next(val);
 	bsub.next({ ...val, [id]: data });
 };
 
@@ -25,18 +29,24 @@ export const state = <T>(data?: T) => {
 
 	const sEt = (data: T) => set<T>(key, data);
 	const gEt = () => get<T>(key) as T;
+	const lAst = () => last<T>(key) as T;
 	const oBserve = observe<T>(key) as Observable<T>;
 
 	if (data !== undefined) sEt(data);
 
 	return (reactive = true): State<T> =>
-		new State<T>(reactive, gEt, sEt, oBserve);
+		new State<T>(reactive, gEt, sEt, lAst, oBserve);
 };
 
 class State<T> {
 	get val() {
-		return this.value();
+		return this.get();
 	}
+
+	get last() {
+		return this.lAst();
+	}
+
 	/**
 	 * onChange without forceUpdate
 	 */
@@ -51,8 +61,9 @@ class State<T> {
 
 	constructor(
 		reactive = true,
-		private value: () => T,
+		private get: () => T,
 		public set: (data: T) => void,
+		private lAst: () => T,
 		private observe: Observable<T>
 	) {
 		if (reactive) {
