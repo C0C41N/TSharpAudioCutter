@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, map, skip } from 'rxjs/operators';
 
@@ -34,8 +34,8 @@ export const state = <T>(data?: T) => {
 
 	if (data !== undefined) sEt(data);
 
-	return (reactive = true): State<T> =>
-		new State<T>(reactive, gEt, sEt, lAst, oBserve);
+	return (options?: options): State<T> =>
+		new State<T>(gEt, sEt, lAst, oBserve, options);
 };
 
 class State<T> {
@@ -46,6 +46,11 @@ class State<T> {
 	get last() {
 		return this.lAst();
 	}
+
+	/**
+	 * ref is by default off
+	 */
+	public ref = useRef<T>();
 
 	/**
 	 * onChange without forceUpdate
@@ -60,13 +65,15 @@ class State<T> {
 	};
 
 	constructor(
-		reactive = true,
 		private get: () => T,
 		public set: (data: T) => void,
 		private lAst: () => T,
-		private observe: Observable<T>
+		private observe: Observable<T>,
+		options?: options
 	) {
-		if (reactive) {
+		const { reactive, ref } = options || {};
+
+		if (reactive !== false) {
 			const forceUpdate = useReducer(x => x + 1, 0)[1];
 
 			useEffect(() => {
@@ -74,5 +81,16 @@ class State<T> {
 				return () => sub.unsubscribe();
 			}, []);
 		}
+
+		if (ref) {
+			useEffect(() => {
+				this.ref.current = this.val;
+			}, [this.val]);
+		}
 	}
+}
+
+interface options {
+	reactive?: boolean;
+	ref?: boolean;
 }
