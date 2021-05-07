@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 import { useStates } from '@services';
@@ -26,7 +27,7 @@ function split(props: any) {
 		for (const file of Object.values(files)) {
 			setStatus(file, Status.split);
 
-			await sleep(100);
+			await sleep(2000);
 
 			setStatus(file, Status.done);
 		}
