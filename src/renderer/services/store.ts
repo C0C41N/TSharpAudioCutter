@@ -38,9 +38,7 @@ class State<T> {
 		return this.value();
 	}
 	/**
-	 * will fire first time then
-	 * on every change without causing
-	 * forceUpdate
+	 * onChange without forceUpdate
 	 */
 	public changed = (e: (v: T) => void, initial = true) => {
 		useEffect(() => {
