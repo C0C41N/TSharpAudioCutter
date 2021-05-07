@@ -14,36 +14,40 @@ const fileTypes = ['.mp3'];
 
 function Files() {
 	const { Files } = useStates();
+	const { val: files, set: setFiles } = Files();
 
 	const { extname } = path;
-	const { val: files, set: setFiles } = Files();
 
 	const [impure, setImpure] = useState(false);
 
 	const inputFileRef = useRef<HTMLInputElement>(null);
+
 	const selectFile = useCallback(() => inputFileRef.current?.click(), []);
 
 	const filterByExt = useCallback((e: FileList): [File[], boolean] => {
 		const arr = [...e];
+
 		const filtered = arr.filter(o => fileTypes.includes(extname(o.name)));
 		const impure = arr.some(o => !fileTypes.includes(extname(o.name)));
+
 		return [filtered, impure];
 	}, []);
 
 	const getDur = useCallback(async (path: string) => {
 		const { once, pub } = pubsub<number>();
-		ffmpeg.ffprobe(path, (_, { format }) => pub(format.duration ?? 0));
-		const dur = await once;
 
+		ffmpeg.ffprobe(path, (err, { format }) => pub(format.duration || 0));
+
+		const dur = await once;
 		if (!dur) return '#NA';
 
 		const { trunc } = Math;
 		const p: any = ['en-US', { minimumIntegerDigits: 2, useGrouping: false }];
 
-		const min = trunc(dur / 60);
-		const sec = trunc(dur % 60);
+		const min = trunc(dur / 60).toLocaleString(...p);
+		const sec = trunc(dur % 60).toLocaleString(...p);
 
-		return `${min.toLocaleString(...p)}:${sec.toLocaleString(...p)}`;
+		return `${min}:${sec}`;
 	}, []);
 
 	const traFile = useCallback(async (file: File): Promise<TraFile> => {
