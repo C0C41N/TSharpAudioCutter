@@ -74,6 +74,7 @@ class State<T> {
 		const { reactive, ref } = options || {};
 
 		if (reactive !== false) {
+			// works on undefined
 			const forceUpdate = useReducer(x => x + 1, 0)[1];
 
 			useEffect(() => {

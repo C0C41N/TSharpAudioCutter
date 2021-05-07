@@ -14,8 +14,8 @@ import { Lic } from '@types';
 function Interface() {
 	const { path } = useRouteMatch();
 	const { License, Modal: $Modal } = useStates();
-	const { set: setModal } = $Modal(false);
-	const { set: setLic, changed: onLic } = License(false);
+	const { set: setModal } = $Modal({ reactive: false });
+	const { set: setLic, changed: onLic } = License({ reactive: false });
 
 	onLic(e => {
 		if (e === Lic.null) setModal({ show: true, loading: true });

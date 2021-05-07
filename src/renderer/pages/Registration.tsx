@@ -7,7 +7,7 @@ import { Level } from '@types';
 
 function Registration() {
 	const { Modal } = useStates();
-	const { set: setModal } = Modal(false);
+	const { set: setModal } = Modal({ reactive: false });
 
 	const clickRegister = useCallback(() => {
 		setModal({

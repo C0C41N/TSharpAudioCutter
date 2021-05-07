@@ -1,4 +1,3 @@
-import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import { useStates } from '@services';
@@ -12,10 +11,8 @@ const BtnDone = styled(btn)`
 
 function split(props: any) {
 	const { Files, License } = useStates();
-	const { val: files, set: setFiles } = Files();
+	const { val: files, set: setFiles, ref: refFiles } = Files({ ref: true });
 	const { val: lic } = License();
-
-	const refFiles = useRef(files);
 
 	// TODO: Demo Check
 
@@ -35,12 +32,9 @@ function split(props: any) {
 		}
 	};
 
-	useEffect(() => {
-		refFiles.current = files;
-	}, [files]);
-
 	if (lic === Lic.null) return null;
 	if (!Object.keys(files).length) return null;
+
 	return (
 		<BtnDone {...props} onClick={split}>
 			Done
