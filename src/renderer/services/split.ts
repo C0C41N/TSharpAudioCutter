@@ -1,4 +1,6 @@
 import type { Observable } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
+
 import { ffmpeg } from './ffmpeg';
 import { electron, fs, path } from './native';
 import { pubsub } from './pubsub';
@@ -49,7 +51,7 @@ export const Short = (file: string): Observable<IReturn> => {
 			.run();
 	})();
 
-	return sub;
+	return sub.pipe(takeWhile(e => !e.end));
 };
 
 export const Long = (file: string): Observable<IReturn> => {
@@ -68,7 +70,7 @@ export const Long = (file: string): Observable<IReturn> => {
 			.run();
 	})();
 
-	return sub;
+	return sub.pipe(takeWhile(e => !e.end));
 };
 
 export const outPath = docsPath;
