@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { useStates } from '@services';
+import { openFolder } from '@services/native';
 import { outPath } from '@services/split';
 import { sleep } from '@services/util';
 import { btn, mont_600_17 } from '@styles';
@@ -42,10 +43,6 @@ function split(props: any) {
 
 	const clearFiles = () => setFiles({});
 
-	const openOutputFolder = () => {
-		//
-	};
-
 	const split = async () => {
 		for (const file of Object.values(files)) {
 			setStatus(file, Status.split);
@@ -61,7 +58,7 @@ function split(props: any) {
 
 		clearFiles();
 		showModal();
-		openOutputFolder();
+		openFolder(await outPath);
 	};
 
 	if (lic === Lic.null) return null;
