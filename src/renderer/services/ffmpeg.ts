@@ -13,9 +13,10 @@ const $ffmpeg: typeof ffmpegStatic = window
 
 const $probe: typeof ffprobeStatic = window.require('ffprobe-static');
 
-const pathProbe = $probe.path
+export const pathFFmpeg = $ffmpeg;
+export const pathProbe = $probe.path
 	.replace('app.asar', 'app.asar.unpacked')
 	.replace('x64', 'ia32');
 
-ffmpeg.setFfmpegPath($ffmpeg);
+ffmpeg.setFfmpegPath(pathFFmpeg);
 ffmpeg.setFfprobePath(pathProbe);
