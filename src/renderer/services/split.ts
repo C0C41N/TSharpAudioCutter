@@ -71,6 +71,8 @@ export const Long = (file: string): Observable<IReturn> => {
 	return sub;
 };
 
+export const outPath = docsPath;
+
 interface IReturn {
 	percent: number;
 	end: boolean;
