@@ -54,9 +54,10 @@ function Files() {
 		const id = randomKey(6);
 		const dur = await getDur(file.path);
 		const { name, path } = file;
+		const ref = { current: null };
 		const status = 0;
 
-		return { id, name, path, dur, status };
+		return { id, name, path, dur, status, ref };
 	}, []);
 
 	const traFileList = useCallback(

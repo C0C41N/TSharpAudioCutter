@@ -87,24 +87,20 @@ function FilesList() {
 	useListenEvent(document, 'mouseup', mouseup);
 	useListenEvent(document, 'mouseleave', mouseup);
 
+	const fileList = Object.values(files).map(e => <File file={e} key={e.id} />);
+	const showScroll = Object.keys(files).length > 4;
+	const scrollBar = (
+		<Scroll ref={scrollRef}>
+			<Thumb ref={thumbRef} onMouseDown={mousedown} />
+		</Scroll>
+	);
+
 	return (
 		<Container>
 			<List ref={contRef} onScroll={scroll}>
-				{Object.values(files).map(e => (
-					<File
-						title={e.name}
-						status={e.status}
-						dur={e.dur}
-						key={e.id}
-						id={e.id}
-					/>
-				))}
+				{fileList}
 			</List>
-			{Object.keys(files).length > 4 && (
-				<Scroll ref={scrollRef}>
-					<Thumb ref={thumbRef} onMouseDown={mousedown} />
-				</Scroll>
-			)}
+			{showScroll && scrollBar}
 		</Container>
 	);
 }

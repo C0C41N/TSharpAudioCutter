@@ -27,6 +27,7 @@ function split(props: any) {
 		for (const file of Object.values(files)) {
 			setStatus(file, Status.split);
 
+			console.log(file.ref.current);
 			await sleep(300);
 
 			setStatus(file, Status.done);

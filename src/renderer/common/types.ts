@@ -1,3 +1,5 @@
+import type { MutableRefObject } from 'react';
+
 export interface IModal {
 	show: boolean;
 	loading: boolean;
@@ -33,6 +35,7 @@ export interface TraFile {
 	path: string;
 	dur: string;
 	status: Status;
+	ref: MutableRefObject<HTMLDivElement | null>;
 }
 
 export enum Status {

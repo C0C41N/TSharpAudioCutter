@@ -7,9 +7,15 @@ import {
 
 import type { TraFile, TraFileList } from '@types';
 
-function File(props: IProps) {
+function File(props: Props) {
 	const { Files } = useStates();
 	const { val: files, set: setFiles } = Files();
+
+	const { dur, id, name, status, ref } = props.file;
+
+	const iconProc = status === 1;
+	const iconDone = status === 2;
+	const statusIcon = iconProc ? <IconProc /> : iconDone ? <IconDone /> : null;
 
 	const remove = useCallback(
 		(id: string) => {
@@ -25,22 +31,18 @@ function File(props: IProps) {
 	);
 
 	return (
-		<Cont>
+		<Cont ref={e => (ref.current = e)}>
 			<IconMusic />
-			<Title>{props.title}</Title>
-			{props.status === 1 && <IconProc />}
-			{props.status === 2 && <IconDone />}
-			<Dur>{props.dur}</Dur>
-			<IconRemove onClick={() => remove(props.id)} />
+			<Title>{name}</Title>
+			{statusIcon}
+			<Dur>{dur}</Dur>
+			<IconRemove onClick={() => remove(id)} />
 		</Cont>
 	);
 }
 
 export default File;
 
-interface IProps {
-	id: string;
-	title: string;
-	dur: string;
-	status: number;
+interface Props {
+	file: TraFile;
 }
