@@ -23,12 +23,18 @@ function split(props: any) {
 		setFiles({ ...refFiles.current, [id]: fiLe });
 	};
 
+	const scrollIntoView = (file: TraFile) =>
+		file.ref.current?.scrollIntoView({
+			behavior: 'smooth',
+			block: 'nearest',
+		});
+
 	const split = async () => {
 		for (const file of Object.values(files)) {
 			setStatus(file, Status.split);
 
-			console.log(file.ref.current);
-			await sleep(300);
+			scrollIntoView(file);
+			await sleep(1000);
 
 			setStatus(file, Status.done);
 		}
