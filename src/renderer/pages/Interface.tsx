@@ -23,7 +23,7 @@ function Interface() {
 	});
 
 	useEffect(() => {
-		setTimeout(() => setLic(Lic.paid), 1000);
+		setTimeout(() => setLic(Lic.paid), 500);
 	}, []);
 
 	const routes = [

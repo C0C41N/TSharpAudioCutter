@@ -1,42 +1,10 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled from 'styled-components';
 
+import { animFadeIn, animFadeOut } from '@styles';
 import { mont_700_36, nuni_400_18, nuni_600_24 } from '@styles/fonts';
 
 import type { Level } from '@types';
-
 const hC = ['#CB3DDC', '#C8A500', '#CB3D2E'];
-
-const fadeIn = keyframes`
-	0%   {
-		opacity: 0;
-		transform: scale(0.95);
-	}
-
-  100% { 
-		opacity: 1;
-		transform: scale(1);
-	}
-`;
-
-const fadeOut = keyframes`
-  0% { 
-		opacity: 1;
-		transform: scale(1);
-	}
-
-	100%   {
-		opacity: 0;
-		transform: scale(0.95);
-	}
-`;
-
-const animFadeIn = css`
-	animation: ${fadeIn} 0.3s forwards ease-in;
-`;
-
-const animFadeOut = css`
-	animation: ${fadeOut} 0.3s forwards ease-out;
-`;
 
 export const Backdrop = styled.div<B>`
 	position: absolute;
