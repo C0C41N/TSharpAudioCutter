@@ -21,8 +21,8 @@ function Youtube() {
 				placeholder='https://www.youtube.com/watch?v=DxNt7xV5aII'
 				autoFocus
 			/>
-			<Btn>Done</Btn>
-			{/* {gProgress} */}
+			<Btn>Start</Btn>
+			{gProgress}
 		</Fragment>
 	);
 }
