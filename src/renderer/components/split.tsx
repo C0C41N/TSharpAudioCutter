@@ -34,7 +34,7 @@ function split(props: any) {
 			setStatus(file, Status.split);
 
 			scrollIntoView(file);
-			await sleep(1000);
+			await sleep(300);
 
 			setStatus(file, Status.done);
 		}

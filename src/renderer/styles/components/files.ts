@@ -13,10 +13,6 @@ export const Cont = styled.div`
 
 	margin: 10px;
 	border: 1px solid #d9d9d9;
-
-	&:last-child {
-		margin-bottom: 100px;
-	}
 `;
 
 export const IconMusic = styled(iconMusic)`
