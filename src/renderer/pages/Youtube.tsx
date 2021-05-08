@@ -6,6 +6,13 @@ import { Btn, Heading, Input, Percent, Progress } from '@styles/pages/youtube';
 function Youtube() {
 	const [progress, setProgress] = useState(25);
 
+	const gProgress = (
+		<Fragment>
+			<Progress width={500} height={10} progress={progress} />
+			<Percent>{`${progress}%`}</Percent>
+		</Fragment>
+	);
+
 	return (
 		<Fragment>
 			<Back />
@@ -15,8 +22,7 @@ function Youtube() {
 				autoFocus
 			/>
 			<Btn>Done</Btn>
-			<Progress width={500} height={10} progress={progress} />
-			<Percent>{`${progress}%`}</Percent>
+			{/* {gProgress} */}
 		</Fragment>
 	);
 }
