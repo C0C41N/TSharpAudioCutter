@@ -2,17 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { useStates } from '@services';
+import { outPath } from '@services/split';
 import { sleep } from '@services/util';
 import { btn, mont_600_17 } from '@styles';
-import { Lic, Status, TraFile } from '@types';
+import { Level, Lic, Status, TraFile } from '@types';
 
 const BtnDone = styled(btn)`
 	${mont_600_17}
 `;
 
 function split(props: any) {
-	const { Files, License } = useStates();
+	const { Files, License, Modal } = useStates();
 	const { val: files, set: setFiles, ref: refFiles } = Files({ ref: true });
+	const { set: setModal } = Modal({ reactive: false });
 	const { val: lic } = License();
 
 	// TODO: Demo Check
@@ -29,15 +31,37 @@ function split(props: any) {
 			block: 'nearest',
 		});
 
+	const showModal = () =>
+		setModal({
+			show: true,
+			loading: false,
+			level: Level.info,
+			desc: 'Done! You can find your files at',
+			subDesc: 'Documents\\TSharp_split',
+		});
+
+	const clearFiles = () => setFiles({});
+
+	const openOutputFolder = () => {
+		//
+	};
+
 	const split = async () => {
 		for (const file of Object.values(files)) {
 			setStatus(file, Status.split);
 
 			scrollIntoView(file);
+
 			await sleep(300);
 
 			setStatus(file, Status.done);
 		}
+
+		await sleep(300);
+
+		clearFiles();
+		showModal();
+		openOutputFolder();
 	};
 
 	if (lic === Lic.null) return null;
@@ -45,7 +69,7 @@ function split(props: any) {
 
 	return (
 		<BtnDone {...props} onClick={split}>
-			Done
+			Split
 		</BtnDone>
 	);
 }
