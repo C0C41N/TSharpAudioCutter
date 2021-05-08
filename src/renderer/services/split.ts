@@ -6,7 +6,7 @@ import { electron, fs, path } from './native';
 import { pubsub } from './pubsub';
 
 const { existsSync, mkdirSync } = fs;
-const { basename } = path;
+const { basename, extname } = path;
 const { ipcRenderer } = electron;
 
 const { pub: setDocsPath, once: docsPath } = pubsub<string>();
@@ -29,9 +29,11 @@ const dur = async (file: string): Promise<number> => {
 const filename = async (file: string, type: 10 | 58) => {
 	const { ceil } = Math;
 
+	const p: any = ['en-US', { minimumIntegerDigits: 2, useGrouping: false }];
+
 	const ext = type === 10 ? '.wav' : '.ogg';
-	const last = ceil((await dur(file)) % type);
-	const name = `${basename(file, '.mp3')}_${type}_${last}_%02d${ext}`;
+	const last = ceil((await dur(file)) % type).toLocaleString(...p);
+	const name = `${type}${last}%02d ${basename(file, extname(file))}${ext}`;
 
 	return `${await docsPath}\\${name}`;
 };
