@@ -7,7 +7,7 @@ export const sleep = (ms: number) => {
 	return new Promise(resolve => setTimeout(resolve, ms));
 };
 
-const deepEqual = (x: any, y: any) => {
+export const deepEqual = (x: any, y: any) => {
 	const isPrimitive = (o: any) => o !== Object(o);
 
 	if (isPrimitive(x) && isPrimitive(y)) return x === y;
