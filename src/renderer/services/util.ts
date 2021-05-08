@@ -1,12 +1,14 @@
-// export const fillNulls = <T extends { [k: string]: any }>(a: T, b: T) =>
-// 	Object.keys(a).reduce((c, e) => ({ ...c, [e]: a[e] || b[e] }), <T>{});
+/**
+ * resolves promise after **ms** milliseconds,
+ * use in async environment for sleep effect
+ */
+export const sleep = (ms: number) =>
+	new Promise(resolve => setTimeout(resolve, ms));
 
-// export const decoupleEntity = <T>(e: T): T => JSON.parse(JSON.stringify(e));
-
-export const sleep = (ms: number) => {
-	return new Promise(resolve => setTimeout(resolve, ms));
-};
-
+/**
+ * deepEqual two objects, returns false
+ * if any object contains circular structure
+ */
 export const deepEqual = (x: any, y: any) => {
 	const cache: any[] = [];
 
@@ -32,6 +34,10 @@ export const deepEqual = (x: any, y: any) => {
 	return exe(x, y);
 };
 
+/**
+ * returns random key of length **len**
+ * #### 62 ^ len combinations
+ */
 export const randomKey = (len: number): string => {
 	// prettier-ignore
 	const x = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C',
