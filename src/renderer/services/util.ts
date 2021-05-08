@@ -7,8 +7,20 @@ export const sleep = (ms: number) => {
 	return new Promise(resolve => setTimeout(resolve, ms));
 };
 
-export const deepEqual = <T, U>(x: T, y: U) =>
-	JSON.stringify(x) === JSON.stringify(y);
+const deepEqual = (x: any, y: any) => {
+	const isPrimitive = (o: any) => o !== Object(o);
+
+	if (isPrimitive(x) && isPrimitive(y)) return x === y;
+
+	if (Object.keys(x).length !== Object.keys(y).length) return false;
+
+	for (const key in x) {
+		if (!(key in y)) return false;
+		if (!deepEqual(x[key], y[key])) return false;
+	}
+
+	return true;
+};
 
 export const randomKey = (len: number): string => {
 	// prettier-ignore
