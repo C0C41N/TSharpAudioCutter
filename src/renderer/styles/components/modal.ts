@@ -50,6 +50,8 @@ export const SubDesc = styled.div`
 	top: 225px;
 	left: 50%;
 	transform: translateX(-50%);
+
+	white-space: pre-wrap;
 `;
 
 export const Dismiss = styled.div`

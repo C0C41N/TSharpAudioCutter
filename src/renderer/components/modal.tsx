@@ -39,10 +39,11 @@ function Modal() {
 	useListenEvent(document, 'keydown', onEnter);
 
 	const h = ['Info', 'Warning', 'Error'];
+	const heading = level !== undefined ? h[level] : '';
 
 	const dialog = (
 		<Fragment>
-			<Heading level={level}>{level ? h[level] : ''}</Heading>
+			<Heading level={level}>{heading}</Heading>
 			<Desc>{desc}</Desc>
 			<SubDesc>{subDesc}</SubDesc>
 			<Dismiss>
