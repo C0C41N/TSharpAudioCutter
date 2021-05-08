@@ -76,10 +76,8 @@ function Files() {
 
 			const [Files, impure] = filterByExt(inputFile.files);
 
-			if (impure) {
-				setImpure(true);
-				if (!Files.length) return;
-			}
+			if (impure) setImpure(true);
+			if (!Files.length) return;
 
 			const fileList = await traFileList(Files);
 			setFiles({ ...files, ...fileList });
