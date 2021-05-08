@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useStates } from '@services';
 import { openFolder } from '@services/native';
-import { outPath } from '@services/split';
+import { Long, outPath, Short } from '@services/split';
 import { sleep } from '@services/util';
 import { btn, mont_600_17 } from '@styles';
 import { Level, Lic, Status, TraFile } from '@types';
@@ -43,14 +43,14 @@ function split(props: any) {
 
 	const clearFiles = () => setFiles({});
 
+	const doSplit = (file: string) =>
+		lic === Lic.dev ? Long(file) : Short(file);
+
 	const split = async () => {
 		for (const file of Object.values(files)) {
 			setStatus(file, Status.split);
-
 			scrollIntoView(file);
-
-			await sleep(300);
-
+			await doSplit(file.path).toPromise();
 			setStatus(file, Status.done);
 		}
 
