@@ -8,18 +8,28 @@ export const sleep = (ms: number) => {
 };
 
 export const deepEqual = (x: any, y: any) => {
+	const cache: any[] = [];
+
 	const isPrimitive = (o: any) => o !== Object(o);
 
-	if (isPrimitive(x) && isPrimitive(y)) return x === y;
+	const exe = (x: any, y: any) => {
+		if (isPrimitive(x) && isPrimitive(y)) return x === y;
 
-	if (Object.keys(x).length !== Object.keys(y).length) return false;
+		if (cache.indexOf(x) !== -1) return false;
+		if (cache.indexOf(y) !== -1) return false;
+		cache.push(x, y);
 
-	for (const key in x) {
-		if (!(key in y)) return false;
-		if (!deepEqual(x[key], y[key])) return false;
-	}
+		if (Object.keys(x).length !== Object.keys(y).length) return false;
 
-	return true;
+		for (const key in x) {
+			if (!(key in y)) return false;
+			if (!exe(x[key], y[key])) return false;
+		}
+
+		return true;
+	};
+
+	return exe(x, y);
 };
 
 export const randomKey = (len: number): string => {
