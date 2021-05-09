@@ -12,12 +12,13 @@ import { Level } from '@types';
 function Youtube() {
 	const { trunc } = Math;
 
-	const { Modal, Files } = useStates();
+	const { Modal, Files, FromYT } = useStates();
 	const { set: setModal } = Modal({ reactive: false });
 	const { set: setFiles } = Files({ reactive: false });
+	const { set: setFromYT } = FromYT({ reactive: false });
 
 	const inputRef = useRef<HTMLInputElement>(null);
-	const { push } = useHistory();
+	const { replace } = useHistory();
 
 	const [progress, setProgress] = useState(0);
 	const [red, setRed] = useState(false);
@@ -67,8 +68,9 @@ function Youtube() {
 			const filePath = await getFilePath(d);
 			const file = await traFile(filePath);
 			setFiles({ [file.id]: file });
+			setFromYT(true);
 			await sleep(300);
-			push('/main/files');
+			replace('/main/files');
 		});
 	};
 

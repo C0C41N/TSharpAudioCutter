@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { useStates } from '@services';
@@ -13,10 +14,14 @@ const BtnDone = styled(btn)`
 `;
 
 function split(props: any) {
-	const { Files, License, Modal } = useStates();
+	const { Files, License, Modal, FromYT } = useStates();
+
 	const { val: files, set: setFiles, ref: refFiles } = Files({ ref: true });
 	const { set: setModal } = Modal({ reactive: false });
 	const { val: lic } = License();
+	const { val: fromYT, set: setFromYT } = FromYT();
+
+	const { replace } = useHistory();
 
 	// TODO: Demo Check
 
@@ -57,6 +62,10 @@ function split(props: any) {
 		await sleep(300);
 
 		clearFiles();
+		if (fromYT) {
+			setFromYT(false);
+			replace('/main/youtube');
+		}
 		showModal();
 		openFolder(await outPath);
 	};
