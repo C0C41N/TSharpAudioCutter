@@ -1,8 +1,10 @@
 import getYtId from 'get-youtube-id';
 import React, { Fragment, useState } from 'react';
+import { useHistory } from 'react-router';
 
 import Back from '@comp/back';
 import { useStates } from '@services';
+import { sleep, traFile } from '@services/util';
 import { getFilePath, ytdl } from '@services/ytdl';
 import { Btn, Heading, Input, Percent, Progress } from '@styles/pages/youtube';
 import { Level } from '@types';
@@ -11,9 +13,12 @@ const url = 'https://www.youtube.com/watch?v=YmMtrNA7BOA';
 
 function Youtube() {
 	const { trunc } = Math;
-	const { Modal } = useStates();
-	const { set: setModal } = Modal({ reactive: false });
 
+	const { Modal, Files } = useStates();
+	const { set: setModal } = Modal({ reactive: false });
+	const { set: setFiles } = Files({ reactive: false });
+
+	const { push } = useHistory();
 	const [progress, setProgress] = useState(0);
 
 	const showErr = (subDesc = '') => {
@@ -42,9 +47,13 @@ function Youtube() {
 
 		YTDL.on('progress', e => setProgress(e.progress.percentage));
 
-		YTDL.on('finished', async (e, d) =>
-			console.log('Finished', JSON.stringify(await getFilePath(d)))
-		);
+		YTDL.on('finished', async (e, d) => {
+			const filePath = await getFilePath(d);
+			const file = await traFile(filePath);
+			setFiles({ [file.id]: file });
+			await sleep(300);
+			push('/main/files');
+		});
 	};
 
 	const gProgress = (

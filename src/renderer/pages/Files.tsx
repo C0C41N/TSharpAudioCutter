@@ -3,13 +3,11 @@ import React, { Fragment, useCallback, useEffect, useRef, useState } from 'react
 import Back from '@comp/back';
 import FilesList from '@comp/filesList';
 import { useStates } from '@services';
-import { ffmpeg } from '@services/ffmpeg';
 import { path } from '@services/native';
-import { pubsub } from '@services/pubsub';
-import { randomKey } from '@services/util';
+import { traFile } from '@services/util';
 import { BtnDone, BtnSelect, Error, Heading, SubHeading } from '@styles/pages/files';
 
-import type { TraFile, TraFileList } from '@types';
+import type { TraFileList } from '@types';
 const fileTypes = ['.mp3'];
 
 function Files() {
@@ -31,33 +29,6 @@ function Files() {
 		const impure = arr.some(o => !fileTypes.includes(extname(o.name)));
 
 		return [filtered, impure];
-	}, []);
-
-	const getDur = useCallback(async (path: string) => {
-		const { once, pub } = pubsub<number>();
-
-		ffmpeg.ffprobe(path, (err, { format }) => pub(format.duration || 0));
-
-		const dur = await once;
-		if (!dur) return '#NA';
-
-		const { trunc } = Math;
-		const p: any = ['en-US', { minimumIntegerDigits: 2, useGrouping: false }];
-
-		const min = trunc(dur / 60).toLocaleString(...p);
-		const sec = trunc(dur % 60).toLocaleString(...p);
-
-		return `${min}:${sec}`;
-	}, []);
-
-	const traFile = useCallback(async (file: File): Promise<TraFile> => {
-		const id = randomKey(6);
-		const dur = await getDur(file.path);
-		const { name, path } = file;
-		const ref = { current: null };
-		const status = 0;
-
-		return { id, name, path, dur, status, ref };
 	}, []);
 
 	const traFileList = useCallback(

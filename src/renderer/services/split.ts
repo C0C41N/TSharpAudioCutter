@@ -4,6 +4,7 @@ import { takeWhile } from 'rxjs/operators';
 import { ffmpeg } from './ffmpeg';
 import { electron, fs, path } from './native';
 import { pubsub } from './pubsub';
+import { getDurRaw } from './util';
 
 const { existsSync, mkdirSync } = fs;
 const { basename, extname } = path;
@@ -19,20 +20,13 @@ ipcRenderer.on('docs', (_, docs) => {
 
 ipcRenderer.send('docs');
 
-const dur = async (file: string): Promise<number> => {
-	const { pub, once } = pubsub<number>();
-
-	ffmpeg.ffprobe(file, (err, { format }) => pub(format.duration || 0));
-	return once;
-};
-
 const filename = async (file: string, type: 10 | 58) => {
 	const { ceil } = Math;
 
 	const p: any = ['en-US', { minimumIntegerDigits: 2, useGrouping: false }];
 
 	const ext = type === 10 ? '.wav' : '.ogg';
-	const last = ceil((await dur(file)) % type).toLocaleString(...p);
+	const last = ceil((await getDurRaw(file)) % type).toLocaleString(...p);
 	const name = `${type}${last}%02d ${basename(file, extname(file))}${ext}`;
 
 	return `${await docsPath}\\${name}`;

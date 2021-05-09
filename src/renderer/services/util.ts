@@ -1,3 +1,48 @@
+import type { TraFile } from '@types';
+import { ffmpeg } from './ffmpeg';
+import { pubsub } from './pubsub';
+
+/**
+ * returns TraFile object by calculating duration, id etc.
+ */
+export const traFile = async (file: {
+	path: string;
+	name: string;
+}): Promise<TraFile> => {
+	const id = randomKey(6);
+	const dur = await getDur(file.path);
+	const { name, path } = file;
+	const ref = { current: null };
+	const status = 0;
+
+	return { id, name, path, dur, status, ref };
+};
+
+/**
+ * returns duration of mp3 file in number
+ */
+export const getDurRaw = async (path: string) => {
+	const { once, pub } = pubsub<number>();
+	ffmpeg.ffprobe(path, (err, { format }) => pub(format.duration || 0));
+	return await once;
+};
+
+/**
+ * returns duration of mp3 file in 00:00 format
+ */
+export const getDur = async (path: string) => {
+	const dur = await getDurRaw(path);
+	if (!dur) return '#NA';
+
+	const { trunc } = Math;
+	const p: any = ['en-US', { minimumIntegerDigits: 2, useGrouping: false }];
+
+	const min = trunc(dur / 60).toLocaleString(...p);
+	const sec = trunc(dur % 60).toLocaleString(...p);
+
+	return `${min}:${sec}`;
+};
+
 /**
  * resolves promise after **ms** milliseconds,
  * use in async environment for sleep effect
