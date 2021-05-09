@@ -1,14 +1,28 @@
-import YTDL from 'youtube-mp3-downloader';
+import { pathFFmpeg } from '@services/ffmpeg';
+import { fs, Ytdl } from '@services/native';
+import { pubsub } from '@services/pubsub';
+import { outPath } from '@services/split';
 
-import { pathFFmpeg } from './ffmpeg';
-import { outPath } from './split';
+const { pub: setYtOutPath, once: YtOutPath } = pubsub<string>();
+const { pub: setYtdl, once: YTDL } = pubsub<YoutubeMp3Downloader>();
 
-export const ytOutPath = `${await outPath}\\mp3_cache`;
+const { existsSync, mkdirSync } = fs;
 
-export const ytdl = new YTDL({
-	ffmpegPath: pathFFmpeg,
-	outputPath: ytOutPath,
-	queueParallelism: 1,
-	progressTimeout: 300,
-	allowWebm: false,
-});
+(async () => {
+	const OutPath = `${await outPath}\\mp3_cache`;
+	!existsSync(OutPath) && mkdirSync(OutPath);
+	setYtOutPath(OutPath);
+
+	setYtdl(
+		new Ytdl({
+			ffmpegPath: pathFFmpeg,
+			outputPath: OutPath,
+			queueParallelism: 1,
+			progressTimeout: 300,
+			allowWebm: false,
+		})
+	);
+})();
+
+export const ytOutPath = YtOutPath;
+export const ytdl = YTDL;
