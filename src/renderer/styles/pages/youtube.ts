@@ -27,8 +27,8 @@ const redFlash = keyframes`
 
   100% { 
 		border-color: rgba(217, 217, 217, 0.9);
-		transform: translateX(0);
 		border-width: 2px;
+		transform: translateX(0);
 	}
 `;
 
