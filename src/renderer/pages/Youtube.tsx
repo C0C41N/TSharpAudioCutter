@@ -9,6 +9,8 @@ import { getFilePath, ytdl } from '@services/ytdl';
 import { Btn, Heading, Input, Percent, Progress } from '@styles/pages/youtube';
 import { Level } from '@types';
 
+const placeholder = 'https://www.youtube.com/watch?v=DxNt7xV5aII';
+
 function Youtube() {
 	const { trunc } = Math;
 
@@ -47,10 +49,17 @@ function Youtube() {
 		return false;
 	};
 
+	const resetPlaceholder = () => {
+		const input = inputRef.current;
+		if (!input) return;
+		input.placeholder = placeholder;
+	};
+
 	const start = async () => {
 		const url = validate();
 		if (!url) return;
 
+		resetPlaceholder();
 		setProgress(0.01);
 
 		const YTDL = await ytdl;
@@ -88,7 +97,7 @@ function Youtube() {
 			<Back />
 			<Heading>Paste youtube link</Heading>
 			<Input
-				placeholder='https://www.youtube.com/watch?v=DxNt7xV5aII'
+				placeholder={placeholder}
 				onKeyDown={enterInput}
 				redFlash={red}
 				ref={inputRef}
