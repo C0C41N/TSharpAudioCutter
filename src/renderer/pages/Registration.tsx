@@ -7,9 +7,11 @@ import { Level } from '@types';
 
 function Registration() {
 	const { Modal } = useStates();
-	const { set: setModal } = Modal({ reactive: false });
+	const { val: modal, set: setModal } = Modal();
 
-	const clickRegister = useCallback(() => {
+	const clickRegister = () => {
+		if (modal.show) return;
+
 		setModal({
 			show: true,
 			level: Level.error,
@@ -17,7 +19,7 @@ function Registration() {
 			desc: 'Sorry, It looks like you’re blocked.',
 			subDesc: 'Contact the creator for assistance.',
 		});
-	}, []);
+	};
 
 	const enterInput = ({ key }: KeyboardEvent) =>
 		key === 'Enter' && clickRegister();

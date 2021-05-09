@@ -15,7 +15,7 @@ function Youtube() {
 	const { trunc } = Math;
 
 	const { Modal, Files, FromYT } = useStates();
-	const { set: setModal } = Modal({ reactive: false });
+	const { val: modal, set: setModal } = Modal();
 	const { set: setFiles } = Files({ reactive: false });
 	const { set: setFromYT } = FromYT({ reactive: false });
 
@@ -49,17 +49,12 @@ function Youtube() {
 		return false;
 	};
 
-	const resetPlaceholder = () => {
-		const input = inputRef.current;
-		if (!input) return;
-		input.placeholder = placeholder;
-	};
-
 	const start = async () => {
+		if (modal.show) return;
+
 		const url = validate();
 		if (!url) return;
 
-		resetPlaceholder();
 		setProgress(0.01);
 
 		const YTDL = await ytdl;
