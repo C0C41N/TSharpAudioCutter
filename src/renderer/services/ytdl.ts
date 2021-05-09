@@ -24,5 +24,10 @@ const { existsSync, mkdirSync } = fs;
 	);
 })();
 
+export const getFilePath = async (data: { file: string }) => ({
+	path: data.file.replace('/', '\\'),
+	name: data.file.replace(`${await YtOutPath}/`, ''),
+});
+
 export const ytOutPath = YtOutPath;
 export const ytdl = YTDL;
