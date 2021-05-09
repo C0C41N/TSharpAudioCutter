@@ -3,9 +3,10 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { useStates } from '@services';
-import { openFolder } from '@services/native';
+import { fs, openFolder } from '@services/native';
 import { Long, outPath, Short } from '@services/split';
 import { sleep } from '@services/util';
+import { ytOutPath } from '@services/ytdl';
 import { btn, mont_600_17 } from '@styles';
 import { Level, Lic, Status, TraFile } from '@types';
 
@@ -22,6 +23,8 @@ function split(props: any) {
 	const { val: fromYT, set: setFromYT } = FromYT();
 
 	const { replace } = useHistory();
+
+	const { rmSync } = fs;
 
 	// TODO: Demo Check
 
@@ -51,6 +54,13 @@ function split(props: any) {
 	const doSplit = (file: string) =>
 		lic === Lic.dev ? Long(file) : Short(file);
 
+	const checkFromYT = async () => {
+		if (!fromYT) return;
+		setFromYT(false);
+		rmSync(await ytOutPath, { recursive: true, force: true });
+		replace('/main/youtube');
+	};
+
 	const split = async () => {
 		for (const file of Object.values(files)) {
 			setStatus(file, Status.split);
@@ -62,11 +72,8 @@ function split(props: any) {
 		await sleep(300);
 
 		clearFiles();
-		if (fromYT) {
-			setFromYT(false);
-			replace('/main/youtube');
-		}
 		showModal();
+		await checkFromYT();
 		openFolder(await outPath);
 	};
 
