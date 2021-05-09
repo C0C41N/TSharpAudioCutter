@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
@@ -25,6 +25,8 @@ function split(props: any) {
 	const { replace } = useHistory();
 
 	const { rmSync } = fs;
+
+	const [inprogress, setInprogress] = useState(false);
 
 	// TODO: Demo Check
 
@@ -62,6 +64,8 @@ function split(props: any) {
 	};
 
 	const split = async () => {
+		setInprogress(true);
+
 		for (const file of Object.values(files)) {
 			setStatus(file, Status.split);
 			scrollIntoView(file);
@@ -75,16 +79,18 @@ function split(props: any) {
 		showModal();
 		await checkFromYT();
 		openFolder(await outPath);
+
+		setInprogress(false);
 	};
 
 	if (lic === Lic.null) return null;
 	if (!Object.keys(files).length) return null;
 
-	return (
+	return !inprogress ? (
 		<BtnDone {...props} onClick={split}>
 			Split
 		</BtnDone>
-	);
+	) : null;
 }
 
 export default split;
