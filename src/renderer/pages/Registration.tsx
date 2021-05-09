@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback } from 'react';
+import React, { Fragment, KeyboardEvent, useCallback } from 'react';
 
 import Back from '@comp/back';
 import { useStates } from '@services';
@@ -19,10 +19,8 @@ function Registration() {
 		});
 	}, []);
 
-	const enterInput = useCallback(
-		({ key }) => key === 'Enter' && clickRegister(),
-		[]
-	);
+	const enterInput = ({ key }: KeyboardEvent) =>
+		key === 'Enter' && clickRegister();
 
 	return (
 		<Fragment>
