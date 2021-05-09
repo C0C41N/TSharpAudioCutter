@@ -18,7 +18,7 @@ const { existsSync, mkdirSync } = fs;
 			ffmpegPath: pathFFmpeg,
 			outputPath: OutPath,
 			queueParallelism: 1,
-			progressTimeout: 300,
+			progressTimeout: 100,
 			allowWebm: false,
 		})
 	);
