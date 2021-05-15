@@ -60,3 +60,5 @@ function Modal() {
 }
 
 export default Modal;
+
+// make a btn, pass whole object named btn
