@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 import registerIllus from '@comp/registerIllus';
 import { btn, input, mont_600_17, mont_700_36, nuni_400_18 } from '@styles';
@@ -28,12 +28,40 @@ export const Illustration = styled(registerIllus)`
 	top: 237px;
 `;
 
-export const Input = styled(input)`
+const redFlash = keyframes`
+	0%   {
+		border-color: red;
+		border-width: 2px;
+		transform: translateX(0);
+	}
+
+	25%   {
+		transform: translateX(5px);
+	}
+
+	50%   {
+		transform: translateX(-5px);
+	}
+
+  100% {
+		border-width: 2px;
+		transform: translateX(0);
+	}
+`;
+
+export const animRedFlash = css`
+	animation: ${redFlash} 0.3s forwards ease-out;
+`;
+
+export const Input = styled(input)<{ redFlash: boolean }>`
+	// TODO: refactor
 	position: absolute;
 	width: 261px;
 	height: 40px;
 	left: 573px;
 	top: 277px;
+
+	${p => (p.redFlash ? animRedFlash : '')}
 `;
 
 export const Btn = styled(btn)`

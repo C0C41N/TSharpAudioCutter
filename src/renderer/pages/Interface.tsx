@@ -8,7 +8,7 @@ import Main from '@pages/Main';
 import Registration from '@pages/Registration';
 import Youtube from '@pages/Youtube';
 import { useStates } from '@services';
-import { appInit, getCachedLic, setCachedLic } from '@services/Lic';
+import { appInit, clearCachedLic, getCachedLic, setCachedLic } from '@services/Lic';
 import { Close, MainDiv } from '@styles/pages/interface';
 import { Level, Lic } from '@types';
 
@@ -46,6 +46,10 @@ function Interface() {
 					desc: 'Unexpected error from API',
 					subDesc: `${data} | ${func}`,
 				});
+
+				clearCachedLic();
+				setLic(Lic.null);
+
 				return redirectToLicensePage();
 			}
 
@@ -54,8 +58,8 @@ function Interface() {
 			const { blocked, isLatest, lic } = data;
 
 			if (blocked) {
-				setCachedLic(0);
-				setLic(0);
+				clearCachedLic();
+				setLic(Lic.null);
 
 				return setModal({
 					show: true,

@@ -40,8 +40,8 @@ function Youtube() {
 	const validate = (): false | string => {
 		const input = inputRef.current;
 		if (input) {
-			const url = input.value;
-			if (url.length) return url;
+			const val = input.value;
+			if (val.length) return val;
 			input.placeholder = 'bruh... paste a youtube link here!';
 		}
 		setRed(true);
