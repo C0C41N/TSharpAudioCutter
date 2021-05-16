@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, useHistory, useRouteMatch } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
 import Modal from '@comp/modal';
@@ -27,25 +27,11 @@ function Interface() {
 
 	useEffect(() => {
 		(async () => {
-			/**
-			 * check local
-			 * set lic
-			 * get lic from api
-			 * compare lic
-			 * 	if not equal
-			 * 		set lic
-			 * 	if equal
-			 * 		ignore
-			 */
-
 			const localLic = getCachedLic();
-
-			console.log({ localLic });
 
 			if (localLic === null) {
 				redirectToLicensePage();
-				setModal({ show: false, loading: false });
-				return;
+				return setModal({ show: false, loading: false });
 			}
 
 			setLic(localLic);
@@ -60,7 +46,33 @@ function Interface() {
 					desc: 'Unexpected error from API',
 					subDesc: `${data} | ${func}`,
 				});
-				redirectToLicensePage();
+				return redirectToLicensePage();
+			}
+
+			if (typeof data === 'string') return;
+
+			const { blocked, isLatest, lic } = data;
+
+			if (blocked) {
+				setCachedLic(0);
+				setLic(0);
+
+				return setModal({
+					show: true,
+					level: Level.error,
+					loading: false,
+					desc: 'Sorry, It looks like you’re blocked.',
+					subDesc: 'Contact the creator for assistance.',
+				});
+			}
+
+			if (lic !== localLic) {
+				setCachedLic(lic);
+				setLic(lic);
+			}
+
+			if (!isLatest) {
+				// TODO: Update
 			}
 		})();
 	}, []);
