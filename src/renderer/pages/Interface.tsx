@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, useRouteMatch } from 'react-router-dom';
+import { Route, useHistory, useRouteMatch } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
 import Modal from '@comp/modal';
@@ -8,14 +8,15 @@ import Main from '@pages/Main';
 import Registration from '@pages/Registration';
 import Youtube from '@pages/Youtube';
 import { useStates } from '@services';
+import { getCachedLic } from '@services/checkLic';
 import { Close, MainDiv } from '@styles/pages/interface';
 import { Lic } from '@types';
 
 function Interface() {
-	const { path } = useRouteMatch();
+	const { replace } = useHistory();
 	const { License, Modal: $Modal } = useStates();
 	const { set: setModal } = $Modal({ reactive: false });
-	const { set: setLic, changed: onLic } = License({ reactive: false });
+	const { changed: onLic, set: setLic } = License({ reactive: false });
 
 	onLic(e => {
 		if (e === Lic.null) setModal({ show: true, loading: true });
@@ -23,14 +24,33 @@ function Interface() {
 	});
 
 	useEffect(() => {
-		setTimeout(() => setLic(Lic.dev), 500);
+		/**
+		 * check local
+		 * set lic
+		 * get lic from api
+		 * compare lic
+		 * 	if not equal
+		 * 		set lic
+		 * 	if equal
+		 * 		ignore
+		 */
+
+		const localLic = getCachedLic();
+
+		if (localLic === null) {
+			replace('/main/license');
+			setModal({ show: false, loading: false });
+			return;
+		}
+
+		setLic(localLic);
 	}, []);
 
 	const routes = [
-		[path, <Main />],
-		[`${path}/youtube`, <Youtube />],
-		[`${path}/license`, <Registration />],
-		[`${path}/files`, <Files />],
+		['/main', <Main />],
+		['/main/youtube', <Youtube />],
+		['/main/license', <Registration />],
+		['/main/files', <Files />],
 	] as [path: string, el: JSX.Element][];
 
 	return (
