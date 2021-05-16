@@ -29,12 +29,7 @@ function Interface() {
 		(async () => {
 			const localLic = getCachedLic();
 
-			if (localLic === null) {
-				redirectToLicensePage();
-				return setModal({ show: false, loading: false });
-			}
-
-			setLic(localLic);
+			if (localLic !== null) setLic(localLic);
 
 			const { type, data, func } = await appInit();
 
