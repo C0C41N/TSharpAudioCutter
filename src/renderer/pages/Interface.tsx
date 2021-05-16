@@ -19,7 +19,7 @@ function Interface() {
 
 	onLic(e => {
 		if (e === Lic.null) setModal({ show: true, loading: true });
-		else setModal({ show: false, loading: true });
+		else setModal({ show: false, loading: false });
 	});
 
 	useEffect(() => {
