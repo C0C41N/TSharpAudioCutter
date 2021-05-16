@@ -8,9 +8,9 @@ import Main from '@pages/Main';
 import Registration from '@pages/Registration';
 import Youtube from '@pages/Youtube';
 import { useStates } from '@services';
-import { appInit, getCachedLic } from '@services/checkLic';
+import { appInit, getCachedLic, setCachedLic } from '@services/checkLic';
 import { Close, MainDiv } from '@styles/pages/interface';
-import { Lic } from '@types';
+import { Level, Lic } from '@types';
 
 function Interface() {
 	const { replace } = useHistory();
@@ -23,29 +23,46 @@ function Interface() {
 		else setModal({ show: false, loading: false });
 	});
 
+	const redirectToLicensePage = () => replace('/main/license');
+
 	useEffect(() => {
-		/**
-		 * check local
-		 * set lic
-		 * get lic from api
-		 * compare lic
-		 * 	if not equal
-		 * 		set lic
-		 * 	if equal
-		 * 		ignore
-		 */
+		(async () => {
+			/**
+			 * check local
+			 * set lic
+			 * get lic from api
+			 * compare lic
+			 * 	if not equal
+			 * 		set lic
+			 * 	if equal
+			 * 		ignore
+			 */
 
-		const localLic = getCachedLic();
+			const localLic = getCachedLic();
 
-		// if (localLic === null) {
-		// 	replace('/main/license');
-		// 	setModal({ show: false, loading: false });
-		// 	return;
-		// }
+			console.log({ localLic });
 
-		setLic(localLic);
+			if (localLic === null) {
+				redirectToLicensePage();
+				setModal({ show: false, loading: false });
+				return;
+			}
 
-		appInit();
+			setLic(localLic);
+
+			const { type, data, func } = await appInit();
+
+			if (type === 'error') {
+				setModal({
+					show: true,
+					loading: false,
+					level: Level.error,
+					desc: 'Unexpected error from API',
+					subDesc: `${data} | ${func}`,
+				});
+				redirectToLicensePage();
+			}
+		})();
 	}, []);
 
 	const routes = [

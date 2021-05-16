@@ -2,7 +2,13 @@ import { appInitURL, version } from '@const';
 
 import { electron, MachineID } from './native';
 
-import type { AppInitBody, AppInitReturn, IpcAxiosRes, Lic } from '@types';
+import type {
+	ApiRes,
+	AppInitBody,
+	AppInitReturn,
+	IpcAxiosRes,
+	Lic,
+} from '@types';
 import type { AxiosRequestConfig } from 'axios';
 
 export const getCachedLic = () => {
@@ -32,7 +38,5 @@ export const appInit = async () => {
 
 	const req: IpcAxiosRes = await ipcRenderer.invoke('request', config);
 
-	const { data }: { data: AppInitReturn } = req;
-
-	console.log(data);
+	return req.data as ApiRes<AppInitReturn>;
 };

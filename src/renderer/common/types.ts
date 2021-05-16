@@ -73,3 +73,9 @@ export interface IpcAxiosRes {
 	data: any;
 	status: number;
 }
+
+export interface ApiRes<T> {
+	type: 'error' | 'done';
+	func: string;
+	data: string | T;
+}
