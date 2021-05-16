@@ -68,3 +68,8 @@ export interface RegisterLicReturn {
 	blocked: boolean;
 	lic: Lic;
 }
+
+export interface IpcAxiosRes {
+	data: any;
+	status: number;
+}

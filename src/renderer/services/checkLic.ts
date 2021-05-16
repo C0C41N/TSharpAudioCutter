@@ -1,11 +1,9 @@
-import axios from 'axios';
-
 import { appInitURL, version } from '@const';
 
-import { MachineID } from './native';
+import { electron, MachineID } from './native';
 
-import type { AppInitBody, Lic } from '@types';
-const { machineId } = MachineID;
+import type { AppInitBody, AppInitReturn, IpcAxiosRes, Lic } from '@types';
+import type { AxiosRequestConfig } from 'axios';
 
 export const getCachedLic = () => {
 	const val = localStorage.getItem('lic');
@@ -21,8 +19,20 @@ export const setCachedLic = (lic: Lic) =>
 	localStorage.setItem('lic', lic.toString());
 
 export const appInit = async () => {
+	const { ipcRenderer } = electron;
+	const { machineId } = MachineID;
+
 	const deviceId = await machineId(true);
 
-	const res = await axios.post(appInitURL, <AppInitBody>{ deviceId, version });
-	console.log(res);
+	const config: AxiosRequestConfig = {
+		url: appInitURL,
+		method: 'POST',
+		data: <AppInitBody>{ deviceId, version },
+	};
+
+	const req: IpcAxiosRes = await ipcRenderer.invoke('request', config);
+
+	const { data }: { data: AppInitReturn } = req;
+
+	console.log(data);
 };
