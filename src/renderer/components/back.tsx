@@ -14,7 +14,6 @@ const Back = styled(Btn)`
 
 function back(props: any) {
 	const { goBack, length } = useHistory();
-	console.log({ length });
 
 	return length > 1 ? (
 		<Back {...props} onClick={goBack}>
