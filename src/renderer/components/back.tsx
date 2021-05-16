@@ -13,9 +13,10 @@ const Back = styled(Btn)`
 `;
 
 function back(props: any) {
-	const { goBack } = useHistory();
+	const { goBack, length } = useHistory();
+	console.log({ length });
 
-	return (
+	return length > 1 ? (
 		<Back {...props} onClick={goBack}>
 			<svg
 				width='9'
@@ -30,7 +31,7 @@ function back(props: any) {
 				/>
 			</svg>
 		</Back>
-	);
+	) : null;
 }
 
 export default back;
