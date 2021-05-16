@@ -1,7 +1,8 @@
-import React, { Fragment, KeyboardEvent, useCallback } from 'react';
+import React, { Fragment, KeyboardEvent } from 'react';
 
 import Back from '@comp/back';
 import { useStates } from '@services';
+import { MachineID } from '@services/native';
 import { Btn, Heading, Illustration, Input, SubHeading } from '@styles/pages/registration';
 import { Level } from '@types';
 
@@ -10,15 +11,9 @@ function Registration() {
 	const { val: modal, set: setModal } = Modal();
 
 	const clickRegister = () => {
-		if (modal.show) return;
+		const { machineIdSync } = MachineID;
 
-		setModal({
-			show: true,
-			level: Level.error,
-			loading: false,
-			desc: 'Sorry, It looks like you’re blocked.',
-			subDesc: 'Contact the creator for assistance.',
-		});
+		const deviceId = machineIdSync(true);
 	};
 
 	const enterInput = ({ key }: KeyboardEvent) =>

@@ -8,7 +8,7 @@ import Main from '@pages/Main';
 import Registration from '@pages/Registration';
 import Youtube from '@pages/Youtube';
 import { useStates } from '@services';
-import { appInit, getCachedLic, setCachedLic } from '@services/checkLic';
+import { appInit, getCachedLic, setCachedLic } from '@services/Lic';
 import { Close, MainDiv } from '@styles/pages/interface';
 import { Level, Lic } from '@types';
 
