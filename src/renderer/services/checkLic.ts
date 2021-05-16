@@ -1,8 +1,10 @@
-import type { Lic } from '@types';
 import axios from 'axios';
+
+import { appInitURL, version } from '@const';
 
 import { MachineID } from './native';
 
+import type { AppInitBody, Lic } from '@types';
 const { machineId } = MachineID;
 
 export const getCachedLic = () => {
@@ -19,9 +21,8 @@ export const setCachedLic = (lic: Lic) =>
 	localStorage.setItem('lic', lic.toString());
 
 export const appInit = async () => {
-	// prettier-ignore
-	const url = 'https://us-central1-tsharp-audio-cutter.cloudfunctions.net/appInit';
 	const deviceId = await machineId(true);
-	console.log(deviceId);
-	// axios.post(url, { deviceId: '', version: 0 });
+
+	const res = await axios.post(appInitURL, <AppInitBody>{ deviceId, version });
+	console.log(res);
 };

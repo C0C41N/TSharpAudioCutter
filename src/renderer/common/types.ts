@@ -47,3 +47,24 @@ export enum Status {
 export interface TraFileList {
 	[key: string]: TraFile;
 }
+
+export interface AppInitBody {
+	deviceId: string;
+	version: number;
+}
+
+export interface RegisterLicBody {
+	key: string;
+	deviceId: string;
+}
+
+export interface AppInitReturn {
+	blocked: boolean;
+	lic: number;
+	isLatest: boolean;
+}
+
+export interface RegisterLicReturn {
+	blocked: boolean;
+	lic: Lic;
+}

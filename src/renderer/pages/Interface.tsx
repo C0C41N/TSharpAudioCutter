@@ -37,11 +37,11 @@ function Interface() {
 
 		const localLic = getCachedLic();
 
-		if (localLic === null) {
-			replace('/main/license');
-			setModal({ show: false, loading: false });
-			return;
-		}
+		// if (localLic === null) {
+		// 	replace('/main/license');
+		// 	setModal({ show: false, loading: false });
+		// 	return;
+		// }
 
 		setLic(localLic);
 
