@@ -8,7 +8,7 @@ import Main from '@pages/Main';
 import Registration from '@pages/Registration';
 import Youtube from '@pages/Youtube';
 import { useStates } from '@services';
-import { getCachedLic } from '@services/checkLic';
+import { appInit, getCachedLic } from '@services/checkLic';
 import { Close, MainDiv } from '@styles/pages/interface';
 import { Lic } from '@types';
 
@@ -44,6 +44,8 @@ function Interface() {
 		}
 
 		setLic(localLic);
+
+		appInit();
 	}, []);
 
 	const routes = [

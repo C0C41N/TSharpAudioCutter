@@ -1,11 +1,12 @@
 import type { Lic } from '@types';
+import axios from 'axios';
 
-const { localStorage } = window;
+import { MachineID } from './native';
+
+const { machineId } = MachineID;
 
 export const getCachedLic = () => {
-	const { getItem } = localStorage;
-
-	const val = getItem('lic');
+	const val = localStorage.getItem('lic');
 	if (val === null) return null;
 
 	const lic: Lic = +val;
@@ -14,7 +15,13 @@ export const getCachedLic = () => {
 	return lic;
 };
 
-export const setCachedLic = (lic: Lic) => {
-	const { setItem } = localStorage;
-	setItem('lic', lic.toString());
+export const setCachedLic = (lic: Lic) =>
+	localStorage.setItem('lic', lic.toString());
+
+export const appInit = async () => {
+	// prettier-ignore
+	const url = 'https://us-central1-tsharp-audio-cutter.cloudfunctions.net/appInit';
+	const deviceId = await machineId(true);
+	console.log(deviceId);
+	// axios.post(url, { deviceId: '', version: 0 });
 };
