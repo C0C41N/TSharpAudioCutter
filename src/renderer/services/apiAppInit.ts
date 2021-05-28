@@ -23,10 +23,7 @@ export const appInit = async () => {
 	return req.data as ApiRes<AppInitReturn>;
 };
 
-export const appInitHook = (
-	setLic: (data: Lic) => void,
-	setModal: (data: IModal) => void
-) => {
+export const appInitHook = ({ setLic, setModal }: appInitHookArgs) => {
 	useAsyncEffect(async () => {
 		const { type, data, func } = await appInit();
 
@@ -61,3 +58,8 @@ export const appInitHook = (
 		}
 	}, []);
 };
+
+interface appInitHookArgs {
+	setLic: (data: Lic) => void;
+	setModal: (data: IModal) => void;
+}

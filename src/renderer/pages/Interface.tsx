@@ -22,7 +22,7 @@ function Interface() {
 		else setModal({ show: false, loading: false });
 	});
 
-	appInitHook(setLic, setModal);
+	appInitHook({ setLic, setModal });
 
 	const routes = [
 		['/main', <Main />],
