@@ -62,6 +62,7 @@ export interface AppInitReturn {
 	blocked: boolean;
 	lic: number;
 	isLatest: boolean;
+	setupURL: string;
 }
 
 export interface RegisterLicReturn {
