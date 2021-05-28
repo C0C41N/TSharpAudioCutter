@@ -10,3 +10,11 @@ export const useListenEvent = (
 		return () => el.removeEventListener(event, callback);
 	}, [callback]);
 };
+
+export const useAsyncEffect = (
+	callback: () => Promise<void>,
+	dependencies?: any[]
+) =>
+	useEffect(() => {
+		callback();
+	}, dependencies);
