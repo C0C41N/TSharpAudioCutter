@@ -15,15 +15,18 @@ function Modal() {
 	const modal = last ? { ...last, ...val } : val;
 	const { show, level, desc, subDesc, loading } = modal;
 
-	const FadeOut = useCallback(() => {
+	const FadeOut = () => {
 		setFadeOut(true);
 		setTimeout(() => {
+			if (!fadeOut) return;
 			setVisible(false);
 			setFadeOut(false);
 		}, 300);
-	}, []);
+	};
 
 	changed(e => {
+		console.log({ e });
+		if (fadeOut) setFadeOut(false);
 		if (e.show) setVisible(true);
 		else FadeOut();
 	}, false);
@@ -61,4 +64,5 @@ function Modal() {
 
 export default Modal;
 
+// TODO: add dismiss option
 // TODO: make a btn, pass whole object named btn
