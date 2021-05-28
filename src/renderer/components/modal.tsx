@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 
 import { useStates } from '@services';
 import { useListenEvent } from '@services/hooks';
@@ -13,7 +13,7 @@ function Modal() {
 	const [visible, setVisible] = useState(false);
 
 	const modal = last ? { ...last, ...val } : val;
-	const { show, level, desc, subDesc, loading } = modal;
+	const { show, level, desc, subDesc, loading, dismiss = true } = modal;
 
 	const FadeOut = () => {
 		setFadeOut(true);
@@ -30,13 +30,10 @@ function Modal() {
 		else FadeOut();
 	}, false);
 
-	const onEnter = useCallback(
-		({ key }) => {
-			if (key !== 'Enter' || !show || loading) return;
-			set({ show: false, loading: false });
-		},
-		[modal]
-	);
+	const onEnter = ({ key }: any) => {
+		if (key !== 'Enter' || !show || !dismiss || loading) return;
+		set({ show: false, loading: false });
+	};
 
 	useListenEvent(document, 'keydown', onEnter);
 
@@ -48,9 +45,11 @@ function Modal() {
 			<Heading level={level}>{heading}</Heading>
 			<Desc>{desc}</Desc>
 			<SubDesc>{subDesc}</SubDesc>
-			<Dismiss>
-				Press &nbsp; <strong>Enter</strong> &nbsp; to dismiss
-			</Dismiss>
+			{dismiss && (
+				<Dismiss>
+					Press &nbsp; <strong>Enter</strong> &nbsp; to dismiss
+				</Dismiss>
+			)}
 		</Fragment>
 	);
 
@@ -63,5 +62,4 @@ function Modal() {
 
 export default Modal;
 
-// TODO: add dismiss option
 // TODO: make a btn, pass whole object named btn

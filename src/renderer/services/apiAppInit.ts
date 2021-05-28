@@ -50,10 +50,10 @@ export const appInitHook = ({ setLic, setModal }: appInitHookArgs) => {
 			setModal({
 				show: true,
 				loading: false,
+				dismiss: false,
 				level: Level.error,
 				desc,
 				subDesc,
-				// dismiss: false
 			});
 		}
 	}, []);

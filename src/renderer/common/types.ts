@@ -6,6 +6,7 @@ export interface IModal {
 	level?: Level;
 	desc?: string;
 	subDesc?: string;
+	dismiss?: boolean;
 }
 
 export interface IModal_ {
