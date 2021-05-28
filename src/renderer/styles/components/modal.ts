@@ -1,10 +1,21 @@
 import styled from 'styled-components';
 
 import { animFadeIn, animFadeOut } from '@styles';
-import { mont_700_36, nuni_400_18, nuni_600_24 } from '@styles/fonts';
+import { btn } from '@styles/comp';
+import { mont_600_17, mont_700_36, nuni_400_18, nuni_600_24 } from '@styles/fonts';
 
 import type { Level } from '@types';
 const hC = ['#CB3DDC', '#C8A500', '#CB3D2E'];
+
+export const Btn = styled(btn)`
+	${mont_600_17}
+
+	position: absolute;
+	width: 260px;
+	height: 38px;
+	left: 370px;
+	top: 361px;
+`;
 
 export const Backdrop = styled.div<B>`
 	position: absolute;

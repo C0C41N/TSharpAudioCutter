@@ -3,7 +3,7 @@ import React, { Fragment, useState } from 'react';
 import { useStates } from '@services';
 import { useListenEvent } from '@services/hooks';
 import Loading from '@styles/components/loading';
-import { Backdrop, Desc, Dismiss, Heading, SubDesc } from '@styles/components/modal';
+import { Backdrop, Btn, Desc, Dismiss, Heading, SubDesc } from '@styles/components/modal';
 
 function Modal() {
 	const { Modal } = useStates();
@@ -45,6 +45,7 @@ function Modal() {
 			<Heading level={level}>{heading}</Heading>
 			<Desc>{desc}</Desc>
 			<SubDesc>{subDesc}</SubDesc>
+			<Btn>Button</Btn>
 			{dismiss && (
 				<Dismiss>
 					Press &nbsp; <strong>Enter</strong> &nbsp; to dismiss
