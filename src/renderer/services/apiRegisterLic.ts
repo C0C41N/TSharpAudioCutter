@@ -1,8 +1,6 @@
-import electron from 'electron';
-
 import { registerLicURL } from '@const';
 
-import { MachineID } from './native';
+import { electron, MachineID } from './native';
 
 import type {
 	RegisterLicBody,
