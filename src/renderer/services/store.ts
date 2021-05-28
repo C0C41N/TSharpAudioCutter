@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useRef } from 'react';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { distinctUntilChanged, map, skip } from 'rxjs/operators';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import { deepEqual, randomKey } from './util';
 
@@ -53,22 +53,18 @@ class State<T> {
 	public ref = useRef<T>();
 
 	/**
-	 * onChange without forceUpdate
+	 * useEfect depending on val. `reactive` must be true
 	 */
-	public changed = (e: (v: T) => void, initial = true) => {
+	public changed = (e: (v: T) => void, initial = true) =>
 		useEffect(() => {
-			const sub = initial
-				? this.observe.subscribe(e)
-				: this.observe.pipe(skip(1)).subscribe(e);
-			return () => sub.unsubscribe();
-		}, []);
-	};
+			e(this.val);
+		}, [this.val]);
 
 	constructor(
 		private get: () => T,
 		public set: (data: T) => void,
 		private lAst: () => T,
-		private observe: Observable<T>,
+		observe: Observable<T>,
 		options?: options
 	) {
 		const { reactive, ref } = options || {};
