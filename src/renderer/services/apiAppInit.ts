@@ -25,16 +25,6 @@ export const appInit = async () => {
 
 export const appInitHook = ({ setLic, setModal }: appInitHookArgs) => {
 	useAsyncEffect(async () => {
-		const showErrModal = (desc: string, subDesc: string) =>
-			setModal({
-				show: true,
-				loading: false,
-				level: Level.error,
-				desc,
-				subDesc,
-				// dismiss: false
-			});
-
 		const { type, data, func } = await appInit();
 
 		if (type === 'error')
@@ -54,6 +44,17 @@ export const appInitHook = ({ setLic, setModal }: appInitHookArgs) => {
 
 		if (!isLatest) {
 			// TODO: Update
+		}
+
+		function showErrModal(desc: string, subDesc: string) {
+			setModal({
+				show: true,
+				loading: false,
+				level: Level.error,
+				desc,
+				subDesc,
+				// dismiss: false
+			});
 		}
 	}, []);
 };
