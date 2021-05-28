@@ -25,7 +25,6 @@ function Modal() {
 	};
 
 	changed(e => {
-		console.log({ e });
 		if (fadeOut) setFadeOut(false);
 		if (e.show) setVisible(true);
 		else FadeOut();
