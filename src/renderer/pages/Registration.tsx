@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 
 import Back from '@comp/back';
 import { useStates } from '@services';
-import { clearCachedLic, registerLic, setCachedLic } from '@services/Lic';
+import { registerLic } from '@services/Lic';
 import { Btn, Heading, Illustration, Input, SubHeading } from '@styles/pages/registration';
 import { ApiRes, Level, RegisterLicReturn } from '@types';
 
@@ -63,14 +63,11 @@ function Registration() {
 			});
 		}
 
-		if (typeof data === 'string') return;
+		if (typeof data === 'string') return; // for type assertion
 
 		const { blocked, lic } = data;
 
-		if (blocked) {
-			clearCachedLic();
-			setLic(0);
-
+		if (blocked)
 			return setModal({
 				show: true,
 				level: Level.error,
@@ -78,10 +75,8 @@ function Registration() {
 				desc: 'Sorry, It looks like you’re blocked.',
 				subDesc: 'Contact the creator for assistance.',
 			});
-		}
 
 		replace('/main');
-		setCachedLic(lic);
 		setLic(lic);
 
 		setModal({

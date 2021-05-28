@@ -8,7 +8,7 @@ import Main from '@pages/Main';
 import Registration from '@pages/Registration';
 import Youtube from '@pages/Youtube';
 import { useStates } from '@services';
-import { appInit, clearCachedLic, getCachedLic, setCachedLic } from '@services/Lic';
+import { appInit } from '@services/Lic';
 import { Close, MainDiv } from '@styles/pages/interface';
 import { Level, Lic } from '@types';
 
@@ -27,14 +27,11 @@ function Interface() {
 
 	useEffect(() => {
 		(async () => {
-			const localLic = getCachedLic();
-
-			if (localLic !== null) setLic(localLic);
-
 			const { type, data, func } = await appInit();
 
-			if (type === 'error') {
-				setModal({
+			if (type === 'error')
+				// uncloseable modal
+				return setModal({
 					show: true,
 					loading: false,
 					level: Level.error,
@@ -42,20 +39,12 @@ function Interface() {
 					subDesc: `${data} | ${func}`,
 				});
 
-				clearCachedLic();
-				setLic(Lic.null);
-
-				return redirectToLicensePage();
-			}
-
-			if (typeof data === 'string') return;
+			if (typeof data === 'string') return; // for type assertion
 
 			const { blocked, isLatest, lic } = data;
 
-			if (blocked) {
-				clearCachedLic();
-				setLic(Lic.null);
-
+			if (blocked)
+				// uncloseable modal
 				return setModal({
 					show: true,
 					level: Level.error,
@@ -63,12 +52,8 @@ function Interface() {
 					desc: 'Sorry, It looks like you’re blocked.',
 					subDesc: 'Contact the creator for assistance.',
 				});
-			}
 
-			if (lic !== localLic) {
-				setCachedLic(lic);
-				setLic(lic);
-			}
+			setLic(lic);
 
 			if (!isLatest) {
 				// TODO: Update
