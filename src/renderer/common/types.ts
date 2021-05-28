@@ -7,14 +7,13 @@ export interface IModal {
 	desc?: string;
 	subDesc?: string;
 	dismiss?: boolean;
+	btn?: IModalBtn;
 }
 
-export interface IModal_ {
+export interface IModalBtn {
 	show: boolean;
-	loading: boolean;
-	level: Level;
-	desc: string;
-	subDesc: string;
+	caption: string;
+	callback: () => void;
 }
 
 export enum Level {

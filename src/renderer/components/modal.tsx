@@ -5,6 +5,8 @@ import { useListenEvent } from '@services/hooks';
 import Loading from '@styles/components/loading';
 import { Backdrop, Btn, Desc, Dismiss, Heading, SubDesc } from '@styles/components/modal';
 
+import type { IModalBtn } from '@types';
+
 function Modal() {
 	const { Modal } = useStates();
 	const { val, set, changed, last } = Modal();
@@ -12,8 +14,20 @@ function Modal() {
 	const [fadeOut, setFadeOut] = useState(false);
 	const [visible, setVisible] = useState(false);
 
+	const nullBtn: IModalBtn = { show: false, caption: '', callback: () => {} };
 	const modal = last ? { ...last, ...val } : val;
-	const { show, level, desc, subDesc, loading, dismiss = true } = modal;
+
+	const {
+		show,
+		level,
+		desc,
+		subDesc,
+		loading,
+		dismiss = true,
+		btn = nullBtn,
+	} = modal;
+
+	const { show: btnShow, callback: btnCallback, caption: btnCaption } = btn;
 
 	const FadeOut = () => {
 		setFadeOut(true);
@@ -45,7 +59,7 @@ function Modal() {
 			<Heading level={level}>{heading}</Heading>
 			<Desc>{desc}</Desc>
 			<SubDesc>{subDesc}</SubDesc>
-			<Btn>Button</Btn>
+			{btnShow && <Btn onClick={btnCallback}>{btnCaption}</Btn>}
 			{dismiss && (
 				<Dismiss>
 					Press &nbsp; <strong>Enter</strong> &nbsp; to dismiss
@@ -62,5 +76,3 @@ function Modal() {
 }
 
 export default Modal;
-
-// TODO: make a btn, pass whole object named btn
