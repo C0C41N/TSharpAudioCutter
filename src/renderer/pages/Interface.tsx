@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
 import Modal from '@comp/modal';
@@ -13,6 +13,8 @@ import { Close, MainDiv } from '@styles/pages/interface';
 import { Lic } from '@types';
 
 function Interface() {
+	const { replace } = useHistory();
+
 	const { License, Modal: $Modal } = useStates();
 	const { set: setModal } = $Modal({ reactive: false });
 	const { changed: onLic, set: setLic } = License();
@@ -22,7 +24,7 @@ function Interface() {
 		else setModal({ show: false, loading: false });
 	});
 
-	appInitHook({ setLic, setModal });
+	appInitHook({ setLic, setModal, replace });
 
 	const routes = [
 		['/main', <Main />],

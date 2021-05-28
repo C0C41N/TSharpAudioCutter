@@ -23,8 +23,10 @@ export const appInit = async () => {
 	return req.data as ApiRes<AppInitReturn>;
 };
 
-export const appInitHook = ({ setLic, setModal }: appInitHookArgs) => {
+export const appInitHook = ({ setLic, setModal, replace }: appInitHookArgs) => {
 	useAsyncEffect(async () => {
+		const redirectToLicPage = () => replace('/main');
+
 		const { type, data, func } = await appInit();
 
 		if (type === 'error')
@@ -40,7 +42,8 @@ export const appInitHook = ({ setLic, setModal }: appInitHookArgs) => {
 				'Contact the creator for assistance.'
 			);
 
-		setLic(lic);
+		if (lic > 1) setLic(lic);
+		else return redirectToLicPage();
 
 		if (!isLatest) {
 			// TODO: Update
@@ -62,4 +65,5 @@ export const appInitHook = ({ setLic, setModal }: appInitHookArgs) => {
 interface appInitHookArgs {
 	setLic: (data: Lic) => void;
 	setModal: (data: IModal) => void;
+	replace: (path: string, state?: unknown) => void;
 }
