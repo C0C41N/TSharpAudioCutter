@@ -8,8 +8,8 @@ import Main from '@pages/Main';
 import Registration from '@pages/Registration';
 import Youtube from '@pages/Youtube';
 import { useStates } from '@services';
+import { appInit } from '@services/api';
 import { useAsyncEffect } from '@services/hooks';
-import { appInit } from '@services/Lic';
 import { Close, MainDiv } from '@styles/pages/interface';
 import { Level, Lic } from '@types';
 

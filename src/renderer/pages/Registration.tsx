@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 
 import Back from '@comp/back';
 import { useStates } from '@services';
-import { registerLic } from '@services/Lic';
+import { registerLic } from '@services/api';
 import { Btn, Heading, Illustration, Input, SubHeading } from '@styles/pages/registration';
 import { ApiRes, Level, RegisterLicReturn } from '@types';
 
