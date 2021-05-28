@@ -25,31 +25,30 @@ export const appInit = async () => {
 
 export const appInitHook = ({ setLic, setModal }: appInitHookArgs) => {
 	useAsyncEffect(async () => {
-		const { type, data, func } = await appInit();
-
-		if (type === 'error')
-			// uncloseable modal
-			return setModal({
+		const showErrModal = (desc: string, subDesc: string) =>
+			setModal({
 				show: true,
 				loading: false,
 				level: Level.error,
-				desc: 'Unexpected error from API',
-				subDesc: `${data} | ${func}`,
+				desc,
+				subDesc,
+				// dismiss: false
 			});
+
+		const { type, data, func } = await appInit();
+
+		if (type === 'error')
+			return showErrModal('Unexpected error from API', `${data} | ${func}`);
 
 		if (typeof data === 'string') return; // for type assertion
 
 		const { blocked, isLatest, lic } = data;
 
 		if (blocked)
-			// uncloseable modal
-			return setModal({
-				show: true,
-				level: Level.error,
-				loading: false,
-				desc: 'Sorry, It looks like you’re blocked.',
-				subDesc: 'Contact the creator for assistance.',
-			});
+			return showErrModal(
+				'Sorry, It looks like you’re blocked.',
+				'Contact the creator for assistance.'
+			);
 
 		setLic(lic);
 
