@@ -28,8 +28,6 @@ function split(props: any) {
 
 	const [inprogress, setInprogress] = useState(false);
 
-	// TODO: Demo Check
-
 	const setStatus = (file: TraFile, status: Status) => {
 		const { id } = file;
 		const fiLe: TraFile = { ...file, status };
@@ -77,7 +75,7 @@ function split(props: any) {
 
 		clearFiles();
 		showModal();
-		await checkFromYT();
+		await checkFromYT(); // came from YT page ? redirect back
 		openFolder(await outPath);
 
 		setInprogress(false);
