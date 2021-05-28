@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
@@ -8,6 +8,7 @@ import Main from '@pages/Main';
 import Registration from '@pages/Registration';
 import Youtube from '@pages/Youtube';
 import { useStates } from '@services';
+import { useAsyncEffect } from '@services/hooks';
 import { appInit } from '@services/Lic';
 import { Close, MainDiv } from '@styles/pages/interface';
 import { Level, Lic } from '@types';
@@ -16,7 +17,7 @@ function Interface() {
 	const { replace } = useHistory();
 	const { License, Modal: $Modal } = useStates();
 	const { set: setModal } = $Modal({ reactive: false });
-	const { changed: onLic, set: setLic } = License({ reactive: false });
+	const { changed: onLic, set: setLic } = License();
 
 	onLic(e => {
 		if (e === Lic.null) setModal({ show: true, loading: true });
@@ -25,40 +26,38 @@ function Interface() {
 
 	const redirectToLicensePage = () => replace('/main/license');
 
-	useEffect(() => {
-		(async () => {
-			const { type, data, func } = await appInit();
+	useAsyncEffect(async () => {
+		const { type, data, func } = await appInit();
 
-			if (type === 'error')
-				// uncloseable modal
-				return setModal({
-					show: true,
-					loading: false,
-					level: Level.error,
-					desc: 'Unexpected error from API',
-					subDesc: `${data} | ${func}`,
-				});
+		if (type === 'error')
+			// uncloseable modal
+			return setModal({
+				show: true,
+				loading: false,
+				level: Level.error,
+				desc: 'Unexpected error from API',
+				subDesc: `${data} | ${func}`,
+			});
 
-			if (typeof data === 'string') return; // for type assertion
+		if (typeof data === 'string') return; // for type assertion
 
-			const { blocked, isLatest, lic } = data;
+		const { blocked, isLatest, lic } = data;
 
-			if (blocked)
-				// uncloseable modal
-				return setModal({
-					show: true,
-					level: Level.error,
-					loading: false,
-					desc: 'Sorry, It looks like you’re blocked.',
-					subDesc: 'Contact the creator for assistance.',
-				});
+		if (blocked)
+			// uncloseable modal
+			return setModal({
+				show: true,
+				level: Level.error,
+				loading: false,
+				desc: 'Sorry, It looks like you’re blocked.',
+				subDesc: 'Contact the creator for assistance.',
+			});
 
-			setLic(lic);
+		setLic(lic);
 
-			if (!isLatest) {
-				// TODO: Update
-			}
-		})();
+		if (!isLatest) {
+			// TODO: Update
+		}
 	}, []);
 
 	const routes = [
