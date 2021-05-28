@@ -1,8 +1,5 @@
-import { appInitURL, registerLicURL, version } from '@const';
-import {
-	ApiRes, AppInitBody, AppInitReturn, IModal, IpcAxiosRes, Level, Lic, RegisterLicBody,
-	RegisterLicReturn
-} from '@types';
+import { appInitURL, version } from '@const';
+import { ApiRes, AppInitBody, AppInitReturn, IModal, IpcAxiosRes, Level, Lic } from '@types';
 
 import { useAsyncEffect } from './hooks';
 import { electron, MachineID } from './native';
@@ -63,21 +60,4 @@ export const appInitHook = (
 			// TODO: Update
 		}
 	}, []);
-};
-
-export const registerLic = async (key: string) => {
-	const { ipcRenderer } = electron;
-	const { machineId } = MachineID;
-
-	const deviceId = await machineId(true);
-
-	const config: AxiosRequestConfig = {
-		url: registerLicURL,
-		method: 'POST',
-		data: <RegisterLicBody>{ key, deviceId },
-	};
-
-	const req: IpcAxiosRes = await ipcRenderer.invoke('request', config);
-
-	return req.data as ApiRes<RegisterLicReturn>;
 };

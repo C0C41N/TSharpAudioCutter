@@ -8,7 +8,7 @@ import Main from '@pages/Main';
 import Registration from '@pages/Registration';
 import Youtube from '@pages/Youtube';
 import { useStates } from '@services';
-import { appInitHook } from '@services/api';
+import { appInitHook } from '@services/apiAppInit';
 import { Close, MainDiv } from '@styles/pages/interface';
 import { Lic } from '@types';
 
