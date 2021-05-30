@@ -1,6 +1,8 @@
 import getYtId from 'get-youtube-id';
 import React, { Fragment, KeyboardEvent, useRef, useState } from 'react';
 import { useHistory } from 'react-router';
+import { Observable } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 
 import Back from '@comp/back';
 import { useStates } from '@services';
@@ -8,6 +10,8 @@ import { sleep, traFile } from '@services/util';
 import { getFilePath, ytdl } from '@services/ytdl';
 import { Btn, Heading, Input, Percent, Progress } from '@styles/pages/youtube';
 import { Level } from '@types';
+
+import type { IVideoTask } from 'youtube-mp3-downloader';
 
 const placeholder = 'https://www.youtube.com/watch?v=DxNt7xV5aII';
 
@@ -66,9 +70,20 @@ function Youtube() {
 
 		YTDL.on('error', (e: Error) => showErr(e.message));
 
-		YTDL.on('progress', e => setProgress(e.progress.percentage));
+		const $finished = new Observable<{ file: string }>(e => {
+			YTDL.on('finished', (_, d) => e.next(d));
+		}).pipe(take(1));
 
-		YTDL.on('finished', async (e, d) => {
+		const $progress = new Observable<IVideoTask>(e => {
+			YTDL.on('progress', o => e.next(o));
+		}).pipe(takeUntil($finished));
+
+		const $start = $progress.pipe(take(1));
+
+		$start.subscribe(() => console.log('starting download.'));
+		$progress.subscribe(e => setProgress(e.progress.percentage));
+
+		$finished.subscribe(async d => {
 			const filePath = await getFilePath(d);
 			const file = await traFile(filePath);
 			setFiles({ [file.id]: file });
