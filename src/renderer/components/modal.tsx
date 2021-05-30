@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 
 import { useStates } from '@services';
 import { useListenEvent } from '@services/hooks';
@@ -11,6 +11,7 @@ function Modal() {
 	const { Modal } = useStates();
 	const { val, set, changed, last } = Modal();
 
+	const fading = useRef(false);
 	const [fadeOut, setFadeOut] = useState(false);
 	const [visible, setVisible] = useState(false);
 
@@ -29,20 +30,24 @@ function Modal() {
 
 	const { show: btnShow, callback: btnCallback, caption: btnCaption } = btn;
 
-	const FadeOut = () => {
-		setFadeOut(true);
-		setTimeout(() => {
-			if (!fadeOut) return;
+	const hideModal = () => {
+		if (fading.current) {
+			fading.current = false;
 			setVisible(false);
 			setFadeOut(false);
-		}, 300);
+		}
 	};
 
 	changed(e => {
-		if (fadeOut) setFadeOut(false);
+		hideModal();
+
 		if (e.show) setVisible(true);
-		else FadeOut();
-	}, false);
+		else {
+			fading.current = true;
+			setFadeOut(true);
+			setTimeout(hideModal, 300);
+		}
+	});
 
 	const onEnter = ({ key }: any) => {
 		if (key !== 'Enter' || !show || !dismiss || loading) return;
