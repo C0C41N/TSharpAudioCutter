@@ -55,7 +55,7 @@ class State<T> {
 	/**
 	 * useEfect depending on val. `reactive` must be true
 	 */
-	public changed = (e: (v: T) => void, initial = true) =>
+	public changed = (e: (v: T) => void) =>
 		useEffect(() => {
 			e(this.val);
 		}, [this.val]);
