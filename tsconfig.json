@@ -25,6 +25,12 @@
 		"forceConsistentCasingInFileNames": true,
 		"resolveJsonModule": true,
 		"allowSyntheticDefaultImports": true,
-		"importsNotUsedAsValues": "error"
+		"importsNotUsedAsValues": "error",
+		"plugins": [
+			{
+				"name": "typescript-styled-plugin",
+				"validate": false
+			}
+		]
 	}
 }
