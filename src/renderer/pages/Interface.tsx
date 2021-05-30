@@ -10,19 +10,13 @@ import Youtube from '@pages/Youtube';
 import { useStates } from '@services';
 import { appInitHook } from '@services/apiAppInit';
 import { Close, MainDiv } from '@styles/pages/interface';
-import { Lic } from '@types';
 
 function Interface() {
 	const { replace } = useHistory();
 
 	const { License, Modal: $Modal } = useStates();
 	const { set: setModal } = $Modal({ reactive: false });
-	const { changed: onLic, set: setLic } = License();
-
-	onLic(e => {
-		if (e === Lic.null) setModal({ show: true, loading: true });
-		else setModal({ show: false, loading: false });
-	});
+	const { set: setLic } = License({ reactive: false });
 
 	appInitHook({ setLic, setModal, replace });
 

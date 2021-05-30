@@ -25,6 +25,8 @@ export const appInit = async () => {
 
 export const appInitHook = ({ setLic, setModal, replace }: appInitHookArgs) =>
 	useAsyncEffect(async () => {
+		setModal({ show: true, loading: true });
+
 		const { shell } = electron;
 		const redirectToLicPage = () => replace('/main');
 
@@ -60,6 +62,8 @@ export const appInitHook = ({ setLic, setModal, replace }: appInitHookArgs) =>
 					callback: () => shell.openExternal(setupURL),
 				},
 			});
+
+		return setModal({ show: false, loading: false });
 
 		function showErrModal(desc: string, subDesc: string) {
 			setModal({
