@@ -33,7 +33,7 @@ export const appInitHook = () => {
 	const { set: setModal } = $Modal({ reactive: false });
 	const { set: setLic } = License({ reactive: false });
 
-	const redirectToLicPage = () => replace('/main');
+	const redirectToLicPage = () => replace('/main/license');
 
 	useAsyncEffect(async () => {
 		setModal({ show: true, loading: true });
@@ -55,7 +55,7 @@ export const appInitHook = () => {
 			);
 
 		if (lic > 1) setLic(lic);
-		else return redirectToLicPage();
+		else redirectToLicPage();
 
 		if (!isLatest)
 			return setModal({
@@ -72,7 +72,7 @@ export const appInitHook = () => {
 				},
 			});
 
-		return setModal({ show: false, loading: false });
+		return setModal({ show: false, loading: true });
 
 		function showErrModal(desc: string, subDesc: string) {
 			setModal({
