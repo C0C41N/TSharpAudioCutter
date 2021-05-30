@@ -12,13 +12,7 @@ import { appInitHook } from '@services/apiAppInit';
 import { Close, MainDiv } from '@styles/pages/interface';
 
 function Interface() {
-	const { replace } = useHistory();
-
-	const { License, Modal: $Modal } = useStates();
-	const { set: setModal } = $Modal({ reactive: false });
-	const { set: setLic } = License({ reactive: false });
-
-	appInitHook({ setLic, setModal, replace });
+	appInitHook();
 
 	const routes = [
 		['/main', <Main />],

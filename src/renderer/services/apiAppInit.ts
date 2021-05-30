@@ -1,4 +1,7 @@
+import { useHistory } from 'react-router-dom';
+
 import { appInitURL, version } from '@const';
+import { useStates } from '@services';
 import { ApiRes, AppInitBody, AppInitReturn, IModal, IpcAxiosRes, Level, Lic } from '@types';
 
 import { useAsyncEffect } from './hooks';
@@ -23,13 +26,19 @@ export const appInit = async () => {
 	return req.data as ApiRes<AppInitReturn>;
 };
 
-export const appInitHook = ({ setLic, setModal, replace }: appInitHookArgs) =>
+export const appInitHook = () => {
+	const { replace } = useHistory();
+
+	const { License, Modal: $Modal } = useStates();
+	const { set: setModal } = $Modal({ reactive: false });
+	const { set: setLic } = License({ reactive: false });
+
+	const redirectToLicPage = () => replace('/main');
+
 	useAsyncEffect(async () => {
 		setModal({ show: true, loading: true });
 
 		const { shell } = electron;
-		const redirectToLicPage = () => replace('/main');
-
 		const { type, data, func } = await appInit();
 
 		if (type === 'error')
@@ -76,9 +85,4 @@ export const appInitHook = ({ setLic, setModal, replace }: appInitHookArgs) =>
 			});
 		}
 	}, []);
-
-interface appInitHookArgs {
-	setLic: (data: Lic) => void;
-	setModal: (data: IModal) => void;
-	replace: (path: string, state?: unknown) => void;
-}
+};
