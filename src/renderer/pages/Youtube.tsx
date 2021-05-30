@@ -1,17 +1,13 @@
 import getYtId from 'get-youtube-id';
 import React, { Fragment, KeyboardEvent, useRef, useState } from 'react';
 import { useHistory } from 'react-router';
-import { Observable } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
 
 import Back from '@comp/back';
 import { useStates } from '@services';
 import { sleep, traFile } from '@services/util';
 import { getFilePath, ytdl } from '@services/ytdl';
-import { Btn, Heading, Input, Percent, Progress } from '@styles/pages/youtube';
+import { Btn, Heading, Input, Percent, Progress, Status } from '@styles/pages/youtube';
 import { Level } from '@types';
-
-import type { IVideoTask } from 'youtube-mp3-downloader';
 
 const placeholder = 'https://www.youtube.com/watch?v=DxNt7xV5aII';
 
@@ -70,20 +66,9 @@ function Youtube() {
 
 		YTDL.on('error', (e: Error) => showErr(e.message));
 
-		const $finished = new Observable<{ file: string }>(e => {
-			YTDL.on('finished', (_, d) => e.next(d));
-		}).pipe(take(1));
+		YTDL.on('progress', e => setProgress(e.progress.percentage));
 
-		const $progress = new Observable<IVideoTask>(e => {
-			YTDL.on('progress', o => e.next(o));
-		}).pipe(takeUntil($finished));
-
-		const $start = $progress.pipe(take(1));
-
-		$start.subscribe(() => console.log('starting download.'));
-		$progress.subscribe(e => setProgress(e.progress.percentage));
-
-		$finished.subscribe(async d => {
+		YTDL.on('finished', async (_, d) => {
 			const filePath = await getFilePath(d);
 			const file = await traFile(filePath);
 			setFiles({ [file.id]: file });
@@ -102,6 +87,12 @@ function Youtube() {
 		</Fragment>
 	);
 
+	const showStart = () => progress === 0;
+	const showProgr = () => progress > 0;
+	const showCheck = () => progress === 0.01;
+	const showDown = () => progress > 0.01 && progress < 100;
+	const showDone = () => progress === 100;
+
 	return (
 		<Fragment>
 			<Back />
@@ -113,12 +104,13 @@ function Youtube() {
 				ref={inputRef}
 				autoFocus
 			/>
-			{progress === 0 && <Btn onClick={start}>Start</Btn>}
-			{progress > 0 && gProgress}
+			{showStart() && <Btn onClick={start}>Start</Btn>}
+			{showProgr() && gProgress}
+			{showCheck() && <Status>Checking the link...</Status>}
+			{showDown() && <Status>Downloading...</Status>}
+			{showDone() && <Status>Done!</Status>}
 		</Fragment>
 	);
 }
 
 export default Youtube;
-
-// TODO: checking video...

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import progress from '@comp/progress';
 import { btn, input, mont_600_17, mont_600_24, mont_700_36 } from '@styles';
+import { nuni_400_18 } from '@styles/fonts';
 
 export const Heading = styled.div`
 	${mont_700_36}
@@ -40,4 +41,12 @@ export const Percent = styled.div`
 	height: 29px;
 	left: 741px;
 	top: 347px;
+`;
+
+export const Status = styled.div`
+	${nuni_400_18}
+	position: absolute;
+	height: 25px;
+	left: 190px;
+	top: 450px;
 `;
