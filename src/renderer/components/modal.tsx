@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useRef, useState } from 'react';
 
 import { useStates } from '@services';
 import { useListenEvent } from '@services/hooks';
