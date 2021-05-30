@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom';
 
 import { appInitURL, version } from '@const';
 import { useStates } from '@services';
-import { ApiRes, AppInitBody, AppInitReturn, IModal, IpcAxiosRes, Level, Lic } from '@types';
+import { ApiRes, AppInitBody, AppInitReturn, IpcAxiosRes, Level } from '@types';
 
 import { useAsyncEffect } from './hooks';
 import { electron, MachineID } from './native';

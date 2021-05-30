@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, useHistory } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
 
 import Modal from '@comp/modal';
@@ -7,7 +7,6 @@ import Files from '@pages/Files';
 import Main from '@pages/Main';
 import Registration from '@pages/Registration';
 import Youtube from '@pages/Youtube';
-import { useStates } from '@services';
 import { appInitHook } from '@services/apiAppInit';
 import { Close, MainDiv } from '@styles/pages/interface';
 
