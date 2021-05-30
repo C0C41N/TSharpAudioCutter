@@ -30,7 +30,7 @@ function Youtube() {
 			show: true,
 			loading: false,
 			level: Level.error,
-			desc: 'Invalid URL',
+			desc: `Unable to download`,
 			subDesc,
 		});
 
@@ -60,7 +60,7 @@ function Youtube() {
 		const YTDL = await ytdl;
 		const vid = getYtId(url);
 
-		if (!vid) return showErr();
+		if (!vid) return showErr('Invalid URL');
 
 		YTDL.download(vid);
 
