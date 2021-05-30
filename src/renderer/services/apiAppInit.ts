@@ -23,8 +23,9 @@ export const appInit = async () => {
 	return req.data as ApiRes<AppInitReturn>;
 };
 
-export const appInitHook = ({ setLic, setModal, replace }: appInitHookArgs) => {
+export const appInitHook = ({ setLic, setModal, replace }: appInitHookArgs) =>
 	useAsyncEffect(async () => {
+		const { shell } = electron;
 		const redirectToLicPage = () => replace('/main');
 
 		const { type, data, func } = await appInit();
@@ -34,7 +35,7 @@ export const appInitHook = ({ setLic, setModal, replace }: appInitHookArgs) => {
 
 		if (typeof data === 'string') return; // for type assertion
 
-		const { blocked, isLatest, lic } = data;
+		const { blocked, isLatest, lic, setupURL } = data;
 
 		if (blocked)
 			return showErrModal(
@@ -45,9 +46,20 @@ export const appInitHook = ({ setLic, setModal, replace }: appInitHookArgs) => {
 		if (lic > 1) setLic(lic);
 		else return redirectToLicPage();
 
-		if (!isLatest) {
-			// TODO: Update
-		}
+		if (!isLatest)
+			return setModal({
+				show: true,
+				loading: false,
+				level: Level.info,
+				desc: 'Update Available',
+				subDesc:
+					'Use the button below to download the update, then install it.',
+				btn: {
+					show: true,
+					caption: 'Download',
+					callback: () => shell.openExternal(setupURL),
+				},
+			});
 
 		function showErrModal(desc: string, subDesc: string) {
 			setModal({
@@ -60,7 +72,6 @@ export const appInitHook = ({ setLic, setModal, replace }: appInitHookArgs) => {
 			});
 		}
 	}, []);
-};
 
 interface appInitHookArgs {
 	setLic: (data: Lic) => void;
