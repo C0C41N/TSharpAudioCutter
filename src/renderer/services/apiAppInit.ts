@@ -2,13 +2,14 @@ import { useHistory } from 'react-router-dom';
 
 import { appInitURL, version } from '@const';
 import { useStates } from '@services';
-import { ApiRes, AppInitBody, AppInitReturn, IpcAxiosRes, Level } from '@types';
+import { ApiRes, AppInitBody, AppInitReturn, IpcAxiosRes, Level, SetModal } from '@types';
 
 import { useAsyncEffect } from './hooks';
 import { electron, MachineID } from './native';
-import { showLoading } from './util';
+import { hideLoading, showErrModal, showLoading } from './util';
 
 import type { AxiosRequestConfig } from 'axios';
+
 export const appInit = async () => {
 	const { ipcRenderer } = electron;
 	const { machineId } = MachineID;
@@ -38,51 +39,50 @@ export const appInitHook = () => {
 	useAsyncEffect(async () => {
 		showLoading(setModal);
 
-		const { shell } = electron;
 		const { type, data, func } = await appInit();
 
-		if (type === 'error')
-			return showErrModal('Unexpected error from API', `${data} | ${func}`);
+		if (type === 'error') return unexpErr(setModal, data, func);
 
 		if (typeof data === 'string') return; // for type assertion
 
 		const { blocked, isLatest, lic, setupURL } = data;
 
-		if (blocked)
-			return showErrModal(
-				'Sorry, It looks like you’re blocked.',
-				'Contact the creator for assistance.'
-			);
+		if (blocked) return blockedErr(setModal);
 
 		if (lic > 1) setLic(lic);
 		else redirectToLicPage();
 
-		if (!isLatest)
-			return setModal({
-				show: true,
-				loading: false,
-				level: Level.info,
-				desc: 'Update Available',
-				subDesc:
-					'Use the button below to download the update, then install it.',
-				btn: {
-					show: true,
-					caption: 'Download',
-					callback: () => shell.openExternal(setupURL),
-				},
-			});
+		if (!isLatest) return updateInfo(setModal, setupURL);
 
-		return setModal({ show: false, loading: true });
-
-		function showErrModal(desc: string, subDesc: string) {
-			setModal({
-				show: true,
-				loading: false,
-				dismiss: false,
-				level: Level.error,
-				desc,
-				subDesc,
-			});
-		}
+		return hideLoading(setModal);
 	}, []);
 };
+
+// modal wrappers
+
+const unexpErr = (
+	setModal: SetModal,
+	data: string | AppInitReturn,
+	func: string
+) => showErrModal(setModal, 'Unexpected error from API', `${data} | ${func}`);
+
+const blockedErr = (setModal: SetModal) =>
+	showErrModal(
+		setModal,
+		'Sorry, It looks like you’re blocked.',
+		'Contact the creator for assistance.'
+	);
+
+const updateInfo = (setModal: SetModal, setupURL: string) =>
+	setModal({
+		show: true,
+		loading: false,
+		level: Level.info,
+		desc: 'Update Available',
+		subDesc: 'Use the button below to download the update, then install it.',
+		btn: {
+			show: true,
+			caption: 'Download',
+			callback: () => electron.shell.openExternal(setupURL),
+		},
+	});

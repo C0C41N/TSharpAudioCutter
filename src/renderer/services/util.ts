@@ -1,8 +1,35 @@
-import type { IModal, TraFile } from '@types';
+import { Level, SetModal, TraFile } from '@types';
+
 import { ffmpeg } from './ffmpeg';
 import { pubsub } from './pubsub';
 
-export const showLoading = (setModal: (data: IModal) => void) =>
+/**
+ * setModal wrapper
+ */
+export const showErrModal = (
+	setModal: SetModal,
+	desc: string,
+	subDesc: string
+) =>
+	setModal({
+		show: true,
+		loading: false,
+		dismiss: false,
+		level: Level.error,
+		desc,
+		subDesc,
+	});
+
+/**
+ * setModal wrapper
+ */
+export const hideLoading = (setModal: SetModal) =>
+	setModal({ show: false, loading: true });
+
+/**
+ * setModal wrapper
+ */
+export const showLoading = (setModal: SetModal) =>
 	setModal({ show: true, loading: true });
 
 /**

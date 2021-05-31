@@ -10,6 +10,8 @@ export interface IModal {
 	btn?: IModalBtn;
 }
 
+export type SetModal = (data: IModal) => void;
+
 export interface IModalBtn {
 	show: boolean;
 	caption: string;
