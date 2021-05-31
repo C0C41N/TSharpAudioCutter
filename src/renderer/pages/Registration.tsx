@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import Back from '@comp/back';
 import { useStates } from '@services';
 import { registerLic } from '@services/apiRegisterLic';
-import { showLoading } from '@services/util';
+import { showLoading, validateInput } from '@services/util';
 import { Btn, Heading, Illustration, Input, SubHeading } from '@styles/pages/registration';
 import { ApiRes, Level, RegisterLicReturn } from '@types';
 
@@ -19,18 +19,12 @@ function Registration() {
 
 	const inputRef = useRef<HTMLInputElement>(null);
 
-	const validate = (): false | string => {
-		// TODO: refactor
-		const input = inputRef.current;
-		if (input) {
-			const val = input.value;
-			if (val.length) return val;
-			input.placeholder = 'Enter key here!';
-		}
-		setRed(true);
-		setTimeout(() => setRed(false), 300);
-		return false;
-	};
+	const validate = () =>
+		validateInput({
+			inputRef,
+			setRed,
+			placeholder: 'Enter key here!',
+		});
 
 	const clickRegister = async () => {
 		if (modal.show) return;

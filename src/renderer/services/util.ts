@@ -3,6 +3,25 @@ import { Level, SetModal, TraFile } from '@types';
 import { ffmpeg } from './ffmpeg';
 import { pubsub } from './pubsub';
 
+interface validateInputArgs {
+	inputRef: React.RefObject<HTMLInputElement>;
+	setRed: (value: React.SetStateAction<boolean>) => void;
+	placeholder: string;
+}
+
+export const validateInput = (args: validateInputArgs): false | string => {
+	const { inputRef, setRed, placeholder } = args;
+	const input = inputRef.current;
+	if (input) {
+		const val = input.value;
+		if (val.length) return val;
+		input.placeholder = placeholder;
+	}
+	setRed(true);
+	setTimeout(() => setRed(false), 300);
+	return false;
+};
+
 /**
  * setModal wrapper
  */

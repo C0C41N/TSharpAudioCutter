@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 
 import Back from '@comp/back';
 import { useStates } from '@services';
-import { sleep, traFile } from '@services/util';
+import { sleep, traFile, validateInput } from '@services/util';
 import { getFilePath, ytdl } from '@services/ytdl';
 import { Btn, Heading, Input, Percent, Progress, Status } from '@styles/pages/youtube';
 import { Level } from '@types';
@@ -37,17 +37,12 @@ function Youtube() {
 		setProgress(0);
 	};
 
-	const validate = (): false | string => {
-		const input = inputRef.current;
-		if (input) {
-			const val = input.value;
-			if (val.length) return val;
-			input.placeholder = 'bruh... paste a youtube link here!';
-		}
-		setRed(true);
-		setTimeout(() => setRed(false), 300);
-		return false;
-	};
+	const validate = () =>
+		validateInput({
+			inputRef,
+			setRed,
+			placeholder: 'bruh... paste a youtube link here!',
+		});
 
 	const start = async () => {
 		if (modal.show) return;
