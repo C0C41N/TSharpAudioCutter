@@ -1,6 +1,9 @@
-import type { TraFile } from '@types';
+import type { IModal, TraFile } from '@types';
 import { ffmpeg } from './ffmpeg';
 import { pubsub } from './pubsub';
+
+export const showLoading = (setModal: (data: IModal) => void) =>
+	setModal({ show: true, loading: true });
 
 /**
  * returns TraFile object by calculating duration, id etc.

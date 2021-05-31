@@ -4,6 +4,7 @@ import { useHistory } from 'react-router';
 import Back from '@comp/back';
 import { useStates } from '@services';
 import { registerLic } from '@services/apiRegisterLic';
+import { showLoading } from '@services/util';
 import { Btn, Heading, Illustration, Input, SubHeading } from '@styles/pages/registration';
 import { ApiRes, Level, RegisterLicReturn } from '@types';
 
@@ -37,8 +38,7 @@ function Registration() {
 		const key = validate();
 		if (!key) return;
 
-		// TODO: refactor showLoading
-		setModal({ show: true, loading: true });
+		showLoading(setModal);
 
 		const res: ApiRes<RegisterLicReturn> = await registerLic(key);
 

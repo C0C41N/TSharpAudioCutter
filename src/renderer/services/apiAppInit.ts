@@ -6,9 +6,9 @@ import { ApiRes, AppInitBody, AppInitReturn, IpcAxiosRes, Level } from '@types';
 
 import { useAsyncEffect } from './hooks';
 import { electron, MachineID } from './native';
+import { showLoading } from './util';
 
 import type { AxiosRequestConfig } from 'axios';
-
 export const appInit = async () => {
 	const { ipcRenderer } = electron;
 	const { machineId } = MachineID;
@@ -36,7 +36,7 @@ export const appInitHook = () => {
 	const redirectToLicPage = () => replace('/main/license');
 
 	useAsyncEffect(async () => {
-		setModal({ show: true, loading: true });
+		showLoading(setModal);
 
 		const { shell } = electron;
 		const { type, data, func } = await appInit();
