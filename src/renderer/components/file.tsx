@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import { useStates } from '@services';
 import {
@@ -17,18 +17,15 @@ function File(props: Props) {
 	const iconDone = status === 2;
 	const statusIcon = iconProc ? <IconProc /> : iconDone ? <IconDone /> : null;
 
-	const remove = useCallback(
-		(id: string) => {
-			const filteredFiles = Object.values(files)
-				.filter(e => e.id !== id)
-				.reduce((a: TraFileList, e: TraFile) => {
-					return { ...a, [e.id]: e };
-				}, {} as TraFileList);
+	const remove = (id: string) => {
+		const filteredFiles = Object.values(files)
+			.filter(e => e.id !== id)
+			.reduce((a: TraFileList, e: TraFile) => {
+				return { ...a, [e.id]: e };
+			}, {} as TraFileList);
 
-			setFiles(filteredFiles);
-		},
-		[files]
-	);
+		setFiles(filteredFiles);
+	};
 
 	return (
 		<Cont ref={e => (ref.current = e)}>
