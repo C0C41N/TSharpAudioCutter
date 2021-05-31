@@ -9,6 +9,7 @@ import { Btn, Heading, Illustration, Input, SubHeading } from '@styles/pages/reg
 import { ApiRes, Level, RegisterLicReturn } from '@types';
 
 function Registration() {
+	// TODO: refactor to hook
 	const { Modal, License } = useStates();
 	const { set: setLic } = License({ reactive: false });
 	const { val: modal, set: setModal } = Modal();
