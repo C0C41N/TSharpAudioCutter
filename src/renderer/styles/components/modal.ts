@@ -85,7 +85,7 @@ export const Dismiss = styled.div`
 	top: 515px;
 	left: 50%;
 	transform: translateX(-50%);
-	animation: ${puffIn} 0.3s cubic-bezier(0.47, 0, 0.745, 0.715) both;
+	animation: ${puffIn} 0.6s cubic-bezier(0.47, 0, 0.745, 0.715) both;
 `;
 
 interface B {

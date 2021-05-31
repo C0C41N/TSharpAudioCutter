@@ -75,7 +75,7 @@ function Modal() {
 			<Desc>{desc}</Desc>
 			<SubDesc>{subDesc}</SubDesc>
 			{btnShow && <Btn onClick={btnCallback}>{btnCaption}</Btn>}
-			{dismissI && (
+			{dismiss && (
 				<Dismiss>
 					Press &nbsp; <strong>Enter</strong> &nbsp; to dismiss
 				</Dismiss>
