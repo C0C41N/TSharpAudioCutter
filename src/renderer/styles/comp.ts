@@ -41,6 +41,7 @@ export const animRedFlash = css`
 	animation: ${redFlash} 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
 `;
 
+// TODO: pressed effect
 export const btn = styled.div`
 	${flexCenter}
 	background: #ffffff;
