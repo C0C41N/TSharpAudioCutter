@@ -1,6 +1,6 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { flexCenter } from '@styles/classes';
+import { animRedFlash, flexCenter } from '@styles/classes';
 import { mont_400_14, mont_600_14 } from '@styles/fonts';
 
 // internal helpers
@@ -14,44 +14,6 @@ const btnShadow = css`
 
 const btnBorder = css`
 	border: 1px solid #d9d9d9;
-`;
-
-const redFlash = keyframes`
-  0% {
-		border-color: red;
-		border-width: 2px;
-		transform: translateX(0);
-	}
-
-	100% {
-		border-width: 2px;
-    transform: translateX(0);
-  }
-
-  10%,
-  30%,
-  50%,
-  70% {
-    transform: translateX(-10px);
-  }
-
-  20%,
-  40%,
-  60% {
-    transform: translateX(10px);
-  }
-
-  80% {
-    transform: translateX(8px);
-  }
-
-  90% {
-    transform: translateX(-8px);
-  }
-`;
-
-const animRedFlash = css`
-	animation: ${redFlash} 0.8s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
 `;
 
 // components

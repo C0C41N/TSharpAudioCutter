@@ -7,11 +7,10 @@ import Files from '@pages/Files';
 import Main from '@pages/Main';
 import Registration from '@pages/Registration';
 import Youtube from '@pages/Youtube';
-import { appInitHook } from '@services/apiAppInit';
 import { Close, MainDiv } from '@styles/pages/interface';
 
 function Interface() {
-	appInitHook();
+	// appInitHook();
 
 	const routes = [
 		['/main', <Main />],

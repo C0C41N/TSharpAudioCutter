@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import { animFadeIn, animFadeOut } from '@styles';
 import { btn } from '@styles/comp';
@@ -65,6 +65,17 @@ export const SubDesc = styled.div`
 	white-space: pre-wrap;
 `;
 
+const puffIn = keyframes`
+	0% {
+		filter: blur(4px);
+    opacity: 0;
+  }
+  100% {
+		filter: blur(0px);
+    opacity: 1;
+  }
+`;
+
 export const Dismiss = styled.div`
 	${nuni_400_18}
 	color: #CB3D2E;
@@ -74,6 +85,7 @@ export const Dismiss = styled.div`
 	top: 515px;
 	left: 50%;
 	transform: translateX(-50%);
+	animation: ${puffIn} 0.3s cubic-bezier(0.47, 0, 0.745, 0.715) both;
 `;
 
 interface B {
