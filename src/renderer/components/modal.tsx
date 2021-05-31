@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 
 import { useStates } from '@services';
 import { useListenEvent } from '@services/hooks';
@@ -14,6 +14,7 @@ function Modal() {
 	const fading = useRef(false);
 	const [fadeOut, setFadeOut] = useState(false);
 	const [visible, setVisible] = useState(false);
+	const [dismissI, setDismissI] = useState(false);
 
 	const nullBtn: IModalBtn = { show: false, caption: '', callback: () => {} };
 	const modal = last ? { ...last, ...val } : val;
@@ -50,11 +51,20 @@ function Modal() {
 	});
 
 	const onEnter = ({ key }: any) => {
-		if (key !== 'Enter' || !show || !dismiss || loading) return;
+		if (key !== 'Enter' || !show || !dismissI || loading) return;
 		set({ show: false, loading: false });
+		setDismissI(false);
 	};
 
 	useListenEvent(document, 'keydown', onEnter);
+
+	useEffect(() => {
+		if (!show || !dismiss || loading) return;
+		const t = setTimeout(() => {
+			setDismissI(dismiss);
+		}, 600);
+		return () => clearTimeout(t);
+	});
 
 	const h = ['Info', 'Warning', 'Error'];
 	const heading = level !== undefined ? h[level] : '';
@@ -65,7 +75,7 @@ function Modal() {
 			<Desc>{desc}</Desc>
 			<SubDesc>{subDesc}</SubDesc>
 			{btnShow && <Btn onClick={btnCallback}>{btnCaption}</Btn>}
-			{dismiss && (
+			{dismissI && (
 				<Dismiss>
 					Press &nbsp; <strong>Enter</strong> &nbsp; to dismiss
 				</Dismiss>
