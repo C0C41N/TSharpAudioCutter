@@ -59,7 +59,7 @@ function Youtube() {
 
 		YTDL.download(vid);
 
-		YTDL.on('error', (e: Error) => showErr(e.message));
+		YTDL.on('error', (e: string) => showErr(e));
 
 		YTDL.on('progress', e => setProgress(e.progress.percentage));
 
