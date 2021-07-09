@@ -31,7 +31,7 @@ function Youtube() {
 			loading: false,
 			level: Level.error,
 			desc: `Unable to download`,
-			subDesc,
+			subDesc: JSON.stringify(subDesc),
 		});
 
 		setProgress(0);
