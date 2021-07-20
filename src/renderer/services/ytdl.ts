@@ -1,33 +1,49 @@
-import { pathFFmpeg } from '@services/ffmpeg';
+import { Observable } from 'rxjs';
+
 import { fs, Ytdl } from '@services/native';
 import { pubsub } from '@services/pubsub';
-import { outPath } from '@services/split';
+
+import { outPath } from './split';
 
 const { pub: setYtOutPath, once: YtOutPath } = pubsub<string>();
-const { pub: setYtdl, once: YTDL } = pubsub<YoutubeMp3Downloader>();
 
 const { existsSync, mkdirSync } = fs;
 
 (async () => {
-	const OutPath = `${await outPath}\\mp3_cache`;
+	const OutPath = `${await outPath}\\tmp`;
 	!existsSync(OutPath) && mkdirSync(OutPath);
 	setYtOutPath(OutPath);
-
-	setYtdl(
-		new Ytdl({
-			ffmpegPath: pathFFmpeg,
-			outputPath: OutPath,
-			queueParallelism: 1,
-			progressTimeout: 100,
-			allowWebm: false,
-		})
-	);
 })();
 
-export const getFilePath = async (data: { file: string }) => ({
-	path: data.file.replace('/', '\\'),
-	name: data.file.replace(`${await YtOutPath}/`, ''),
-});
+export const download = async (url: string) => {
+	const info = Ytdl.getBasicInfo(url);
+	const { title } = (await info).videoDetails;
+
+	const stream = Ytdl(url, { filter: 'audioonly', quality: 'highestaudio' });
+
+	const path = await ytOutPath;
+	const file = `${path}\\${title}`;
+
+	stream.pipe(fs.createWriteStream(file));
+
+	const progress = new Observable<number>(sub => {
+		stream.on('progress', (_, downloaded: number, total: number) => {
+			const percent = (downloaded * 100) / total;
+			sub.next(percent);
+			if (percent === 100) sub.complete();
+		});
+	});
+
+	const finished = new Promise<{ path: string; name: string }>(resolve => {
+		stream.on('end', () => {
+			resolve({
+				path: file.replace('/', '\\'),
+				name: title,
+			});
+		});
+	});
+
+	return { progress, finished };
+};
 
 export const ytOutPath = YtOutPath;
-export const ytdl = YTDL;

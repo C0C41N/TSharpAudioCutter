@@ -1,11 +1,11 @@
-import getYtId from 'get-youtube-id';
 import React, { Fragment, KeyboardEvent, useRef, useState } from 'react';
 import { useHistory } from 'react-router';
 
 import Back from '@comp/back';
 import { useStates } from '@services';
+import { Ytdl } from '@services/native';
 import { sleep, traFile, validateInput } from '@services/util';
-import { getFilePath, ytdl } from '@services/ytdl';
+import { download } from '@services/ytdl';
 import { Btn, Heading, Input, Percent, Progress, Status } from '@styles/pages/youtube';
 import { Level } from '@types';
 
@@ -13,6 +13,7 @@ const placeholder = 'https://www.youtube.com/watch?v=DxNt7xV5aII';
 
 function Youtube() {
 	const { trunc } = Math;
+	const { validateURL } = Ytdl;
 
 	const { Modal, Files, FromYT } = useStates();
 	const { val: modal, set: setModal } = Modal();
@@ -52,25 +53,20 @@ function Youtube() {
 
 		setProgress(0.01);
 
-		const YTDL = await ytdl;
-		const vid = getYtId(url);
+		if (!validateURL(url)) return showErr('Invalid URL');
 
-		if (!vid) return showErr('Invalid URL');
+		const { finished, progress } = await download(url);
 
-		YTDL.download(vid);
+		const sub = progress.subscribe(e => setProgress(e));
 
-		YTDL.on('error', (e: string) => showErr(e));
+		const filePath = await finished;
+		sub.unsubscribe();
 
-		YTDL.on('progress', e => setProgress(e.progress.percentage));
-
-		YTDL.on('finished', async (_, d) => {
-			const filePath = await getFilePath(d);
-			const file = await traFile(filePath);
-			setFiles({ [file.id]: file });
-			setFromYT(true);
-			await sleep(300);
-			replace('/main/files');
-		});
+		const file = await traFile(filePath);
+		setFiles({ [file.id]: file });
+		setFromYT(true);
+		await sleep(300);
+		replace('/main/files');
 	};
 
 	const enterInput = ({ key }: KeyboardEvent) => key === 'Enter' && start();
