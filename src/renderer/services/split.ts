@@ -28,7 +28,7 @@ const filename = async (file: string, type: 10 | 58) => {
 	const ext = type === 10 ? '.wav' : '.ogg';
 	const last = ceil((await getDurRaw(file)) % type).toLocaleString(...p);
 	// const name = `${type}${last}%02d ${basename(file, extname(file))}${ext}`;
-	const name = `${basename(file, extname(file))}_${type}_${last}_%02d`;
+	const name = `${basename(file, extname(file))}_${type}_${last}_%02d${ext}`;
 
 	return `${await docsPath}\\${name}`;
 };
