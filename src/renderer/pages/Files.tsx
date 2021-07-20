@@ -5,10 +5,10 @@ import FilesList from '@comp/filesList';
 import { useStates } from '@services';
 import { path } from '@services/native';
 import { traFile } from '@services/util';
-import { BtnDone, BtnSelect, Error, Heading, SubHeading } from '@styles/pages/files';
+import { BtnDone, BtnSelect, Error, Heading } from '@styles/pages/files';
 
 import type { TraFileList } from '@types';
-const fileTypes = ['.mp3'];
+const fileTypes = ['.mp3', '.wav', '.mp4'];
 
 function Files() {
 	const { Files } = useStates();
@@ -63,7 +63,7 @@ function Files() {
 		<Fragment>
 			<Back />
 			<Heading>Select your files</Heading>
-			<SubHeading>Files should be mp3</SubHeading>
+			{/* <SubHeading>Files should be mp3</SubHeading> */}
 			<input
 				multiple
 				type='file'

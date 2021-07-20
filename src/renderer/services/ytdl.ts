@@ -35,7 +35,8 @@ export const download = async (url: string) => {
 	});
 
 	const finished = new Promise<{ path: string; name: string }>(resolve => {
-		stream.on('end', () => {
+		stream.once('end', () => {
+			stream.destroy();
 			resolve({
 				path: file.replace('/', '\\'),
 				name: title,
