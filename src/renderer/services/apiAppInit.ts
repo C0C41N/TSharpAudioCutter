@@ -41,9 +41,10 @@ export const appInitHook = () => {
 
 		const { type, data, func } = await appInit();
 
-		if (type === 'error') return unexpErr(setModal, data, func);
+		if (invalidDeviceId({ type, data, func })) redirectToLicPage();
+		else if (type === 'error') return unexpErr(setModal, data, func);
 
-		if (typeof data === 'string') return; // for type assertion
+		if (typeof data === 'string') return hideLoading(setModal); // for type assertion
 
 		const { blocked, isLatest, lic, setupURL } = data;
 
@@ -56,6 +57,15 @@ export const appInitHook = () => {
 
 		return hideLoading(setModal);
 	}, []);
+
+	function invalidDeviceId(res: ApiRes<AppInitReturn>): boolean {
+		const e = { type: 'error', data: 'Invalid deviceId', func: 'getDevice' };
+
+		const { data, func, type } = res;
+
+		if (data === e.data && func === e.func && type === e.type) return true;
+		return false;
+	}
 };
 
 // modal wrappers
