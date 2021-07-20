@@ -9,11 +9,13 @@ const { pub: setYtOutPath, once: YtOutPath } = pubsub<string>();
 
 const { existsSync, mkdirSync } = fs;
 
-(async () => {
-	const OutPath = `${await outPath}\\tmp`;
-	!existsSync(OutPath) && mkdirSync(OutPath);
-	setYtOutPath(OutPath);
-})();
+export const checkTmpDir = async () => {
+	const TSharp_split = await outPath;
+	const tmp = `${TSharp_split}\\tmp`;
+	!existsSync(TSharp_split) && mkdirSync(TSharp_split);
+	!existsSync(tmp) && mkdirSync(tmp);
+	setYtOutPath(tmp);
+};
 
 export const download = async (url: string) => {
 	const info = Ytdl.getBasicInfo(url);
@@ -21,6 +23,7 @@ export const download = async (url: string) => {
 
 	const stream = Ytdl(url, { filter: 'audioonly', quality: 'highestaudio' });
 
+	await checkTmpDir();
 	const path = await ytOutPath;
 	const file = `${path}\\${title}`;
 
@@ -46,5 +49,7 @@ export const download = async (url: string) => {
 
 	return { progress, finished };
 };
+
+checkTmpDir();
 
 export const ytOutPath = YtOutPath;

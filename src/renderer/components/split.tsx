@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import { useStates } from '@services';
-import { fs_extra, openFolder } from '@services/native';
+import { fs, openFolder } from '@services/native';
 import { Long, outPath, Short } from '@services/split';
 import { sleep } from '@services/util';
 import { ytOutPath } from '@services/ytdl';
@@ -24,7 +24,7 @@ function split(props: any) {
 
 	const { replace } = useHistory();
 
-	const { emptyDirSync } = fs_extra;
+	const { rmSync } = fs;
 
 	const [inprogress, setInprogress] = useState(false);
 
@@ -57,7 +57,7 @@ function split(props: any) {
 	const checkFromYT = async () => {
 		if (!fromYT) return;
 		setFromYT(false);
-		emptyDirSync(await ytOutPath);
+		rmSync(await ytOutPath, { recursive: true, force: true });
 		replace('/main/youtube');
 	};
 
