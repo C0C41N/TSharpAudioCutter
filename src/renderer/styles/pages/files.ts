@@ -27,7 +27,7 @@ export const BtnSelect = styled(btn)`
 	width: 260px;
 	height: 38px;
 	left: 370px;
-	top: 145px;
+	top: 125px;
 `;
 
 export const BtnDone = styled(split)`
