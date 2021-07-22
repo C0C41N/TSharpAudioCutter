@@ -78,7 +78,7 @@ function Registration() {
 			show: true,
 			loading: false,
 			level: Level.info,
-			desc: 'License key Changed',
+			desc: 'License key Updated',
 		});
 	};
 
