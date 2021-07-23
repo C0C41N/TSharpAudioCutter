@@ -40,7 +40,8 @@ function Registration() {
 		const { data, func, type } = res;
 
 		if (type === 'error') {
-			if (data === 'Invalid key')
+			if (typeof data !== 'string') return; // for type assertion
+			if (data.toLowerCase() === 'invalid key')
 				return setModal({
 					show: true,
 					loading: false,
