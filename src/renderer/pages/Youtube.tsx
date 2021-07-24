@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 
 import Back from '@comp/back';
 import { useStates } from '@services';
+import { usePasteOnRClick } from '@services/hooks';
 import { Ytdl } from '@services/native';
 import { sleep, traFile, validateInput } from '@services/util';
 import { download } from '@services/ytdl';
@@ -77,6 +78,8 @@ function Youtube() {
 			<Percent>{`${trunc(progress)}%`}</Percent>
 		</Fragment>
 	);
+
+	usePasteOnRClick(inputRef.current);
 
 	const showStart = () => progress === 0;
 	const showProgr = () => progress > 0;

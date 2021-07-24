@@ -4,6 +4,7 @@ import { useHistory } from 'react-router';
 import Back from '@comp/back';
 import { useStates } from '@services';
 import { registerLic } from '@services/apiRegisterLic';
+import { usePasteOnRClick } from '@services/hooks';
 import { showLoading, validateInput } from '@services/util';
 import { Btn, Heading, Illustration, Input, SubHeading } from '@styles/pages/registration';
 import { ApiRes, Level, RegisterLicReturn } from '@types';
@@ -85,6 +86,8 @@ function Registration() {
 
 	const enterInput = ({ key }: KeyboardEvent) =>
 		key === 'Enter' && clickRegister();
+
+	usePasteOnRClick(inputRef.current);
 
 	return (
 		<Fragment>
