@@ -1,6 +1,6 @@
 {
 	"name": "tsharp-audio-cutter",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "Audio cutter app for secondlife uploads.",
 	"main": "dist",
 	"author": "C0C41N",
