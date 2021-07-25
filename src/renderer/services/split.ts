@@ -4,7 +4,7 @@ import { takeWhile } from 'rxjs/operators';
 import { ffmpeg } from './ffmpeg';
 import { electron, fs, path } from './native';
 import { pubsub } from './pubsub';
-import { getDurRaw } from './util';
+import { getDurRaw, randomKey36 } from './util';
 
 const { existsSync, mkdirSync } = fs;
 const { basename, extname } = path;
@@ -25,9 +25,13 @@ const filename = async (file: string, type: 10 | 58) => {
 
 	const p: any = ['en-US', { minimumIntegerDigits: 2, useGrouping: false }];
 
+	const key = randomKey36(2);
+
 	const ext = type === 10 ? '.wav' : '.ogg';
 	const last = ceil((await getDurRaw(file)) % type).toLocaleString(...p);
-	const name = `${type}${last}%02d ${basename(file, extname(file))}${ext}`;
+	const bname = basename(file, extname(file));
+
+	const name = `${key}${type}${last}%02d ${bname}${ext}`;
 	// const name = `${basename(file, extname(file))}_${type}_${last}_%02d${ext}`;
 
 	return `${await docsPath}\\${name}`;
