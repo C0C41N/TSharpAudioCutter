@@ -40,22 +40,17 @@ export const Btn = styled(btn)`
 export const YtBtn = styled(Btn)`
 	position: absolute;
 	left: 515px;
-	top: 333px;
+	top: 308px;
 `;
 
 export const FilesBtn = styled(Btn)`
 	position: absolute;
 	left: 515px;
-	top: 413px;
+	top: 388px;
 `;
 
-export const LicBtn = styled.div`
+export const sBtn = styled.div`
 	${mont_600_14}
-	position: absolute;
-	width: 162px;
-	height: 17px;
-	left: 594px;
-	top: 517px;
 	text-transform: uppercase;
 	color: #3f3d56;
 	cursor: pointer;
@@ -64,4 +59,20 @@ export const LicBtn = styled.div`
 	&:hover {
 		text-decoration-line: underline;
 	}
+`;
+
+export const FolderBtn = styled(sBtn)`
+	position: absolute;
+	width: 171px;
+	height: 17px;
+	left: 590px;
+	top: 472px;
+`;
+
+export const LicBtn = styled(sBtn)`
+	position: absolute;
+	width: 162px;
+	height: 17px;
+	left: 594px;
+	top: 517px;
 `;

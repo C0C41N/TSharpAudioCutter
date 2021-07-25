@@ -22,5 +22,13 @@ export const exit = () => {
 	ipcRenderer.send('exit');
 };
 
-export const openFolder = (path: string) =>
+export const openFolder = async (
+	path: string,
+	makeIfNoExist: boolean = false
+) => {
+	if (makeIfNoExist) {
+		const { existsSync, mkdirSync } = fs;
+		!existsSync(path) && mkdirSync(path);
+	}
 	child_process.exec(`start "" "${path}"`);
+};
