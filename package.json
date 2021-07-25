@@ -76,6 +76,10 @@
 			"target": [
 				"AppImage"
 			]
+		},
+		"nsis": {
+			"oneClick": false,
+			"allowToChangeInstallationDirectory": false
 		}
 	}
 }
