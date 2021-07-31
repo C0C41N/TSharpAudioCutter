@@ -21,12 +21,12 @@ export const useAsyncEffect = (
 
 export const usePasteOnRClick = (el: HTMLInputElement | null) => {
 	const callback = async () => {
-		if (!el) return console.log('null');
+		if (!el) return;
 		const text = await navigator.clipboard.readText();
 		el.value = text;
 	};
 	useAsyncEffect(async () => {
-		if (!el) return console.log('null');
+		if (!el) return;
 		el.addEventListener('contextmenu', callback);
 		return () => el.removeEventListener('contextmenu', callback);
 	}, [el]);
