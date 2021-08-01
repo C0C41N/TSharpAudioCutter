@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
+import sanitize from 'sanitize-filename';
 
-import { Filenamify, fs, Ytdl } from '@services/native';
+import { fs, Ytdl } from '@services/native';
 import { pubsub } from '@services/pubsub';
 
 import { outPath } from './split';
@@ -18,11 +19,10 @@ export const checkTmpDir = async () => {
 };
 
 export const download = async (url: string) => {
-	const { default: filenamify } = Filenamify;
-
 	const info = Ytdl.getBasicInfo(url);
+
 	const { title: titleRaw } = (await info).videoDetails;
-	const title = filenamify(titleRaw, { replacement: '' });
+	const title = sanitize(titleRaw);
 
 	const stream = Ytdl(url, { filter: 'audioonly', quality: 'highestaudio' });
 

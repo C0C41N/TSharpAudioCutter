@@ -4,7 +4,6 @@ import type * as Electron from 'electron';
 import type * as ChildProcess from 'child_process';
 import type * as YTDL from 'ytdl-core';
 import type * as NMID from 'node-machine-id';
-import type * as FILENAMIFY from 'filenamify';
 
 export const valid = () => !!(window?.process as any)?.type;
 
@@ -15,7 +14,6 @@ export const path: typeof Path = window.require('path');
 export const electron: typeof Electron = window.require('electron');
 export const Ytdl: typeof YTDL = window.require('ytdl-core');
 export const MachineID: typeof NMID = window.require('node-machine-id');
-export const Filenamify: typeof FILENAMIFY = window.require('filenamify');
 
 const child_process: typeof ChildProcess = window.require('child_process');
 
