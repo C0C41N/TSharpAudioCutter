@@ -41,33 +41,19 @@ export const download = async (url: string) => {
 	const progress = new Subject<number>();
 
 	stream.on('progress', (_, downloaded: number, total: number) => {
-		const percent = 10 + (downloaded * 80) / total;
+		const percent = 10 + (downloaded * 90) / total;
 		progress.next(percent);
 	});
 
 	const finished = new Promise<{ path: string; name: string }>(resolve => {
 		stream.once('end', () => {
 			stream.destroy();
-			const pathIn = file.replace('/', '\\');
-			const path = `${pathIn}.mp3`;
-			const name = `${title}.mp3`;
+			const path = file.replace('/', '\\');
 
-			resolve({ path: pathIn, name: title }); //
+			progress.next(100);
+			progress.complete();
 
-			// ffmpeg()
-			// 	.addInput(pathIn)
-			// 	.audioBitrate(192)
-			// 	.withAudioCodec('libmp3lame')
-			// 	.toFormat('mp3')
-			// 	.saveToFile(path)
-			// 	.on('progress', ({ percent }) => {
-			// 		progress.next(90 + percent / 10);
-			// 	})
-			// 	.on('end', () => {
-			// 		progress.next(100);
-			// 		progress.complete();
-			// 		resolve({ path, name });
-			// 	});
+			resolve({ path, name: title });
 		});
 	});
 
