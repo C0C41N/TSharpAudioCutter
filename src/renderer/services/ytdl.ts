@@ -1,7 +1,6 @@
-import filenamify from 'filenamify';
 import { Observable } from 'rxjs';
 
-import { fs, Ytdl } from '@services/native';
+import { Filenamify, fs, Ytdl } from '@services/native';
 import { pubsub } from '@services/pubsub';
 
 import { outPath } from './split';
@@ -19,6 +18,8 @@ export const checkTmpDir = async () => {
 };
 
 export const download = async (url: string) => {
+	const { default: filenamify } = Filenamify;
+
 	const info = Ytdl.getBasicInfo(url);
 	const { title: titleRaw } = (await info).videoDetails;
 	const title = filenamify(titleRaw, { replacement: '' });
