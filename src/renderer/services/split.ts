@@ -74,6 +74,26 @@ export const Long = (file: string): Observable<IReturn> => {
 	return sub.pipe(takeWhile(e => !e.end));
 };
 
+export const toMP3 = async (file: {
+	path: string;
+	name: string;
+}): Promise<{ path: string; name: string }> => {
+	const { pub: setDone, once: $done } = pubsub<void>();
+
+	const path = `${await outPath}\\tmp\\converted.mp3`;
+
+	ffmpeg()
+		.on('end', () => setDone())
+		.addInput(file.path)
+		.addOutput(path)
+		.addOutputOption('-q:a', '10') // quality
+		.run();
+
+	await $done;
+
+	return { path, name: file.name };
+};
+
 export const outPath = docsPath;
 
 interface IReturn {
