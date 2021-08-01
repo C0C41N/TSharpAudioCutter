@@ -5,7 +5,6 @@ import Back from '@comp/back';
 import { useStates } from '@services';
 import { usePasteOnRClick } from '@services/hooks';
 import { Ytdl } from '@services/native';
-import { toMP3 } from '@services/split';
 import { sleep, traFile, validateInput } from '@services/util';
 import { download } from '@services/ytdl';
 import { Btn, Heading, Input, Percent, Progress, Status } from '@styles/pages/youtube';
@@ -61,11 +60,10 @@ function Youtube() {
 
 		const sub = progress.subscribe(e => setProgress(e));
 
-		const mp4Path = await finished;
+		const path = await finished;
 		sub.unsubscribe();
 
-		const mp3Path = await toMP3(mp4Path);
-		const file = await traFile(mp3Path);
+		const file = await traFile(path);
 
 		setFiles({ [file.id]: file });
 		setFromYT(true);
