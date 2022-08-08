@@ -1,46 +1,45 @@
-import type { Observable } from 'rxjs';
-import { takeWhile } from 'rxjs/operators';
+import type { Observable } from 'rxjs'
+import { takeWhile } from 'rxjs/operators'
 
-import { ffmpeg } from './ffmpeg';
-import { electron, fs, path } from './native';
-import { pubsub } from './pubsub';
-import { getDurRaw, randomKey36 } from './util';
+import { ffmpeg } from './ffmpeg'
+import { electron, fs, path } from './native'
+import { pubsub } from './pubsub'
+import { getDurRaw, randomKey36 } from './util'
 
-const { existsSync, mkdirSync } = fs;
-const { basename, extname } = path;
-const { ipcRenderer } = electron;
+const { existsSync, mkdirSync } = fs
+const { basename, extname } = path
+const { ipcRenderer } = electron
 
-const { pub: setDocsPath, once: docsPath } = pubsub<string>();
+const { pub: setDocsPath, once: docsPath } = pubsub<string>()
 
 ipcRenderer.on('docs', (_, docs) => {
-	const dir = `${docs}\\TSharp_split`;
-	!existsSync(dir) && mkdirSync(dir);
-	setDocsPath(dir);
-});
+	const dir = `${docs}/TSharp_split`
+	!existsSync(dir) && mkdirSync(dir)
+	setDocsPath(dir)
+})
 
-ipcRenderer.send('docs');
+ipcRenderer.send('docs')
 
 const filename = async (file: string, type: 10 | 58) => {
-	const { ceil } = Math;
+	const { ceil } = Math
 
-	const p: any = ['en-US', { minimumIntegerDigits: 2, useGrouping: false }];
+	const p: any = ['en-US', { minimumIntegerDigits: 2, useGrouping: false }]
 
-	const key = randomKey36(2);
+	const key = randomKey36(2)
 
-	const ext = type === 10 ? '.wav' : '.ogg';
-	const last = ceil((await getDurRaw(file)) % type).toLocaleString(...p);
-	const bname = basename(file, extname(file));
+	const ext = type === 10 ? '.wav' : '.ogg'
+	const last = ceil((await getDurRaw(file)) % type).toLocaleString(...p)
+	const bname = basename(file, extname(file))
 
-	const name = `${key}${type}${last}%02d ${bname}${ext}`;
-	// const name = `${basename(file, extname(file))}_${type}_${last}_%02d${ext}`;
+	const name = `${key}${type}${last}%02d ${bname}${ext}`
 
-	return `${await docsPath}\\${name}`;
-};
+	return `${await docsPath}/${name}`
+}
 
 export const Short = (file: string): Observable<IReturn> => {
-	const { pub, sub } = pubsub<IReturn>();
+	const { pub, sub } = pubsub<IReturn>()
 
-	(async () => {
+	;(async () => {
 		ffmpeg()
 			.on('progress', ({ percent }) => pub({ percent, end: false }))
 			.on('end', () => pub({ percent: 100, end: true }))
@@ -49,16 +48,16 @@ export const Short = (file: string): Observable<IReturn> => {
 			.addOutputOption('-f', 'segment', '-segment_time', '9.96') // split
 			.addOutputOption('-ar', '44100') // resample
 			.addOutputOption('-ac', '1') // mono
-			.run();
-	})();
+			.run()
+	})()
 
-	return sub.pipe(takeWhile(e => !e.end));
-};
+	return sub.pipe(takeWhile(e => !e.end))
+}
 
 export const Long = (file: string): Observable<IReturn> => {
-	const { pub, sub } = pubsub<IReturn>();
+	const { pub, sub } = pubsub<IReturn>()
 
-	(async () => {
+	;(async () => {
 		ffmpeg()
 			.on('progress', ({ percent }) => pub({ percent, end: false }))
 			.on('end', () => pub({ percent: 100, end: true }))
@@ -68,15 +67,15 @@ export const Long = (file: string): Observable<IReturn> => {
 			.addOutputOption('-af', 'asetrate=352800') // resample
 			.addOutputOption('-ar', '176400') // resample
 			.addOutputOption('-q:a', '10') // quality
-			.run();
-	})();
+			.run()
+	})()
 
-	return sub.pipe(takeWhile(e => !e.end));
-};
+	return sub.pipe(takeWhile(e => !e.end))
+}
 
-export const outPath = docsPath;
+export const outPath = docsPath
 
 interface IReturn {
-	percent: number;
-	end: boolean;
+	percent: number
+	end: boolean
 }
